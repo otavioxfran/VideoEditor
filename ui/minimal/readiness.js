@@ -74,9 +74,11 @@ function render(view) {
     row(ffmpeg.ok, "FFmpeg", ffmpeg.ok
       ? `Instalado${ffmpeg.version ? ` (${ffmpeg.version})` : ""}.`
       : "Não encontrado. Ele corta e exporta o vídeo; instale e reabra o Studio."),
-    row(true, "Placa de vídeo", gpu.ok
+    row(gpu.ok || !gpu.count, "Placa de vídeo", gpu.ok
       ? `${gpu.name || "NVIDIA"}: transcrição rápida.`
-      : "Sem placa NVIDIA: funciona, mas a transcrição é mais lenta. Usando um modelo mais leve."),
+      : gpu.count
+        ? "Placa NVIDIA encontrada, mas a aceleração não está instalada. Para usá-la, reinstale com a opção Completa; até lá, a transcrição usa a CPU com um modelo mais leve."
+        : "Sem placa NVIDIA: funciona, mas a transcrição é mais lenta. Usando um modelo mais leve."),
     modelRow(status),
     row(status.disk.free_bytes == null || status.disk.free_bytes > 5e9, "Espaço livre",
       `${formatBytes(status.disk.free_bytes)} livres onde o editor guarda os cortes.`),

@@ -26,6 +26,17 @@ python -m pytest -q           # testes
 Coloque vídeos de teste numa pasta e aponte `SOURCE_VIDEOS_DIR` para ela. Os vídeos
 originais nunca são alterados; tudo o que o editor gera fica em `jobs/`.
 
+## Instalador para Windows
+
+`packaging/windows/build.ps1` monta o Python embutido, as dependências, o FFmpeg e o app em
+`build/windows/stage` e, com o [Inno Setup 6](https://jrsoftware.org/isinfo.php) instalado,
+gera o `.exe`. O workflow `Windows installer` faz o mesmo no GitHub e anexa o instalador a
+cada release publicada.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File packaging\windows\build.ps1
+```
+
 ## Regras da casa
 
 - **Privacidade primeiro.** Nada de vídeo, áudio ou transcrição sai do computador, a não

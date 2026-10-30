@@ -238,6 +238,7 @@ function renderJobs(allJobs) {
 }
 
 async function refresh() {
+  if (stopped) return;
   try {
     const library = await api("/api/library");
     const select = $("source");
@@ -330,7 +331,21 @@ async function pickFolder() {
   }
 }
 
+let stopped = false;
+
+async function shutdown() {
+  stopped = true;
+  closeDialog("settings-dialog");
+  try {
+    await api("/api/system/shutdown", "POST");
+  } catch {
+    // The server may stop before it answers.
+  }
+  showMessage("Estúdio encerrado. Para voltar, abra o atalho VideoEditor.", "success");
+}
+
 function followComputer(status) {
+  if (status) $("shutdown").hidden = !status.installed;
   if (!status || configTouched) return;
   $("model").value = status.model.recommended;
   $("device").value = status.gpu.ok ? "cuda" : "cpu";
@@ -356,6 +371,7 @@ function bind() {
   $("refresh-library").addEventListener("click", refresh);
   $("pick-video").addEventListener("click", pickVideo);
   $("pick-folder").addEventListener("click", pickFolder);
+  $("shutdown").addEventListener("click", shutdown);
   $("source").addEventListener("change", () => {
     if ($("source").value) {
       pickedPath = "";

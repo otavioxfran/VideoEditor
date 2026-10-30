@@ -35,19 +35,38 @@ subtitles, ready to finish in CapCut, Premiere or any other editor.
 
 ## Status
 
-This is a young project used daily by its author. It works, but setup still needs a
-terminal. A one-click Windows installer is on the [roadmap](#-roadmap).
+This is a young project used daily by its author. On Windows it installs like any other
+program; on macOS and Linux it runs from the source code.
 
 | | Works | Notes |
 |---|---|---|
-| Windows + NVIDIA GPU | ✅ best experience | NVENC export; 10 min of audio transcribed in ~40 s on an RTX 2060 |
-| Windows/Linux without GPU | ✅ slower | Falls back to CPU automatically |
-| macOS | ⚠️ untested | CPU only |
+| Windows + NVIDIA GPU | ✅ best experience | Installer; NVENC export; 10 min of audio transcribed in ~40 s on an RTX 2060 |
+| Windows without GPU | ✅ slower | Installer ("sem placa NVIDIA" option); transcription on the CPU |
+| Linux | ✅ from source | CPU or NVIDIA |
+| macOS | ⚠️ untested | From source, CPU only |
 | Docker | ✅ for trying it out | CPU only in the provided image |
 
 ---
 
-## 🚀 Quick start (local)
+## 💾 Windows: install
+
+1. Download **`VideoEditor-Setup-x.y.z.exe`** from the latest
+   [release](https://github.com/otavioxfran/VideoEditor/releases/latest).
+2. Run it. It installs for your user only (no administrator password) and brings its own
+   Python and FFmpeg; nothing else is needed. Keep "Completa" if you have an NVIDIA card.
+3. Open **VideoEditor** from the Start menu. The Studio opens in your browser and, the first
+   time, offers to download the speech model (~1.5 GB, once).
+
+To close it, use **Configurações → Encerrar o estúdio** or the Start menu entry **Encerrar o
+VideoEditor**. Your cuts stay in `%LOCALAPPDATA%\VideoEditor`, also after uninstalling.
+
+> **"Windows protected your PC"?** The installer is not code-signed yet, so SmartScreen warns
+> the first time. Click **More info → Run anyway**. The `.exe` is built by GitHub Actions
+> from this repository ([workflow](.github/workflows/release-windows.yml)).
+
+---
+
+## 🚀 Quick start (from source)
 
 **You need:** Python 3.11+, [FFmpeg](https://ffmpeg.org/download.html) in your PATH, and
 about 2 GB free for the speech model. An NVIDIA GPU is optional but much faster.
@@ -95,15 +114,27 @@ python cli.py report JOB_ID      # naturalness metrics of the current cut
 
 ## 🇧🇷 Como usar (pt-BR)
 
-1. Instale o [Python 3.11+](https://www.python.org/downloads/) (marque "Add Python to PATH")
-   e o [FFmpeg](https://www.gyan.dev/ffmpeg/builds/).
-2. Baixe este projeto (botão verde **Code → Download ZIP**) e extraia.
-3. Na pasta do projeto, abra o terminal e rode `pip install -r requirements.txt` (uma vez só).
-4. Dê dois cliques em `start-studio.cmd`. O navegador abre o Studio.
-5. Na primeira vez, o Studio confere o computador e oferece **Baixar** o modelo de
-   transcrição, com barra de progresso.
-6. Clique em **Novo corte → Escolher vídeo no computador…**, revise as poucas decisões que
+**No Windows, sem instalar mais nada:**
+
+1. Baixe o **`VideoEditor-Setup-x.y.z.exe`** na página da
+   [última versão](https://github.com/otavioxfran/VideoEditor/releases/latest).
+2. Abra o arquivo e siga o instalador (não pede senha de administrador). Se tiver placa
+   NVIDIA, deixe a opção **Completa**.
+   - Se aparecer **"O Windows protegeu o computador"**, clique em **Mais informações →
+     Executar assim mesmo**. O aviso aparece porque o instalador ainda não tem assinatura
+     digital.
+3. Abra o **VideoEditor** pelo menu Iniciar. O navegador abre o Studio.
+4. Na primeira vez, clique em **Baixar** para trazer o modelo de transcrição (~1,5 GB, uma
+   vez só).
+5. Clique em **Novo corte → Escolher vídeo no computador…**, revise as poucas decisões que
    aparecerem e clique em **Exportar MP4 + SRT**.
+6. Para fechar: **Configurações → Encerrar o estúdio** (ou **Encerrar o VideoEditor** no menu
+   Iniciar).
+
+**Pelo código-fonte** (Windows, Linux ou macOS): instale o
+[Python 3.11+](https://www.python.org/downloads/) e o [FFmpeg](https://ffmpeg.org/download.html),
+baixe este projeto, rode `pip install -r requirements.txt` e abra com `start-studio.cmd`
+(Windows) ou `python cli.py studio`.
 
 Quer que a lista mostre outra pasta? **Configurações → Pasta de vídeos → Trocar pasta…**.
 As opções avançadas (modelo, edição experimental, briefing) ficam escondidas até você ligar
@@ -139,7 +170,7 @@ python -m pytest -q
 
 ## 🗺️ Roadmap
 
-- One-click Windows installer (bundled Python and FFmpeg).
+- Code-signed installer (no SmartScreen warning) and a macOS package.
 - Transcription language selector and an English interface.
 
 ## 🤝 Contributing

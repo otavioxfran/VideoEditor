@@ -1,11 +1,12 @@
 """First-run checks: is this computer ready to cut? FFmpeg, GPU, speech model, disk."""
+import os
 import shutil
 import subprocess
 import threading
 from functools import lru_cache
 from pathlib import Path
 
-from video_editor.settings import DATA_DIR
+from video_editor.settings import DATA_DIR, INSTALLED
 
 MODEL_FILES = ('config.json', 'preprocessor_config.json', 'model.bin', 'tokenizer.json', 'vocabulary.')
 # Without an NVIDIA card the big model is too slow for a 20-minute video; small is the default there.
@@ -32,6 +33,23 @@ def ffmpeg():
 
 
 @lru_cache(maxsize=1)
+def _cublas_loadable():
+    # A card can be present while cuBLAS is not (the installer's "sem placa NVIDIA" option);
+    # transcription would then fail over to the CPU, so the check must say so.
+    if os.name != 'nt':
+        return True
+    import ctypes
+    import ctranslate2
+    for candidate in (Path(ctranslate2.__file__).parent / 'cublas64_12.dll', 'cublas64_12.dll'):
+        try:
+            ctypes.WinDLL(str(candidate))
+            return True
+        except OSError:
+            continue
+    return False
+
+
+@lru_cache(maxsize=1)
 def gpu():
     try:
         import ctranslate2
@@ -42,7 +60,8 @@ def gpu():
     if count and shutil.which('nvidia-smi'):
         output = _quiet(['nvidia-smi', '--query-gpu=name,memory.total', '--format=csv,noheader'])
         name = output.strip().split('\n')[0] if output else None
-    return dict(ok=count > 0, count=count, name=name)
+    libraries = bool(count) and _cublas_loadable()
+    return dict(ok=count > 0 and libraries, count=count, name=name, libraries=libraries)
 
 
 def recommended_model():
@@ -145,4 +164,5 @@ def status(model=None):
         model=dict(name=model, recommended=recommended_model(), ready=ready, download=downloads.status(model)),
         disk=dict(free_bytes=free, path=str(DATA_DIR)),
         ready=bool(tools['ok'] and ready),
+        installed=INSTALLED,
     )

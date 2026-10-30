@@ -6,6 +6,10 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 ## [Não lançado]
 
 ### Adicionado
+- Instalador para Windows (`VideoEditor-Setup-*.exe`): instala por usuário, sem
+  administrador, com Python e FFmpeg embutidos, atalho no menu Iniciar e componente opcional
+  de aceleração NVIDIA. Gerado pelo GitHub Actions a cada release.
+- **Configurações → Encerrar o estúdio** na versão instalada.
 - Escolher qualquer vídeo do computador pelo diálogo nativo do sistema (**Novo corte →
   Escolher vídeo no computador…**) e trocar a pasta de vídeos nas Configurações.
 - "O estúdio está pronto?": checagem de FFmpeg, placa de vídeo, modelo e espaço em disco,

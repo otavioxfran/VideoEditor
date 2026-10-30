@@ -39,3 +39,5 @@ Thumbs.db
 PERSONA.md
 private/
 start-studio.local.cmd
+# Windows installer build output
+build/
