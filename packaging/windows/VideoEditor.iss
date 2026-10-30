@@ -15,7 +15,6 @@
 #endif
 
 #define Launcher "{app}\python\pythonw.exe"
-#define LauncherArgs """{app}\app\launcher.py"""
 
 [Setup]
 AppId={{6B0E5B8C-3F2A-4E7D-9C1B-8A4D2E6F7A10}
@@ -65,19 +64,19 @@ Source: "{#GpuDir}\ctranslate2\*"; DestDir: "{app}\python\Lib\site-packages\ctra
 Source: "VideoEditor.ico"; DestDir: "{app}"; Components: app
 
 [Icons]
-Name: "{autoprograms}\VideoEditor"; Filename: "{#Launcher}"; Parameters: "{#LauncherArgs}"; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"; Comment: "Abrir o estúdio de corte"
-Name: "{autoprograms}\Encerrar o VideoEditor"; Filename: "{#Launcher}"; Parameters: "{#LauncherArgs} --stop"; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"
-Name: "{autodesktop}\VideoEditor"; Filename: "{#Launcher}"; Parameters: "{#LauncherArgs}"; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"; Tasks: desktopicon
+Name: "{autoprograms}\VideoEditor"; Filename: "{#Launcher}"; Parameters: """{app}\app\launcher.py"""; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"; Comment: "Abrir o estúdio de corte"
+Name: "{autoprograms}\Encerrar o VideoEditor"; Filename: "{#Launcher}"; Parameters: """{app}\app\launcher.py"" --stop"; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"
+Name: "{autodesktop}\VideoEditor"; Filename: "{#Launcher}"; Parameters: """{app}\app\launcher.py"""; WorkingDir: "{app}\app"; IconFilename: "{app}\VideoEditor.ico"; Tasks: desktopicon
 
 [Run]
-Filename: "{#Launcher}"; Parameters: "{#LauncherArgs}"; WorkingDir: "{app}\app"; Description: "Abrir o VideoEditor agora"; Flags: postinstall nowait skipifsilent
+Filename: "{#Launcher}"; Parameters: """{app}\app\launcher.py"""; WorkingDir: "{app}\app"; Description: "Abrir o VideoEditor agora"; Flags: postinstall nowait skipifsilent
 
 [InstallDelete]
 ; An update replaces the program files; cuts and settings live in %LOCALAPPDATA%\VideoEditor.
 Type: filesandordirs; Name: "{app}\app"
 
 [UninstallRun]
-Filename: "{#Launcher}"; Parameters: "{#LauncherArgs} --stop"; WorkingDir: "{app}\app"; Flags: runhidden waituntilterminated; RunOnceId: "StopStudio"
+Filename: "{#Launcher}"; Parameters: """{app}\app\launcher.py"" --stop"; WorkingDir: "{app}\app"; Flags: runhidden waituntilterminated; RunOnceId: "StopStudio"
 
 [UninstallDelete]
 ; Python writes bytecode caches next to the installed files.
