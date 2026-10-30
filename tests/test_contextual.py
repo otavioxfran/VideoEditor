@@ -509,7 +509,9 @@ def test_refinement_commit_recovers_only_when_no_human_document_changed(
 
 def test_sdk_retry_is_bounded_and_does_not_expose_credentials(tmp_path, monkeypatch):
     from video_editor import storage
-    from google import genai
+
+    # The Gemini SDK is optional (requirements-editorial.txt); CI installs it.
+    genai = pytest.importorskip("google.genai")
 
     secret = "isolated-do-not-log"
     path = tmp_path / "provider.json"
