@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>VideoEditor · Filmoteca</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20261030g">
+  <link rel="stylesheet" href="/assets/style.css?v=20261030h">
 </head>
 <body class="studio-page">
   <header class="topbar">
@@ -50,6 +50,8 @@
       </div>
     </section>
 
+    <section class="readiness" id="readiness" aria-live="polite" hidden></section>
+
     <section id="jobs" aria-label="Jobs preparados">
       <div class="job-grid" aria-hidden="true">
         <article class="job-card skeleton-card">
@@ -84,9 +86,16 @@
     </div>
     <form id="prepare">
       <div class="dialog-body new-job-form">
+        <div class="pick-row">
+          <button class="btn" id="pick-video" type="button">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-folder-open"></use></svg>
+            Escolher vídeo no computador…
+          </button>
+          <span class="picked" id="picked-video" hidden></span>
+        </div>
         <div class="source-row">
           <label class="field">
-            <span class="field-label">Gravação</span>
+            <span class="field-label">Ou escolha da sua pasta de vídeos</span>
             <select class="select" id="source">
               <option value="">Escolha um vídeo</option>
             </select>
@@ -101,7 +110,7 @@
           <summary>Opções avançadas</summary>
           <div class="advanced-body">
             <div class="form-grid">
-              <label class="field">
+              <label class="field" data-advanced>
                 <span class="field-label">Caminho completo</span>
                 <input class="input" id="path" placeholder="C:\Users\voce\Videos\video.mp4" spellcheck="false">
               </label>
@@ -128,7 +137,7 @@
               <input id="automatic-consent" type="checkbox">
               <span>Autorizar análise textual pelo Gemini gratuito para este vídeo. Áudio e vídeo ficam no PC.</span>
             </label>
-            <label class="check">
+            <label class="check" data-advanced>
               <input id="evaluation-mode" type="checkbox">
               <span>Gerar edição experimental. Pode usar a análise textual autorizada; a naturalidade ainda está em avaliação.</span>
             </label>
@@ -136,7 +145,7 @@
         </details>
       </div>
       <div class="dialog-actions">
-        <button class="btn" type="submit" value="manual">Só transcrever</button>
+        <button class="btn" type="submit" value="manual" data-advanced>Só transcrever</button>
         <button class="btn primary" type="submit" value="automatic">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-scissors"></use></svg>
           Editar automaticamente
@@ -149,7 +158,7 @@
     <div class="dialog-head">
       <div>
         <h2 id="settings-title">Configurações</h2>
-        <p>Transcrição, assistência textual e caminhos do estúdio.</p>
+        <p>O estúdio está pronto para cortar? Pastas, transcrição e assistência textual.</p>
       </div>
       <button class="btn ghost icon-only close" type="button" data-close="settings-dialog" aria-label="Fechar">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-x"></use></svg>
@@ -157,6 +166,31 @@
     </div>
     <div class="dialog-body settings-stack">
       <section class="settings-section">
+        <h3>Este computador</h3>
+        <div id="system-checks"></div>
+      </section>
+
+      <section class="settings-section">
+        <h3>Pasta de vídeos</h3>
+        <p class="hint">O editor lista as gravações desta pasta e nunca altera os arquivos originais. Os cortes ficam em <span class="mono" id="data-dir">jobs</span>.</p>
+        <div class="folder-row">
+          <span class="mono" id="source-dir">pasta de vídeos</span>
+          <button class="btn small" id="pick-folder" type="button">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-folder-open"></use></svg>
+            Trocar pasta…
+          </button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h3>Interface</h3>
+        <label class="check">
+          <input id="advanced-mode" type="checkbox">
+          <span>Mostrar opções avançadas (modelo, dispositivo, edição experimental, avaliação e briefing).</span>
+        </label>
+      </section>
+
+      <section class="settings-section" data-advanced>
         <h3>Transcrição</h3>
         <p class="hint">O modelo padrão é <span class="mono">large-v3-turbo</span>, local. Os pesos são baixados uma vez e ficam no cache do Hugging Face (<span class="mono">HF_HOME</span>).</p>
         <div class="provider-status">
@@ -196,10 +230,6 @@
         </form>
       </section>
 
-      <section class="settings-section">
-        <h3>Caminhos</h3>
-        <p class="hint">Raws em <span class="mono" id="source-dir">pasta de vídeos</span>; jobs em <span class="mono">jobs\</span>. A fonte é somente leitura.</p>
-      </section>
     </div>
     <div class="dialog-actions">
       <button class="btn" type="button" data-close="settings-dialog">Fechar</button>

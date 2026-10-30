@@ -366,9 +366,9 @@ def editorial_packet(transcript, candidates, summary):
     nearby = {
         j for i in indices for j in range(max(0, i - 2), min(len(segments), i + 3))
     }
-    from video_editor.settings import BASE_DIR
+    from video_editor.settings import PERSONA_PATH
 
-    persona_path = BASE_DIR / "PERSONA.md"
+    persona_path = PERSONA_PATH
     persona = (
         persona_path.read_text(encoding="utf-8")[:20000]
         if persona_path.exists()

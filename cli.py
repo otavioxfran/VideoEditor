@@ -78,19 +78,19 @@ def main():
         from video_editor import media
         from video_editor.performance import calibrate as measure
         from video_editor.safety import source_identity
-        from video_editor.settings import BASE_DIR
+        from video_editor.settings import DATA_DIR, LOCAL_CONFIG_DIR
         if not 5<=args.seconds<=300:parser.error('--seconds deve estar entre 5 e 300')
         source=Path(args.video).resolve()
-        (BASE_DIR/'scratch').mkdir(exist_ok=True)
-        with jobs.runtime_lock(),tempfile.TemporaryDirectory(prefix='asr-calibration-',dir=BASE_DIR/'scratch') as folder:
+        (DATA_DIR/'scratch').mkdir(exist_ok=True)
+        with jobs.runtime_lock(),tempfile.TemporaryDirectory(prefix='asr-calibration-',dir=DATA_DIR/'scratch') as folder:
             identity=source_identity(source);info=media.probe(source);wav=Path(folder)/'sample.wav'
             seek=['-ss',str(info['origin'])] if info['origin']>0 else []
             media.run(['ffmpeg','-nostdin','-y','-v','error',*seek,'-i',str(source),'-vn',
                        '-af','aresample=async=1:first_pts=0','-t',str(args.seconds),
                        '-ac','1','-ar','16000','-c:a','pcm_s16le',str(wav)])
-            result=measure(wav,identity,BASE_DIR/'config/asr_calibration.local.json')
+            result=measure(wav,identity,LOCAL_CONFIG_DIR/'asr_calibration.local.json')
             print('Lote selecionado:',result['selected_batch_size'])
-            print('Relatório:',BASE_DIR/'config/asr_calibration.local.json')
+            print('Relatório:',LOCAL_CONFIG_DIR/'asr_calibration.local.json')
         from video_editor.transcription import release_model
         release_model()
     elif args.command == 'process':
@@ -100,8 +100,8 @@ def main():
             if args.automatic and config.model == 'small':
                 # ASR batching was calibrated for the small model only.
                 from video_editor.performance import selected_batch
-                from video_editor.settings import BASE_DIR
-                config.batch_size=selected_batch(BASE_DIR/'config/asr_calibration.local.json')
+                from video_editor.settings import DATA_DIR, LOCAL_CONFIG_DIR
+                config.batch_size=selected_batch(LOCAL_CONFIG_DIR/'asr_calibration.local.json')
             if args.automatic:
                 config.refine_uncertain=True
             job = jobs.create(Path(args.video).resolve(), config.model_dump(), allow_external=True)

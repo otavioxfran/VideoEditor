@@ -3,16 +3,23 @@ import {
   closeDialog,
   formatDuration,
   icon,
+  isAdvanced,
   openDialog,
+  setAdvanced,
   showMessage,
   stateLabel,
   stateTone,
   wireCommand,
   wireDialogs,
 } from "./ui.js";
+import { mountReadiness, refreshReadiness } from "./readiness.js";
 
 const $ = (id) => document.getElementById(id);
 let sourceDir = "";
+// A file chosen in the native dialog (it may live outside the source folder).
+let pickedPath = "";
+// The model and device follow the computer until the person picks them by hand.
+let configTouched = false;
 const PROCESSING = new Set([
   "created",
   "queued",
@@ -247,6 +254,7 @@ async function refresh() {
     }
     sourceDir = library.source_dir || "";
     if (sourceDir && $("source-dir")) $("source-dir").textContent = sourceDir;
+    if (library.jobs_dir && $("data-dir")) $("data-dir").textContent = library.jobs_dir;
     renderJobs(library.jobs || []);
   } catch (error) {
     showMessage(error.message, "error");
@@ -280,6 +288,59 @@ async function loadSettings() {
   }
 }
 
+function showPicked(name) {
+  const label = $("picked-video");
+  label.hidden = !name;
+  label.textContent = name || "";
+}
+
+async function pickVideo() {
+  const button = $("pick-video");
+  button.disabled = true;
+  try {
+    const result = await api("/api/pick/video", "POST");
+    if (result.cancelled) return;
+    pickedPath = result.path;
+    $("source").value = "";
+    showPicked(result.name);
+  } catch (error) {
+    showMessage(error.message, "error");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function pickFolder() {
+  const button = $("pick-folder");
+  button.disabled = true;
+  try {
+    const result = await api("/api/pick/folder", "POST");
+    if (result.cancelled) return;
+    await refresh();
+    showMessage(
+      result.session_only
+        ? "Pasta trocada nesta sessão. O start-studio.local.cmd define outra pasta ao reabrir."
+        : "Pasta de vídeos trocada.",
+      "success"
+    );
+  } catch (error) {
+    showMessage(error.message, "error");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function followComputer(status) {
+  if (!status || configTouched) return;
+  $("model").value = status.model.recommended;
+  $("device").value = status.gpu.ok ? "cuda" : "cpu";
+}
+
+function openSettings() {
+  refreshReadiness();
+  openDialog("settings-dialog");
+}
+
 function openNew() {
   const source = $("source");
   if (source && !source.value && source.options.length > 1) {
@@ -291,15 +352,39 @@ function openNew() {
 function bind() {
   wireDialogs();
   $("open-new").addEventListener("click", openNew);
-  $("open-settings").addEventListener("click", () => openDialog("settings-dialog"));
+  $("open-settings").addEventListener("click", openSettings);
   $("refresh-library").addEventListener("click", refresh);
+  $("pick-video").addEventListener("click", pickVideo);
+  $("pick-folder").addEventListener("click", pickFolder);
+  $("source").addEventListener("change", () => {
+    if ($("source").value) {
+      pickedPath = "";
+      showPicked("");
+    }
+  });
+  for (const id of ["model", "device"]) {
+    $(id).addEventListener("change", () => (configTouched = true));
+  }
+  document.addEventListener("system:status", (event) => followComputer(event.detail));
+  $("advanced-mode").checked = isAdvanced();
+  $("advanced-mode").addEventListener("change", (event) => setAdvanced(event.target.checked));
+  mountReadiness($("readiness"), { onlyWhenMissing: true });
+  mountReadiness($("system-checks"));
   wireCommand([
     { label: "Novo corte", icon: "plus", hint: "N", run: openNew },
     {
       label: "Configurações",
       icon: "gear-six",
       hint: "S",
-      run: () => openDialog("settings-dialog"),
+      run: openSettings,
+    },
+    {
+      label: "Mostrar ou esconder opções avançadas",
+      icon: "sliders-horizontal",
+      run: () => {
+        setAdvanced(!isAdvanced());
+        $("advanced-mode").checked = isAdvanced();
+      },
     },
     { label: "Atualizar filmoteca", icon: "arrow-counter-clockwise", run: refresh },
   ]);
@@ -310,9 +395,9 @@ function bind() {
     const buttons = [...form.querySelectorAll("button")];
     buttons.forEach((button) => (button.disabled = true));
     const automatic = event.submitter?.value !== "manual";
-    const source = $("path").value.trim() || $("source").value;
+    const source = $("path").value.trim() || pickedPath || $("source").value;
     if (!source) {
-      showMessage("Escolha um raw ou informe o caminho completo.", "error");
+      showMessage("Escolha um vídeo no computador ou da sua pasta de vídeos.", "error");
       buttons.forEach((button) => (button.disabled = false));
       return;
     }
@@ -375,7 +460,7 @@ function bind() {
 }
 
 bind();
-Promise.all([refresh(), loadSettings()]).catch((error) => showMessage(error.message, "error"));
+Promise.all([refresh(), loadSettings(), refreshReadiness()]).catch((error) => showMessage(error.message, "error"));
 window.setInterval(() => {
   if (!document.hidden) refresh();
 }, 6000);

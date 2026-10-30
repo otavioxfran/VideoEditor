@@ -152,3 +152,33 @@ export function wireCommand(actions) {
     }
   });
 }
+
+// Simple mode (default) hides research and expert controls marked with data-advanced.
+// It is a per-viewer preference, so it lives in this browser only.
+const MODE_KEY = "videoeditor.advanced";
+
+export function isAdvanced() {
+  try {
+    return localStorage.getItem(MODE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function setAdvanced(value) {
+  try {
+    localStorage.setItem(MODE_KEY, value ? "1" : "0");
+  } catch {
+    // Private windows may refuse storage; the mode still applies to this page.
+  }
+  document.documentElement.dataset.mode = value ? "advanced" : "simple";
+  document.dispatchEvent(new CustomEvent("mode:change", { detail: { advanced: value } }));
+}
+
+export function formatBytes(bytes) {
+  if (!Number.isFinite(bytes)) return "—";
+  const gb = bytes / 1024 ** 3;
+  return gb >= 1 ? `${gb.toLocaleString("pt-BR", { maximumFractionDigits: 1 })} GB` : `${Math.round(bytes / 1024 ** 2)} MB`;
+}
+
+document.documentElement.dataset.mode = isAdvanced() ? "advanced" : "simple";

@@ -293,3 +293,103 @@
   width: 46%;
   height: 9px;
 }
+
+/* First-run readiness: a banner on the library, the full check in Settings. */
+.readiness {
+  margin-bottom: var(--space-6);
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.ready-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.ready-head h2 {
+  font-size: var(--fs-16);
+  font-weight: 600;
+}
+.ready-list {
+  display: grid;
+  gap: 10px;
+}
+.ready-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+.ready-mark .icon {
+  width: 18px;
+  height: 18px;
+}
+.ready-row.ok .ready-mark {
+  color: var(--success);
+}
+.ready-row.missing .ready-mark {
+  color: var(--accent);
+}
+.ready-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.ready-text strong {
+  font-size: var(--fs-13);
+  font-weight: 600;
+}
+.ready-text span {
+  color: var(--muted);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.ready-progress {
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--raised);
+  overflow: hidden;
+}
+.ready-progress::before {
+  content: "";
+  display: block;
+  width: var(--value, 0%);
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--t-ui) var(--ease);
+}
+.ready-help {
+  color: var(--accent);
+  font-size: var(--fs-13);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Source choice in the new-cut dialog and the folder row in Settings. */
+.pick-row,
+.folder-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.picked {
+  overflow: hidden;
+  color: var(--text);
+  font-size: var(--fs-13);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folder-row .mono {
+  font-family: var(--font-mono);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--fs-12);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

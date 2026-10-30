@@ -133,15 +133,56 @@ def router(jobs, worker, pipeline, exports, automatic=None):
             best['export'] = None if best.get('legacy') else latest_export(best['job_id'])
             result.append(best)
         result.sort(key=lambda item: item.get('created_at') or '', reverse=True)
-        return dict(sources=jobs.sources(), source_dir=str(jobs.source_dir), jobs=result)
+        return dict(sources=jobs.sources(), source_dir=str(jobs.source_dir), jobs_dir=str(jobs.root), jobs=result)
 
     @api.get('/jobs')
     def list_jobs():
         return jobs.list()
 
+    # Paths the person chose in the native dialog may live outside the source folder.
+    picked = set()
+
+    def chosen(path):
+        try:
+            return str(Path(path).resolve()) in picked
+        except OSError:
+            return False
+
+    @api.post('/pick/video')
+    def pick_video():
+        from video_editor import picker
+        try:
+            value = picker.pick_file(jobs.source_dir)
+        except picker.PickerUnavailable as error:
+            raise HTTPException(501, str(error))
+        if not value:
+            return dict(cancelled=True)
+        path = Path(value).resolve()
+        picked.add(str(path))
+        return dict(path=str(path), name=path.name)
+
+    @api.post('/pick/folder')
+    def pick_folder():
+        import os
+        from video_editor import picker
+        from video_editor.settings import save_user_settings
+        try:
+            value = picker.pick_folder(jobs.source_dir)
+        except picker.PickerUnavailable as error:
+            raise HTTPException(501, str(error))
+        if not value:
+            return dict(cancelled=True)
+        folder = Path(value).resolve()
+        if jobs.root == folder or jobs.root.is_relative_to(folder):
+            raise HTTPException(422, 'Escolha uma pasta que não contenha a pasta de trabalho do editor.')
+        jobs.source_dir = folder
+        save_user_settings(source_dir=str(folder))
+        # An environment variable (start-studio.local.cmd) wins again on the next start.
+        return dict(source_dir=str(folder), session_only=bool(os.getenv('SOURCE_VIDEOS_DIR')))
+
     @api.post('/jobs', status_code=202)
     def create(request: CreateJob):
-        info = jobs.create(request.source_path, request.config.model_dump())
+        info = jobs.create(request.source_path, request.config.model_dump(), allow_external=chosen(request.source_path))
         return enqueue(info['job_id'])
 
     @api.post('/automatic-jobs',status_code=202)
@@ -149,9 +190,9 @@ def router(jobs, worker, pipeline, exports, automatic=None):
         config=request.config.model_dump()
         if config['model']=='small' and config['batch_size']==1:
             from video_editor.performance import selected_batch
-            from video_editor.settings import BASE_DIR
-            config['batch_size']=selected_batch(BASE_DIR/'config/asr_calibration.local.json')
-        info=jobs.create(request.source_path,config)
+            from video_editor.settings import LOCAL_CONFIG_DIR
+            config['batch_size']=selected_batch(LOCAL_CONFIG_DIR/'asr_calibration.local.json')
+        info=jobs.create(request.source_path,config,allow_external=chosen(request.source_path))
         automatic.request(info['job_id'],request.automatic.model_dump())
         return jobs.info(info['job_id'])
 

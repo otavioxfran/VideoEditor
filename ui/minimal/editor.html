@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>VideoEditor · Editor</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20261030g">
+  <link rel="stylesheet" href="/assets/style.css?v=20261030h">
 </head>
 <body class="editor-page is-loading">
   <header class="topbar">
@@ -49,9 +49,9 @@
         <span id="automatic-status" role="status">Edição automática</span>
         <span class="spacer"></span>
         <button class="btn small" id="automatic-retry" type="button" hidden>Retomar edição</button>
-        <button class="btn small" id="evaluation-create" type="button" hidden>Nova edição experimental</button>
+        <button class="btn small" id="evaluation-create" type="button" hidden data-advanced>Nova edição experimental</button>
         <a class="btn small" id="evaluation-parent" hidden>Abrir edição anterior</a>
-        <label class="check" id="evaluation-consent-label" hidden>
+        <label class="check" id="evaluation-consent-label" hidden data-advanced>
           <input id="evaluation-consent" type="checkbox">
           <span>Usar análise textual autorizada</span>
         </label>
@@ -59,11 +59,11 @@
       <details>
         <summary>Relatório e avaliação da edição</summary>
         <p id="automatic-report"></p>
-        <details>
+        <details data-advanced>
           <summary>Por que os trechos foram mantidos</summary>
           <div id="context-reasons"></div>
         </details>
-        <div id="human-review"></div>
+        <div id="human-review" data-advanced></div>
       </details>
     </section>
 
@@ -177,7 +177,7 @@
           <button class="tab" type="button" role="tab" data-tab="transcript" aria-selected="false" aria-controls="panel-transcript">
             Transcrição
           </button>
-          <button class="tab" type="button" role="tab" data-tab="briefing" aria-selected="false" aria-controls="panel-briefing">
+          <button class="tab" type="button" role="tab" data-tab="briefing" data-advanced aria-selected="false" aria-controls="panel-briefing">
             Briefing
           </button>
         </div>
@@ -276,7 +276,7 @@
           <div id="markers"></div>
         </div>
       </div>
-      <details class="finish-more" id="productivity-panel">
+      <details class="finish-more" id="productivity-panel" data-advanced>
         <summary>Medir meu ganho de tempo</summary>
         <div class="tool-body" id="productivity"></div>
       </details>

@@ -343,3 +343,8 @@ time,
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Simple mode hides expert and research controls (see ui.js). */
+:root:not([data-mode="advanced"]) [data-advanced] {
+  display: none !important;
+}

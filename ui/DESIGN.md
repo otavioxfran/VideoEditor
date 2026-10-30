@@ -354,6 +354,20 @@ Tabs com underline âmbar de 2 px e contagem (mono só no número) no ativo. Fil
 - **Erro:** dentro do bloco que falhou, uma frase com o que fazer e um botão de tentar de novo.
 - **Processando:** o Editor diz "Aguardando o preparo"; a Filmoteca põe o card em Processando.
 
+### Pronto para cortar (`ui/minimal/readiness.js`)
+Uma checagem só, mostrada em dois lugares: um aviso no topo da Filmoteca (borda âmbar, lista
+só o que falta, some quando tudo está pronto) e a seção **Este computador** nas
+Configurações (lista completa). Cada linha tem ícone de status (`check-circle` verde ou
+`warning-circle` âmbar), título a 13 px/600, explicação a 13 px em `muted` e, quando houver,
+uma ação secundária à direita ("Baixar (1,5 GB)"). O download mostra uma barra plana de 6 px
+em `raised` com preenchimento âmbar e o texto "x de y".
+
+### Modo simples e avançado
+O modo simples é o padrão: elementos com `data-advanced` somem (edição experimental,
+avaliação humana, briefing, medição de tempo, caminho digitado, "Só transcrever"). A
+preferência é por navegador (`localStorage`) e liga em **Configurações → Interface** ou no
+command palette.
+
 ### Dialog, command palette e toast
 Dialog em `surface` com borda `border-strong`, raio 14, sombra; foco preso; Esc fecha. Toast em uma linha, canto inferior, `aria-live`, sem cobrir controles.
 

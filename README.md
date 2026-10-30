@@ -60,17 +60,19 @@ pip install -r requirements.txt
 # Download the speech model once (~1.5 GB)
 python cli.py download-model --model large-v3-turbo
 
-# Point to the folder with your recordings and open the Studio
-# (Windows: set SOURCE_VIDEOS_DIR=C:\Users\you\Videos)
-export SOURCE_VIDEOS_DIR="$HOME/Videos"
+# Open the Studio (it lists ./videos by default; you can pick any file or folder in it)
 python cli.py studio
 ```
 
-The Studio opens at <http://127.0.0.1:8765>. Pick a recording, click **Novo corte**, then
-review the decisions and export.
+The Studio opens at <http://127.0.0.1:8765>. On the first run it checks FFmpeg, your
+graphics card and the speech model, and offers to download the model with a progress bar
+(without an NVIDIA card it picks a lighter model). Click **Novo corte → Escolher vídeo no
+computador…**, pick any recording, then review the decisions and export.
 
-On Windows you can also double-click `start-studio.cmd`. To use your own folders, copy
-`start-studio.local.example.cmd` to `start-studio.local.cmd` and edit the paths there.
+On Windows you can also double-click `start-studio.cmd`. The folder listed in the Studio
+can be changed in **Configurações → Pasta de vídeos**. When installed in a read-only
+program folder, cuts and settings go to `%LOCALAPPDATA%\VideoEditor`;
+`VIDEOEDITOR_DATA_DIR` overrides it.
 
 ### Docker
 
@@ -96,13 +98,16 @@ python cli.py report JOB_ID      # naturalness metrics of the current cut
 1. Instale o [Python 3.11+](https://www.python.org/downloads/) (marque "Add Python to PATH")
    e o [FFmpeg](https://www.gyan.dev/ffmpeg/builds/).
 2. Baixe este projeto (botão verde **Code → Download ZIP**) e extraia.
-3. Na pasta do projeto, abra o terminal e rode `pip install -r requirements.txt` e
-   `python cli.py download-model --model large-v3-turbo` (uma vez só).
-4. Copie `start-studio.local.example.cmd` para `start-studio.local.cmd` e coloque nele a
-   pasta onde ficam suas gravações.
-5. Dê dois cliques em `start-studio.cmd`. O navegador abre o Studio.
-6. Escolha a gravação em **Novo corte**, revise as poucas decisões que aparecerem e clique em
-   **Exportar MP4 + SRT**.
+3. Na pasta do projeto, abra o terminal e rode `pip install -r requirements.txt` (uma vez só).
+4. Dê dois cliques em `start-studio.cmd`. O navegador abre o Studio.
+5. Na primeira vez, o Studio confere o computador e oferece **Baixar** o modelo de
+   transcrição, com barra de progresso.
+6. Clique em **Novo corte → Escolher vídeo no computador…**, revise as poucas decisões que
+   aparecerem e clique em **Exportar MP4 + SRT**.
+
+Quer que a lista mostre outra pasta? **Configurações → Pasta de vídeos → Trocar pasta…**.
+As opções avançadas (modelo, edição experimental, briefing) ficam escondidas até você ligar
+**Configurações → Interface → Mostrar opções avançadas**.
 
 Quer que a assistência editorial conheça o seu estilo? Copie `PERSONA.example.md` para
 `PERSONA.md` e escreva sobre o seu canal. Esse arquivo fica só no seu computador.
@@ -134,11 +139,8 @@ python -m pytest -q
 
 ## 🗺️ Roadmap
 
-- One-click Windows installer (bundled Python and FFmpeg, model download with progress).
-- Pick any file from the interface instead of a configured folder.
-- First-run check: GPU, FFmpeg and model status with fixes.
+- One-click Windows installer (bundled Python and FFmpeg).
 - Transcription language selector and an English interface.
-- A simple mode that hides the advanced options.
 
 ## 🤝 Contributing
 

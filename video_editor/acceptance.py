@@ -33,7 +33,9 @@ def policy_hash():
             "takes.py",
         )
     }
-    persona = root.parent / "PERSONA.md"
+    from video_editor.settings import PERSONA_PATH
+
+    persona = PERSONA_PATH
     sources["author_style"] = (
         persona.read_text(encoding="utf-8") if persona.exists() else ""
     )

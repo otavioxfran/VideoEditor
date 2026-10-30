@@ -1,4 +1,4 @@
-import { wireCommand } from "./ui.js";
+import { isAdvanced, setAdvanced, wireCommand } from "./ui.js";
 
 function tab(name) {
   document.querySelector(`[data-tab="${name}"]`)?.click();
@@ -37,4 +37,5 @@ wireCommand([
   { label: "Exportar MP4 + SRT", icon: "download-simple", run: () => document.getElementById("export")?.click() },
   { label: "Desfazer", icon: "arrow-counter-clockwise", hint: "Ctrl Z", run: () => document.getElementById("undo")?.click() },
   { label: "Voltar para a Filmoteca", icon: "film-strip", run: () => (location.href = "/") },
+  { label: "Mostrar ou esconder opções avançadas", icon: "sliders-horizontal", run: () => setAdvanced(!isAdvanced()) },
 ]);

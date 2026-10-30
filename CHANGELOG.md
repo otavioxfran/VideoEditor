@@ -3,6 +3,26 @@
 O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto
 usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 
+## [Não lançado]
+
+### Adicionado
+- Escolher qualquer vídeo do computador pelo diálogo nativo do sistema (**Novo corte →
+  Escolher vídeo no computador…**) e trocar a pasta de vídeos nas Configurações.
+- "O estúdio está pronto?": checagem de FFmpeg, placa de vídeo, modelo e espaço em disco,
+  com download do modelo e barra de progresso na primeira vez. Sem placa NVIDIA, o modelo
+  `small` é escolhido.
+- Modo simples (padrão) que esconde edição experimental, avaliação, briefing e medição de
+  tempo; **Configurações → Interface** liga o modo avançado.
+
+### Mudado
+- Instalado numa pasta somente leitura (ou com `VIDEOEDITOR_INSTALLED`), o editor guarda
+  cortes, configurações e `PERSONA.md` em `%LOCALAPPDATA%\VideoEditor`.
+  `VIDEOEDITOR_DATA_DIR` define outra pasta.
+
+### Corrigido
+- `start-studio.cmd` chama o `start-studio.local.cmd` pelo caminho completo (alguns Windows
+  não executam comandos da pasta atual).
+
 ## [1.1.0] — 2026-10-30
 
 ### Adicionado

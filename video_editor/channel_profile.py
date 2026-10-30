@@ -9,7 +9,7 @@ import os
 import threading
 from pathlib import Path
 from video_editor import storage
-from video_editor.settings import BASE_DIR
+from video_editor.settings import LOCAL_CONFIG_DIR
 
 DEFAULT_PROFILE = {
     "version": 1,
@@ -53,7 +53,7 @@ DECISION_KEYS = (
 
 def profile_path() -> Path:
     override = os.getenv("CHANNEL_PROFILE_PATH")
-    return Path(override) if override else BASE_DIR / "config" / "channel_profile.local.json"
+    return Path(override) if override else LOCAL_CONFIG_DIR / "channel_profile.local.json"
 
 
 def decision_parameters(profile: dict | None = None) -> dict:

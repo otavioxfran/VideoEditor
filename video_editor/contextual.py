@@ -7,7 +7,6 @@ equivalence. A second model pass and real human calibration remain necessary.
 import json
 import copy
 from collections import Counter
-from pathlib import Path
 
 from video_editor import storage
 from video_editor.cuts import tokens
@@ -344,7 +343,8 @@ def plan(jobs, job_id, transcript, config, human_protected=(), progress=None):
         ],
     )
     proposals, protected, outline = [], list(human_protected), []
-    persona_path = Path(__file__).resolve().parents[1] / "PERSONA.md"
+    from video_editor.settings import PERSONA_PATH
+    persona_path = PERSONA_PATH
     persona = persona_path.read_text(encoding="utf8") if persona_path.exists() else ""
     try:
         for chunk in batches(chapters, limit=8):

@@ -137,6 +137,11 @@ function bind() {
     const card = event.target.closest(".review-card");
     if (card && !event.target.closest("button, summary, a")) select(card.dataset.id);
   });
+  // Leaving advanced mode hides the Briefing tab; never leave its panel orphaned on screen.
+  document.addEventListener("mode:change", (event) => {
+    const briefing = document.querySelector('[data-tab="briefing"]');
+    if (!event.detail?.advanced && briefing?.getAttribute("aria-selected") === "true") activateTab("review");
+  });
   // Capture phase: the rail keys run before the editor's global shortcuts.
   document.addEventListener("keydown", onKey, true);
   activateTab("review");

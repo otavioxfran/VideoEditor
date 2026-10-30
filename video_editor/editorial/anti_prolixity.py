@@ -9,7 +9,7 @@ from pathlib import Path
 from video_editor import storage
 from video_editor.cuts import tokens
 from video_editor.editorial import llm_client
-from video_editor.settings import BASE_DIR
+from video_editor.settings import PERSONA_PATH
 from video_editor.timeline import digest
 
 PROMPT_VERSION = 3
@@ -37,7 +37,7 @@ BEFORE_KEPT = .1
 
 
 def load_persona() -> str:
-    persona_path = BASE_DIR / "PERSONA.md"
+    persona_path = PERSONA_PATH
     if persona_path.exists():
         try:
             return persona_path.read_text(encoding="utf-8")[:10000]

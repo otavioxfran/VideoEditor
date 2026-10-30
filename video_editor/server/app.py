@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from fastapi.exception_handlers import request_validation_exception_handler
 from starlette.middleware.trustedhost import TrustedHostMiddleware
-from video_editor.settings import BASE_DIR, JOBS_DIR, SOURCE_VIDEOS_DIR
+from video_editor.settings import BASE_DIR, JOBS_DIR, LOCAL_CONFIG_DIR, SOURCE_VIDEOS_DIR
 from video_editor import storage
 from video_editor.jobs import Jobs
 from video_editor.worker import Worker, BusyError
@@ -23,7 +23,7 @@ def create_app(jobs_dir=JOBS_DIR, source_dir=SOURCE_VIDEOS_DIR, pipeline=None, r
     worker = Worker()
     preparation = pipeline or Pipeline(jobs)
     exports = Exports(jobs, worker, **({'render_function': renderer} if renderer else {}))
-    provider_config=editorial_config or BASE_DIR/'config/editorial_provider.local.json'
+    provider_config=editorial_config or LOCAL_CONFIG_DIR/'editorial_provider.local.json'
     automatic=Automatic(jobs,worker,preparation,exports,provider_config)
 
     @asynccontextmanager
@@ -132,6 +132,8 @@ def create_app(jobs_dir=JOBS_DIR, source_dir=SOURCE_VIDEOS_DIR, pipeline=None, r
 
     application.include_router(jobs_api.router(jobs, worker, preparation, exports,automatic))
     application.include_router(editing_api.router(jobs, exports))
+    from video_editor.server import system_api
+    application.include_router(system_api.router())
     from video_editor.productivity import router as productivity_router
     application.include_router(productivity_router(jobs, exports))
     application.include_router(editorial_api.router(jobs, worker, provider_config))
