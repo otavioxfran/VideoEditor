@@ -1,0 +1,20 @@
+name: Ideia ou melhoria
+description: Sugira algo que deixaria o editor melhor
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qual problema isso resolve?
+      description: Conte o que você tenta fazer hoje e onde trava.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Como você imagina a solução?
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto
+      description: Tipo de vídeo, duração, idioma, editor que você usa depois (CapCut, Premiere…).

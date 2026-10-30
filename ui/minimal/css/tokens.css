@@ -1,0 +1,104 @@
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/assets/fonts/instrument-sans-latin-500-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/assets/fonts/instrument-sans-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/assets/fonts/instrument-sans-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/assets/fonts/instrument-sans-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --ground: #08080a;
+  --surface: #101013;
+  --raised: #17171b;
+  --raised-2: #1f1f24;
+  --border: #26262c;
+  --border-strong: #3a3a42;
+  --text: #f4f4f4;
+  --muted: #a8a8a8;
+  --faint: #8d8d8d;
+  --accent: #e8b45a;
+  --accent-strong: #f2c879;
+  --accent-soft: #2a2214;
+  --danger: #e46a6a;
+  --danger-soft: #2a1719;
+  --success: #7bcb9a;
+  --success-soft: #12251a;
+  --info: #8fb8d9;
+  --info-soft: #14212b;
+  --primary: #ffffff;
+  --primary-ink: #08080a;
+  --tl-keep: #202027;
+  --tl-cut: #3a1d21;
+  --tl-protected: #1d3327;
+  --tl-wave: #8b8b95;
+
+  --font-ui: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --topbar: 56px;
+  --canvas-max: 1440px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 120ms;
+  --t-ui: 180ms;
+  --t-slow: 240ms;
+  --shadow-pop: 0 18px 60px rgba(0, 0, 0, 0.55);
+}

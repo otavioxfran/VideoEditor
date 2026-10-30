@@ -1,0 +1,15 @@
+services:
+  video-editor:
+    build: .
+    container_name: video-editor-studio
+    ports:
+      - "127.0.0.1:8765:8765"
+    volumes:
+      - ./videos:/app/videos
+      - ./jobs:/app/jobs
+    environment:
+      - SOURCE_VIDEOS_DIR=/app/videos
+      - JOBS_DIR=/app/jobs
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8765
+    restart: unless-stopped

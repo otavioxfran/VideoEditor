@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+*.log
+
+# Environments
+.env
+config/editorial_provider.local.json
+config/asr_calibration.local.json
+config/channel_profile.local.json
+channel_profile.json
+venv/
+env/
+ENV/
+.coverage
+htmlcov/
+
+# Large media & datasets
+*.mp4
+*.wav
+*.mov
+*.mkv
+*.srt
+videos/
+jobs/
+editor_memory/
+scratch/
+scratch_*
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+.claude/
+
+# Personal channel notes and research artifacts: kept locally, never published.
+PERSONA.md
+private/
+start-studio.local.cmd

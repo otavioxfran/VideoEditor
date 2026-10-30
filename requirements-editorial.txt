@@ -1,0 +1,2 @@
+# Optional. Core preparation, preview and export do not import this SDK.
+google-genai==2.22.0

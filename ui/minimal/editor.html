@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VideoEditor · Editor</title>
+  <link rel="stylesheet" href="/assets/style.css?v=20261030g">
+</head>
+<body class="editor-page is-loading">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Voltar para a Filmoteca">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="3" y="6" width="11" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <rect x="18" y="6" width="11" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M14 12h4M14 20h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text"><strong>VideoEditor</strong><small>Estúdio local</small></span>
+    </a>
+    <span class="crumb">Filmoteca</span>
+    <div class="project-head">
+      <h1 id="name">Editor</h1>
+      <span class="status" id="status" role="status" aria-live="polite">Carregando job…</span>
+    </div>
+    <span class="spacer"></span>
+    <div class="topbar-actions">
+      <button class="btn ghost small" id="open-command" type="button" aria-label="Abrir comandos">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-command"></use></svg>
+        <span class="kbd">Ctrl K</span>
+      </button>
+      <button class="btn small" id="undo" type="button" disabled aria-label="Desfazer">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-arrow-counter-clockwise"></use></svg>
+        <span class="label">Desfazer</span>
+      </button>
+      <button class="btn small" id="retry" type="button" hidden>Retomar preparação</button>
+      <button class="btn small" id="migrate" type="button" hidden>Migrar</button>
+      <button class="btn primary" id="export" type="button" disabled aria-label="Exportar MP4 + SRT">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-download-simple"></use></svg>
+        <span class="label">Exportar MP4 + SRT</span>
+      </button>
+    </div>
+  </header>
+
+  <p id="message" role="alert" aria-live="polite"></p>
+
+  <main class="editor-shell">
+    <section class="automatic-strip" id="automatic-panel" hidden>
+      <div class="automatic-head">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-sparkle"></use></svg>
+        <span id="automatic-status" role="status">Edição automática</span>
+        <span class="spacer"></span>
+        <button class="btn small" id="automatic-retry" type="button" hidden>Retomar edição</button>
+        <button class="btn small" id="evaluation-create" type="button" hidden>Nova edição experimental</button>
+        <a class="btn small" id="evaluation-parent" hidden>Abrir edição anterior</a>
+        <label class="check" id="evaluation-consent-label" hidden>
+          <input id="evaluation-consent" type="checkbox">
+          <span>Usar análise textual autorizada</span>
+        </label>
+      </div>
+      <details>
+        <summary>Relatório e avaliação da edição</summary>
+        <p id="automatic-report"></p>
+        <details>
+          <summary>Por que os trechos foram mantidos</summary>
+          <div id="context-reasons"></div>
+        </details>
+        <div id="human-review"></div>
+      </details>
+    </section>
+
+    <section class="delivery" id="delivery" hidden>
+      <div class="delivery-head">
+        <h2>Sua edição pronta</h2>
+        <span class="badge success" id="delivery-status">Exportado</span>
+      </div>
+      <div class="delivery-body">
+        <div class="delivery-video">
+          <video id="delivery-video" controls preload="none"></video>
+        </div>
+        <div class="delivery-side">
+          <p class="hint">Assista com áudio. Restaure cortes no editor e exporte de novo se precisar. Este MP4 é o corte final; as edições mirabolantes ficam no CapCut.</p>
+          <div class="toolbar">
+            <button class="btn small" id="delivery-cuts" type="button">Conferir cortes</button>
+            <button class="btn small" id="delivery-original" type="button">Comparar com o original</button>
+          </div>
+          <details id="delivery-review">
+            <summary>Conferir emendas e restaurar cortes</summary>
+            <div class="delivery-cut-list" id="delivery-cut-list"></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <div class="editor-grid">
+      <div class="editor-main-column">
+      <section class="viewer-panel panel">
+        <div class="viewer-head">
+          <button class="btn small" id="mode" type="button" disabled>Rough cut virtual</button>
+          <button class="btn small" id="mark" type="button">Marcar (M)</button>
+          <span class="spacer"></span>
+          <span class="clock" id="clock">Original 00:00:00 · raw 00:00:00</span>
+        </div>
+        <div class="viewer-frame">
+          <video id="video" preload="none"></video>
+        </div>
+        <div class="transport">
+          <div class="transport-buttons">
+            <button class="btn ghost icon-only" id="play-toggle" type="button" aria-label="Reproduzir ou pausar">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-play"></use></svg>
+            </button>
+            <button class="btn ghost icon-only" id="back-2" type="button" aria-label="Voltar 2 segundos">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-skip-back"></use></svg>
+            </button>
+            <button class="btn ghost icon-only" id="forward-2" type="button" aria-label="Avançar 2 segundos">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-skip-forward"></use></svg>
+            </button>
+          </div>
+          <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled aria-label="Timeline virtual">
+          <span id="duration"></span>
+          <div class="transport-buttons">
+            <button class="btn ghost icon-only" id="mute-toggle" type="button" aria-label="Silenciar ou ativar o som" title="Som">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-speaker-high"></use></svg>
+            </button>
+            <button class="btn ghost icon-only" id="fullscreen" type="button" aria-label="Tela cheia" title="Tela cheia">
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-corners-out"></use></svg>
+            </button>
+          </div>
+        </div>
+        <details class="manual-cut">
+          <summary>Corte manual</summary>
+          <form id="range">
+            <div class="range-row">
+              <label class="field"><span class="field-label">Início no raw (s)</span><input class="input" id="start" type="number" min="0" step="0.01" required></label>
+              <label class="field"><span class="field-label">Fim no raw (s)</span><input class="input" id="end" type="number" min="0" step="0.01" required></label>
+            </div>
+            <div class="toolbar">
+              <button class="btn small" type="submit" disabled>Cortar intervalo</button>
+              <button class="btn small" type="button" id="restore" disabled>Restaurar intervalo</button>
+              <button class="btn small" type="button" id="protect" disabled>Proteger pausa</button>
+            </div>
+          </form>
+        </details>
+      </section>
+
+    <section class="timeline-panel">
+      <div class="timeline-head">
+        <h2>Timeline de decisão</h2>
+        <div class="segmented timeline-zoom" role="group" aria-label="Zoom da timeline">
+          <button type="button" data-zoom="1" aria-pressed="true">Ajustar</button>
+          <button type="button" data-zoom="2" aria-pressed="false">2×</button>
+          <button type="button" data-zoom="4" aria-pressed="false">4×</button>
+        </div>
+        <div class="timeline-legend" aria-hidden="true">
+          <span class="swatch">mantido</span>
+          <span class="swatch cut">corte</span>
+          <span class="swatch review">revisar</span>
+          <span class="swatch protected">protegido</span>
+        </div>
+      </div>
+      <div id="timeline" role="img" aria-label="Linha do tempo da fonte com cortes e sugestões"></div>
+      <div class="timeline-help">
+        <span>Clique busca · arraste seleciona · marca âmbar abre a decisão</span>
+        <span class="timeline-range-label" id="timeline-range" role="status" hidden></span>
+        <span>Espaço play · J/L ±2s · ↑/↓ · Enter ouvir · A aplicar · R manter</span>
+      </div>
+    </section>
+
+      </div>
+
+      <aside class="review-panel">
+        <div class="tabs" role="tablist" aria-label="Painéis do editor">
+          <button class="tab" type="button" role="tab" data-tab="review" aria-selected="true" aria-controls="panel-review">
+            Revisar <span class="count" id="review-count">–</span>
+          </button>
+          <button class="tab" type="button" role="tab" data-tab="rhythm" aria-selected="false" aria-controls="panel-rhythm">
+            Ritmo <span class="count" id="rhythm-count" hidden></span>
+          </button>
+          <button class="tab" type="button" role="tab" data-tab="transcript" aria-selected="false" aria-controls="panel-transcript">
+            Transcrição
+          </button>
+          <button class="tab" type="button" role="tab" data-tab="briefing" aria-selected="false" aria-controls="panel-briefing">
+            Briefing
+          </button>
+        </div>
+        <div class="tab-panels">
+          <section data-panel="review" id="panel-review" role="tabpanel">
+            <div class="review-toolbar">
+              <div class="segmented" role="group" aria-label="Filtrar sugestões">
+                <button type="button" data-filter="review" aria-pressed="true">Revisar</button>
+                <button type="button" data-filter="auto" aria-pressed="false">Automáticos</button>
+                <button type="button" data-filter="all" aria-pressed="false">Todos</button>
+              </div>
+              <span class="review-progress" id="review-progress">Carregando decisões…</span>
+              <span id="cut-count" class="sr-only"></span>
+            </div>
+            <div class="skeleton-list" aria-hidden="true">
+              <div class="skeleton-card"><span></span><span></span><span></span></div>
+              <div class="skeleton-card"><span></span><span></span><span></span></div>
+              <div class="skeleton-card"><span></span><span></span><span></span></div>
+            </div>
+            <div id="cuts" data-mode="review"></div>
+          </section>
+          <section data-panel="rhythm" id="panel-rhythm" role="tabpanel" hidden>
+            <div class="rhythm-panel">
+              <div class="toolbar">
+                <button class="btn small" id="analyze-prolixity" type="button">Analisar ritmo e roteiro</button>
+                <span class="hint" id="prolixity-status"></span>
+              </div>
+              <p class="hint">Procura trechos prolixos, modo aula, loops repetitivos e leituras arrastadas. Nada é cortado sem seu clique.</p>
+              <div id="prolixity-list"></div>
+            </div>
+          </section>
+          <section data-panel="transcript" id="panel-transcript" role="tabpanel" hidden>
+            <div class="transcript-panel">
+              <input class="input" id="search" type="search" placeholder="Buscar na transcrição" aria-label="Buscar na transcrição">
+              <div id="transcript"></div>
+            </div>
+          </section>
+          <section data-panel="briefing" id="panel-briefing" role="tabpanel" hidden>
+            <div class="briefing-panel">
+              <details id="editorial-panel" open>
+                <summary>Briefing, claims e títulos · opcional</summary>
+                <p id="editorial-status">Sem briefing semântico. O editor funciona inteiramente local.</p>
+                <div class="toolbar">
+                  <button class="btn small" id="copy-prompt" type="button" disabled>Copiar prompt</button>
+                  <a class="btn small" id="download-prompt">Baixar prompt</a>
+                </div>
+                <textarea id="prompt" hidden readonly aria-label="Prompt local para copiar"></textarea>
+                <label class="field">
+                  <span class="field-label">Resposta JSON do seu LLM</span>
+                  <textarea class="input" id="response" rows="5" placeholder="Cole a resposta estruturada"></textarea>
+                </label>
+                <button class="btn small" id="import" type="button" disabled>Importar briefing</button>
+                <details>
+                  <summary>Provider gratuito configurado</summary>
+                  <p class="hint">Envia somente transcrição e contexto textual. Gemini Free pode usar esses textos para melhorar produtos. Quota indisponível mantém o fluxo manual.</p>
+                  <label class="check"><input id="consent" type="checkbox"><span>Autorizo o envio deste pacote textual</span></label>
+                  <label class="field"><span class="field-label">Tarefa semântica</span>
+                    <select class="select" id="task">
+                      <option value="brief">Briefing e claims</option>
+                      <option value="titles">Ideias de títulos</option>
+                      <option value="retakes">Explicar retakes ambíguos</option>
+                    </select>
+                  </label>
+                  <button class="btn small" id="assist" type="button" disabled>Enviar texto ao provider</button>
+                </details>
+                <div id="brief"></div>
+              </details>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+
+    <section class="finish panel" id="finish" aria-labelledby="finish-title">
+      <div class="panel-head">
+        <h2 id="finish-title">Finalizar para o CapCut</h2>
+        <span class="meta">O corte termina aqui; o CapCut recebe o MP4, o SRT e os marcadores.</span>
+      </div>
+      <div class="finish-grid">
+        <div class="finish-block">
+          <h3>Export</h3>
+          <div id="export-current"></div>
+          <details id="export-history" hidden>
+            <summary>Exportações anteriores <span id="export-history-count"></span></summary>
+            <div id="exports"></div>
+          </details>
+        </div>
+        <div class="finish-block">
+          <div class="finish-block-head">
+            <h3>Marcadores</h3>
+            <button class="btn ghost small" id="copy-markers" type="button" disabled>
+              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-copy"></use></svg>
+              <span>Copiar lista</span>
+            </button>
+          </div>
+          <div id="markers"></div>
+        </div>
+      </div>
+      <details class="finish-more" id="productivity-panel">
+        <summary>Medir meu ganho de tempo</summary>
+        <div class="tool-body" id="productivity"></div>
+      </details>
+    </section>
+  </main>
+
+  <dialog class="dialog command" id="command-dialog" aria-label="Comandos">
+    <div class="dialog-body">
+      <input id="command-input" type="search" placeholder="Buscar comando…" autocomplete="off">
+      <div class="command-list" id="command-list"></div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/assets/editor.js?v=editor-v4"></script>
+</body>
+</html>

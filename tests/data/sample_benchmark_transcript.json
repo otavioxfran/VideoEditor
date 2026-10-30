@@ -1,0 +1,7230 @@
+{
+ "schema": 1,
+ "source_hash": "synthetic-benchmark",
+ "segments": [
+  {
+   "id": "s1",
+   "start": 5.1,
+   "end": 14.8,
+   "text": "a baba babe o melhor babi melhor do que o babo hoje vou babu uma",
+   "words": [
+    {
+     "id": "s1-w1",
+     "text": "a",
+     "start": 5.1,
+     "end": 5.58,
+     "probability": 0.11907958984375
+    },
+    {
+     "id": "s1-w2",
+     "text": "baba",
+     "start": 5.58,
+     "end": 6.16,
+     "probability": 0.9557291666666666
+    },
+    {
+     "id": "s1-w3",
+     "text": "babe",
+     "start": 6.16,
+     "end": 6.94,
+     "probability": 0.95947265625
+    },
+    {
+     "id": "s1-w4",
+     "text": "o",
+     "start": 6.94,
+     "end": 7.02,
+     "probability": 0.96240234375
+    },
+    {
+     "id": "s1-w5",
+     "text": "melhor",
+     "start": 7.02,
+     "end": 7.26,
+     "probability": 0.986328125
+    },
+    {
+     "id": "s1-w6",
+     "text": "babi",
+     "start": 7.26,
+     "end": 7.98,
+     "probability": 0.97705078125
+    },
+    {
+     "id": "s1-w7",
+     "text": "melhor",
+     "start": 9.84,
+     "end": 10.94,
+     "probability": 0.7451171875
+    },
+    {
+     "id": "s1-w8",
+     "text": "do",
+     "start": 10.94,
+     "end": 11.14,
+     "probability": 0.86474609375
+    },
+    {
+     "id": "s1-w9",
+     "text": "que",
+     "start": 11.14,
+     "end": 11.2,
+     "probability": 0.966796875
+    },
+    {
+     "id": "s1-w10",
+     "text": "o",
+     "start": 11.2,
+     "end": 11.32,
+     "probability": 0.97021484375
+    },
+    {
+     "id": "s1-w11",
+     "text": "babo",
+     "start": 11.32,
+     "end": 11.7,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s1-w12",
+     "text": "hoje",
+     "start": 11.7,
+     "end": 12.88,
+     "probability": 0.794921875
+    },
+    {
+     "id": "s1-w13",
+     "text": "vou",
+     "start": 14.38,
+     "end": 14.52,
+     "probability": 0.70751953125
+    },
+    {
+     "id": "s1-w14",
+     "text": "babu",
+     "start": 14.52,
+     "end": 14.7,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s1-w15",
+     "text": "uma",
+     "start": 14.7,
+     "end": 14.8,
+     "probability": 0.92236328125
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "start": 14.8,
+   "end": 22.98,
+   "text": "baca bace baci aqui cara o maior case de baco de babi no",
+   "words": [
+    {
+     "id": "s2-w1",
+     "text": "baca",
+     "start": 14.8,
+     "end": 15.32,
+     "probability": 0.8548177083333334
+    },
+    {
+     "id": "s2-w2",
+     "text": "bace",
+     "start": 15.32,
+     "end": 16.38,
+     "probability": 0.390380859375
+    },
+    {
+     "id": "s2-w3",
+     "text": "baci",
+     "start": 16.45,
+     "end": 16.83,
+     "probability": 0.9833984375
+    },
+    {
+     "id": "s2-w4",
+     "text": "aqui",
+     "start": 16.83,
+     "end": 17.13,
+     "probability": 0.517578125
+    },
+    {
+     "id": "s2-w5",
+     "text": "cara",
+     "start": 17.13,
+     "end": 17.61,
+     "probability": 0.92919921875
+    },
+    {
+     "id": "s2-w6",
+     "text": "o",
+     "start": 17.61,
+     "end": 18.63,
+     "probability": 0.327392578125
+    },
+    {
+     "id": "s2-w7",
+     "text": "maior",
+     "start": 18.88,
+     "end": 19.0,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s2-w8",
+     "text": "case",
+     "start": 19.0,
+     "end": 19.42,
+     "probability": 0.87744140625
+    },
+    {
+     "id": "s2-w9",
+     "text": "de",
+     "start": 19.42,
+     "end": 20.3,
+     "probability": 0.97607421875
+    },
+    {
+     "id": "s2-w10",
+     "text": "baco",
+     "start": 20.3,
+     "end": 21.0,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s2-w11",
+     "text": "de",
+     "start": 21.0,
+     "end": 22.26,
+     "probability": 0.97216796875
+    },
+    {
+     "id": "s2-w12",
+     "text": "babi",
+     "start": 22.26,
+     "end": 22.68,
+     "probability": 0.98828125
+    },
+    {
+     "id": "s2-w13",
+     "text": "no",
+     "start": 22.68,
+     "end": 22.98,
+     "probability": 0.90478515625
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "start": 22.98,
+   "end": 30.99,
+   "text": "bacu, ne? nao foi no bada, nao foi a bade, nao foi o badi, mas e bado.",
+   "words": [
+    {
+     "id": "s3-w1",
+     "text": "bacu,",
+     "start": 22.98,
+     "end": 23.46,
+     "probability": 0.513671875
+    },
+    {
+     "id": "s3-w2",
+     "text": "ne?",
+     "start": 23.7,
+     "end": 23.8,
+     "probability": 0.76220703125
+    },
+    {
+     "id": "s3-w3",
+     "text": "nao",
+     "start": 24.46,
+     "end": 24.52,
+     "probability": 0.86962890625
+    },
+    {
+     "id": "s3-w4",
+     "text": "foi",
+     "start": 24.52,
+     "end": 24.68,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s3-w5",
+     "text": "no",
+     "start": 24.68,
+     "end": 24.88,
+     "probability": 0.50830078125
+    },
+    {
+     "id": "s3-w6",
+     "text": "bada,",
+     "start": 24.88,
+     "end": 25.18,
+     "probability": 0.38232421875
+    },
+    {
+     "id": "s3-w7",
+     "text": "nao",
+     "start": 25.36,
+     "end": 25.54,
+     "probability": 0.97998046875
+    },
+    {
+     "id": "s3-w8",
+     "text": "foi",
+     "start": 25.54,
+     "end": 25.76,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s3-w9",
+     "text": "a",
+     "start": 25.76,
+     "end": 25.92,
+     "probability": 0.492431640625
+    },
+    {
+     "id": "s3-w10",
+     "text": "bade,",
+     "start": 25.92,
+     "end": 26.96,
+     "probability": 0.9503173828125
+    },
+    {
+     "id": "s3-w11",
+     "text": "nao",
+     "start": 27.54,
+     "end": 27.7,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s3-w12",
+     "text": "foi",
+     "start": 27.7,
+     "end": 27.9,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s3-w13",
+     "text": "o",
+     "start": 27.9,
+     "end": 28.08,
+     "probability": 0.95947265625
+    },
+    {
+     "id": "s3-w14",
+     "text": "badi,",
+     "start": 28.08,
+     "end": 28.98,
+     "probability": 0.8181966145833334
+    },
+    {
+     "id": "s3-w15",
+     "text": "mas",
+     "start": 30.08,
+     "end": 30.22,
+     "probability": 0.6435546875
+    },
+    {
+     "id": "s3-w16",
+     "text": "e",
+     "start": 30.22,
+     "end": 30.32,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s3-w17",
+     "text": "bado.",
+     "start": 30.32,
+     "end": 30.68,
+     "probability": 0.67724609375
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "start": 30.99,
+   "end": 39.11,
+   "text": "badu que essa bafa e bafe, ne? e a baba bafi, mano.",
+   "words": [
+    {
+     "id": "s4-w1",
+     "text": "badu",
+     "start": 30.99,
+     "end": 31.069999999999997,
+     "probability": 0.037506103515625
+    },
+    {
+     "id": "s4-w2",
+     "text": "que",
+     "start": 31.069999999999997,
+     "end": 31.13,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s4-w3",
+     "text": "essa",
+     "start": 31.13,
+     "end": 31.33,
+     "probability": 0.32958984375
+    },
+    {
+     "id": "s4-w4",
+     "text": "bafa",
+     "start": 31.33,
+     "end": 31.669999999999998,
+     "probability": 0.4541422526041667
+    },
+    {
+     "id": "s4-w5",
+     "text": "e",
+     "start": 31.669999999999998,
+     "end": 31.889999999999997,
+     "probability": 0.95751953125
+    },
+    {
+     "id": "s4-w6",
+     "text": "bafe,",
+     "start": 31.889999999999997,
+     "end": 32.269999999999996,
+     "probability": 0.95947265625
+    },
+    {
+     "id": "s4-w7",
+     "text": "ne?",
+     "start": 32.269999999999996,
+     "end": 32.57,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s4-w8",
+     "text": "e",
+     "start": 35.629999999999995,
+     "end": 35.81,
+     "probability": 0.7421875
+    },
+    {
+     "id": "s4-w9",
+     "text": "a",
+     "start": 35.81,
+     "end": 35.93,
+     "probability": 0.6298828125
+    },
+    {
+     "id": "s4-w10",
+     "text": "baba",
+     "start": 35.93,
+     "end": 36.17,
+     "probability": 0.9186197916666666
+    },
+    {
+     "id": "s4-w11",
+     "text": "bafi,",
+     "start": 36.17,
+     "end": 37.23,
+     "probability": 0.6449788411458334
+    },
+    {
+     "id": "s4-w12",
+     "text": "mano.",
+     "start": 37.39,
+     "end": 37.55,
+     "probability": 0.99169921875
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "start": 39.11,
+   "end": 55.83,
+   "text": "bafo isso agora por exemplo a baba ela e o bafu baga do bacu onde voce",
+   "words": [
+    {
+     "id": "s5-w1",
+     "text": "bafo",
+     "start": 39.11,
+     "end": 39.39,
+     "probability": 0.223052978515625
+    },
+    {
+     "id": "s5-w2",
+     "text": "isso",
+     "start": 39.39,
+     "end": 39.51,
+     "probability": 0.93017578125
+    },
+    {
+     "id": "s5-w3",
+     "text": "agora",
+     "start": 39.51,
+     "end": 39.81,
+     "probability": 0.94970703125
+    },
+    {
+     "id": "s5-w4",
+     "text": "por",
+     "start": 39.81,
+     "end": 40.75,
+     "probability": 0.0347900390625
+    },
+    {
+     "id": "s5-w5",
+     "text": "exemplo",
+     "start": 50.86,
+     "end": 51.14,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s5-w6",
+     "text": "a",
+     "start": 51.14,
+     "end": 51.46,
+     "probability": 0.86376953125
+    },
+    {
+     "id": "s5-w7",
+     "text": "baba",
+     "start": 51.46,
+     "end": 52.04,
+     "probability": 0.9889322916666666
+    },
+    {
+     "id": "s5-w8",
+     "text": "ela",
+     "start": 52.04,
+     "end": 52.4,
+     "probability": 0.744140625
+    },
+    {
+     "id": "s5-w9",
+     "text": "e",
+     "start": 52.4,
+     "end": 52.5,
+     "probability": 0.974609375
+    },
+    {
+     "id": "s5-w10",
+     "text": "o",
+     "start": 52.5,
+     "end": 52.6,
+     "probability": 0.94970703125
+    },
+    {
+     "id": "s5-w11",
+     "text": "bafu",
+     "start": 52.6,
+     "end": 52.82,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s5-w12",
+     "text": "baga",
+     "start": 52.82,
+     "end": 53.22,
+     "probability": 0.9931640625
+    },
+    {
+     "id": "s5-w13",
+     "text": "do",
+     "start": 53.22,
+     "end": 53.38,
+     "probability": 0.97900390625
+    },
+    {
+     "id": "s5-w14",
+     "text": "bacu",
+     "start": 53.38,
+     "end": 53.8,
+     "probability": 0.8720703125
+    },
+    {
+     "id": "s5-w15",
+     "text": "onde",
+     "start": 53.8,
+     "end": 55.06,
+     "probability": 0.9697265625
+    },
+    {
+     "id": "s5-w16",
+     "text": "voce",
+     "start": 55.29,
+     "end": 55.83,
+     "probability": 0.96533203125
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "start": 55.83,
+   "end": 63.63,
+   "text": "bage de bagi ne voce fica ali uma bago e voce bagu de la bala 10% do seu",
+   "words": [
+    {
+     "id": "s6-w1",
+     "text": "bage",
+     "start": 55.83,
+     "end": 56.09,
+     "probability": 0.982421875
+    },
+    {
+     "id": "s6-w2",
+     "text": "de",
+     "start": 56.09,
+     "end": 56.25,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s6-w3",
+     "text": "bagi",
+     "start": 56.25,
+     "end": 57.05,
+     "probability": 0.990966796875
+    },
+    {
+     "id": "s6-w4",
+     "text": "ne",
+     "start": 57.05,
+     "end": 57.41,
+     "probability": 0.251220703125
+    },
+    {
+     "id": "s6-w5",
+     "text": "voce",
+     "start": 57.76,
+     "end": 58.72,
+     "probability": 0.462158203125
+    },
+    {
+     "id": "s6-w6",
+     "text": "fica",
+     "start": 58.72,
+     "end": 59.0,
+     "probability": 0.7666015625
+    },
+    {
+     "id": "s6-w7",
+     "text": "ali",
+     "start": 59.0,
+     "end": 59.24,
+     "probability": 0.8408203125
+    },
+    {
+     "id": "s6-w8",
+     "text": "uma",
+     "start": 59.24,
+     "end": 59.52,
+     "probability": 0.9521484375
+    },
+    {
+     "id": "s6-w9",
+     "text": "bago",
+     "start": 59.52,
+     "end": 59.92,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s6-w10",
+     "text": "e",
+     "start": 59.92,
+     "end": 60.98,
+     "probability": 0.947265625
+    },
+    {
+     "id": "s6-w11",
+     "text": "voce",
+     "start": 61.33,
+     "end": 61.45,
+     "probability": 0.86083984375
+    },
+    {
+     "id": "s6-w12",
+     "text": "bagu",
+     "start": 61.45,
+     "end": 61.69,
+     "probability": 0.91943359375
+    },
+    {
+     "id": "s6-w13",
+     "text": "de",
+     "start": 61.69,
+     "end": 61.85,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s6-w14",
+     "text": "la",
+     "start": 61.85,
+     "end": 62.05,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s6-w15",
+     "text": "bala",
+     "start": 62.05,
+     "end": 62.41,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s6-w16",
+     "text": "10",
+     "start": 62.41,
+     "end": 62.81,
+     "probability": 0.69189453125
+    },
+    {
+     "id": "s6-w17",
+     "text": "%",
+     "start": 62.81,
+     "end": 63.25,
+     "probability": 0.9560546875
+    },
+    {
+     "id": "s6-w18",
+     "text": "do",
+     "start": 63.25,
+     "end": 63.47,
+     "probability": 0.92529296875
+    },
+    {
+     "id": "s6-w19",
+     "text": "seu",
+     "start": 63.47,
+     "end": 63.63,
+     "probability": 0.95751953125
+    }
+   ]
+  },
+  {
+   "id": "s7",
+   "start": 63.63,
+   "end": 94.26,
+   "text": "bale ta bali ou seja o i balo ele vai balu bama de bame ou seja o",
+   "words": [
+    {
+     "id": "s7-w1",
+     "text": "bale",
+     "start": 63.63,
+     "end": 64.13,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s7-w2",
+     "text": "ta",
+     "start": 64.13,
+     "end": 64.31,
+     "probability": 0.6259765625
+    },
+    {
+     "id": "s7-w3",
+     "text": "bali",
+     "start": 64.31,
+     "end": 64.63,
+     "probability": 0.901611328125
+    },
+    {
+     "id": "s7-w4",
+     "text": "ou",
+     "start": 89.08,
+     "end": 90.04,
+     "probability": 0.94970703125
+    },
+    {
+     "id": "s7-w5",
+     "text": "seja",
+     "start": 90.04,
+     "end": 90.28,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s7-w6",
+     "text": "o",
+     "start": 90.28,
+     "end": 90.72,
+     "probability": 0.81591796875
+    },
+    {
+     "id": "s7-w7",
+     "text": "i",
+     "start": 90.72,
+     "end": 90.84,
+     "probability": 0.45458984375
+    },
+    {
+     "id": "s7-w8",
+     "text": "balo",
+     "start": 90.84,
+     "end": 91.16,
+     "probability": 0.35595703125
+    },
+    {
+     "id": "s7-w9",
+     "text": "ele",
+     "start": 91.16,
+     "end": 91.44,
+     "probability": 0.91845703125
+    },
+    {
+     "id": "s7-w10",
+     "text": "vai",
+     "start": 91.44,
+     "end": 91.58,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s7-w11",
+     "text": "balu",
+     "start": 91.58,
+     "end": 91.94,
+     "probability": 0.96142578125
+    },
+    {
+     "id": "s7-w12",
+     "text": "bama",
+     "start": 91.94,
+     "end": 92.34,
+     "probability": 0.904541015625
+    },
+    {
+     "id": "s7-w13",
+     "text": "de",
+     "start": 92.34,
+     "end": 92.46,
+     "probability": 0.9775390625
+    },
+    {
+     "id": "s7-w14",
+     "text": "bame",
+     "start": 92.46,
+     "end": 93.54,
+     "probability": 0.2696990966796875
+    },
+    {
+     "id": "s7-w15",
+     "text": "ou",
+     "start": 93.54,
+     "end": 93.74,
+     "probability": 0.90673828125
+    },
+    {
+     "id": "s7-w16",
+     "text": "seja",
+     "start": 93.74,
+     "end": 93.98,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s7-w17",
+     "text": "o",
+     "start": 93.98,
+     "end": 94.26,
+     "probability": 0.83984375
+    }
+   ]
+  },
+  {
+   "id": "s8",
+   "start": 94.26,
+   "end": 99.99,
+   "text": "i balo ele vai ou seja o i balo ele vai balu a bama de entrega e a baba vai",
+   "words": [
+    {
+     "id": "s8-w1",
+     "text": "i",
+     "start": 94.26,
+     "end": 94.4,
+     "probability": 0.751953125
+    },
+    {
+     "id": "s8-w2",
+     "text": "balo",
+     "start": 94.4,
+     "end": 94.62,
+     "probability": 0.927734375
+    },
+    {
+     "id": "s8-w3",
+     "text": "ele",
+     "start": 94.62,
+     "end": 94.86,
+     "probability": 0.9736328125
+    },
+    {
+     "id": "s8-w4",
+     "text": "vai",
+     "start": 94.86,
+     "end": 95.02,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s8-w5",
+     "text": "ou",
+     "start": 95.02,
+     "end": 96.1,
+     "probability": 0.7822265625
+    },
+    {
+     "id": "s8-w6",
+     "text": "seja",
+     "start": 96.23,
+     "end": 96.39,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s8-w7",
+     "text": "o",
+     "start": 96.39,
+     "end": 96.57,
+     "probability": 0.75634765625
+    },
+    {
+     "id": "s8-w8",
+     "text": "i",
+     "start": 96.57,
+     "end": 96.67,
+     "probability": 0.63232421875
+    },
+    {
+     "id": "s8-w9",
+     "text": "balo",
+     "start": 96.67,
+     "end": 96.83,
+     "probability": 0.9365234375
+    },
+    {
+     "id": "s8-w10",
+     "text": "ele",
+     "start": 96.83,
+     "end": 96.99,
+     "probability": 0.9462890625
+    },
+    {
+     "id": "s8-w11",
+     "text": "vai",
+     "start": 96.99,
+     "end": 97.11,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s8-w12",
+     "text": "balu",
+     "start": 97.11,
+     "end": 97.55,
+     "probability": 0.948486328125
+    },
+    {
+     "id": "s8-w13",
+     "text": "a",
+     "start": 97.55,
+     "end": 97.83,
+     "probability": 0.85205078125
+    },
+    {
+     "id": "s8-w14",
+     "text": "bama",
+     "start": 97.83,
+     "end": 98.11,
+     "probability": 0.998291015625
+    },
+    {
+     "id": "s8-w15",
+     "text": "de",
+     "start": 98.11,
+     "end": 98.21,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s8-w16",
+     "text": "entrega",
+     "start": 98.21,
+     "end": 98.91,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s8-w17",
+     "text": "e",
+     "start": 98.91,
+     "end": 99.45,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s8-w18",
+     "text": "a",
+     "start": 99.45,
+     "end": 99.57,
+     "probability": 0.93896484375
+    },
+    {
+     "id": "s8-w19",
+     "text": "baba",
+     "start": 99.57,
+     "end": 99.85,
+     "probability": 0.9967447916666666
+    },
+    {
+     "id": "s8-w20",
+     "text": "vai",
+     "start": 99.85,
+     "end": 99.99,
+     "probability": 0.9453125
+    }
+   ]
+  },
+  {
+   "id": "s9",
+   "start": 99.99,
+   "end": 111.56,
+   "text": "balu bama de bami e o bamo vai voltar na bamu bana ou seja ou",
+   "words": [
+    {
+     "id": "s9-w1",
+     "text": "balu",
+     "start": 99.99,
+     "end": 100.35,
+     "probability": 0.4918212890625
+    },
+    {
+     "id": "s9-w2",
+     "text": "bama",
+     "start": 100.35,
+     "end": 100.71,
+     "probability": 0.870361328125
+    },
+    {
+     "id": "s9-w3",
+     "text": "de",
+     "start": 100.71,
+     "end": 100.85,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s9-w4",
+     "text": "bami",
+     "start": 100.85,
+     "end": 101.27,
+     "probability": 0.971923828125
+    },
+    {
+     "id": "s9-w5",
+     "text": "e",
+     "start": 101.27,
+     "end": 102.39,
+     "probability": 0.57421875
+    },
+    {
+     "id": "s9-w6",
+     "text": "o",
+     "start": 103.54,
+     "end": 103.66,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s9-w7",
+     "text": "bamo",
+     "start": 103.66,
+     "end": 104.12,
+     "probability": 0.98779296875
+    },
+    {
+     "id": "s9-w8",
+     "text": "vai",
+     "start": 104.12,
+     "end": 104.28,
+     "probability": 0.90283203125
+    },
+    {
+     "id": "s9-w9",
+     "text": "voltar",
+     "start": 104.28,
+     "end": 104.7,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s9-w10",
+     "text": "na",
+     "start": 104.7,
+     "end": 105.34,
+     "probability": 0.9658203125
+    },
+    {
+     "id": "s9-w11",
+     "text": "bamu",
+     "start": 105.34,
+     "end": 105.64,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s9-w12",
+     "text": "bana",
+     "start": 105.64,
+     "end": 105.94,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s9-w13",
+     "text": "ou",
+     "start": 105.94,
+     "end": 107.12,
+     "probability": 0.423095703125
+    },
+    {
+     "id": "s9-w14",
+     "text": "seja",
+     "start": 110.32,
+     "end": 110.54,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s9-w15",
+     "text": "ou",
+     "start": 110.54,
+     "end": 111.56,
+     "probability": 0.485595703125
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "start": 112.36,
+   "end": 118.34,
+   "text": "seja vamos bane o modelo de bani da ou seja vamos bane o modelo de",
+   "words": [
+    {
+     "id": "s10-w1",
+     "text": "seja",
+     "start": 112.36,
+     "end": 112.68,
+     "probability": 0.95263671875
+    },
+    {
+     "id": "s10-w2",
+     "text": "vamos",
+     "start": 112.68,
+     "end": 112.9,
+     "probability": 0.8974609375
+    },
+    {
+     "id": "s10-w3",
+     "text": "bane",
+     "start": 112.9,
+     "end": 113.22,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s10-w4",
+     "text": "o",
+     "start": 113.22,
+     "end": 113.44,
+     "probability": 0.84716796875
+    },
+    {
+     "id": "s10-w5",
+     "text": "modelo",
+     "start": 113.44,
+     "end": 113.62,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s10-w6",
+     "text": "de",
+     "start": 113.62,
+     "end": 113.78,
+     "probability": 0.99267578125
+    },
+    {
+     "id": "s10-w7",
+     "text": "bani",
+     "start": 113.78,
+     "end": 114.06,
+     "probability": 0.953125
+    },
+    {
+     "id": "s10-w8",
+     "text": "da",
+     "start": 114.06,
+     "end": 114.32,
+     "probability": 0.83349609375
+    },
+    {
+     "id": "s10-w9",
+     "text": "ou",
+     "start": 114.32,
+     "end": 115.32,
+     "probability": 0.92431640625
+    },
+    {
+     "id": "s10-w10",
+     "text": "seja",
+     "start": 116.82,
+     "end": 117.18,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s10-w11",
+     "text": "vamos",
+     "start": 117.18,
+     "end": 117.42,
+     "probability": 0.97900390625
+    },
+    {
+     "id": "s10-w12",
+     "text": "bane",
+     "start": 117.42,
+     "end": 117.76,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s10-w13",
+     "text": "o",
+     "start": 117.76,
+     "end": 117.96,
+     "probability": 0.93017578125
+    },
+    {
+     "id": "s10-w14",
+     "text": "modelo",
+     "start": 117.96,
+     "end": 118.16,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s10-w15",
+     "text": "de",
+     "start": 118.16,
+     "end": 118.34,
+     "probability": 0.9931640625
+    }
+   ]
+  },
+  {
+   "id": "s11",
+   "start": 118.34,
+   "end": 127.66,
+   "text": "bani de uma baba ou seja o babo bano se banu voce vai bapa",
+   "words": [
+    {
+     "id": "s11-w1",
+     "text": "bani",
+     "start": 118.34,
+     "end": 118.58,
+     "probability": 0.9775390625
+    },
+    {
+     "id": "s11-w2",
+     "text": "de",
+     "start": 118.58,
+     "end": 118.82,
+     "probability": 0.97216796875
+    },
+    {
+     "id": "s11-w3",
+     "text": "uma",
+     "start": 118.82,
+     "end": 118.92,
+     "probability": 0.92431640625
+    },
+    {
+     "id": "s11-w4",
+     "text": "baba",
+     "start": 118.92,
+     "end": 119.3,
+     "probability": 0.9881184895833334
+    },
+    {
+     "id": "s11-w5",
+     "text": "ou",
+     "start": 119.3,
+     "end": 120.2,
+     "probability": 0.810546875
+    },
+    {
+     "id": "s11-w6",
+     "text": "seja",
+     "start": 123.34,
+     "end": 123.54,
+     "probability": 0.9990234375
+    },
+    {
+     "id": "s11-w7",
+     "text": "o",
+     "start": 123.54,
+     "end": 123.72,
+     "probability": 0.96533203125
+    },
+    {
+     "id": "s11-w8",
+     "text": "babo",
+     "start": 123.72,
+     "end": 123.98,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s11-w9",
+     "text": "bano",
+     "start": 123.98,
+     "end": 124.58,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s11-w10",
+     "text": "se",
+     "start": 124.58,
+     "end": 125.76,
+     "probability": 0.287109375
+    },
+    {
+     "id": "s11-w11",
+     "text": "banu",
+     "start": 126.72,
+     "end": 127.18,
+     "probability": 0.89990234375
+    },
+    {
+     "id": "s11-w12",
+     "text": "voce",
+     "start": 127.18,
+     "end": 127.32,
+     "probability": 0.76220703125
+    },
+    {
+     "id": "s11-w13",
+     "text": "vai",
+     "start": 127.32,
+     "end": 127.4,
+     "probability": 0.9814453125
+    },
+    {
+     "id": "s11-w14",
+     "text": "bapa",
+     "start": 127.4,
+     "end": 127.66,
+     "probability": 0.9951171875
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "start": 127.66,
+   "end": 135.32,
+   "text": "um bape ne voce vai bapa um bapi ne a baba la vai bapa a",
+   "words": [
+    {
+     "id": "s12-w1",
+     "text": "um",
+     "start": 127.66,
+     "end": 127.78,
+     "probability": 0.9931640625
+    },
+    {
+     "id": "s12-w2",
+     "text": "bape",
+     "start": 127.78,
+     "end": 128.12,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s12-w3",
+     "text": "ne",
+     "start": 128.12,
+     "end": 129.24,
+     "probability": 0.810546875
+    },
+    {
+     "id": "s12-w4",
+     "text": "voce",
+     "start": 129.53,
+     "end": 130.63,
+     "probability": 0.9130859375
+    },
+    {
+     "id": "s12-w5",
+     "text": "vai",
+     "start": 130.63,
+     "end": 130.81,
+     "probability": 0.98193359375
+    },
+    {
+     "id": "s12-w6",
+     "text": "bapa",
+     "start": 130.81,
+     "end": 131.05,
+     "probability": 0.9794921875
+    },
+    {
+     "id": "s12-w7",
+     "text": "um",
+     "start": 131.05,
+     "end": 131.17,
+     "probability": 0.96533203125
+    },
+    {
+     "id": "s12-w8",
+     "text": "bapi",
+     "start": 131.17,
+     "end": 131.81,
+     "probability": 0.998779296875
+    },
+    {
+     "id": "s12-w9",
+     "text": "ne",
+     "start": 131.81,
+     "end": 132.79,
+     "probability": 0.9501953125
+    },
+    {
+     "id": "s12-w10",
+     "text": "a",
+     "start": 132.88,
+     "end": 133.86,
+     "probability": 0.82373046875
+    },
+    {
+     "id": "s12-w11",
+     "text": "baba",
+     "start": 133.86,
+     "end": 134.28,
+     "probability": 0.9925130208333334
+    },
+    {
+     "id": "s12-w12",
+     "text": "la",
+     "start": 134.28,
+     "end": 134.46,
+     "probability": 0.765625
+    },
+    {
+     "id": "s12-w13",
+     "text": "vai",
+     "start": 134.46,
+     "end": 134.76,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s12-w14",
+     "text": "bapa",
+     "start": 134.76,
+     "end": 135.14,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s12-w15",
+     "text": "a",
+     "start": 135.14,
+     "end": 135.32,
+     "probability": 0.9833984375
+    }
+   ]
+  },
+  {
+   "id": "s13",
+   "start": 135.32,
+   "end": 139.9,
+   "text": "bapo existem bapu e existem bara que tambem bare",
+   "words": [
+    {
+     "id": "s13-w1",
+     "text": "bapo",
+     "start": 135.32,
+     "end": 136.46,
+     "probability": 0.986572265625
+    },
+    {
+     "id": "s13-w2",
+     "text": "existem",
+     "start": 136.46,
+     "end": 137.36,
+     "probability": 0.8916015625
+    },
+    {
+     "id": "s13-w3",
+     "text": "bapu",
+     "start": 137.36,
+     "end": 137.98,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s13-w4",
+     "text": "e",
+     "start": 137.98,
+     "end": 138.18,
+     "probability": 0.93115234375
+    },
+    {
+     "id": "s13-w5",
+     "text": "existem",
+     "start": 138.18,
+     "end": 138.46,
+     "probability": 0.93798828125
+    },
+    {
+     "id": "s13-w6",
+     "text": "bara",
+     "start": 138.46,
+     "end": 139.04,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s13-w7",
+     "text": "que",
+     "start": 139.04,
+     "end": 139.26,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s13-w8",
+     "text": "tambem",
+     "start": 139.26,
+     "end": 139.5,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s13-w9",
+     "text": "bare",
+     "start": 139.5,
+     "end": 139.9,
+     "probability": 0.946533203125
+    }
+   ]
+  },
+  {
+   "id": "s14",
+   "start": 139.9,
+   "end": 144.22,
+   "text": "bari e sao baro os que mais baru ne que tambem e basa",
+   "words": [
+    {
+     "id": "s14-w1",
+     "text": "bari",
+     "start": 139.9,
+     "end": 140.66,
+     "probability": 0.6068115234375
+    },
+    {
+     "id": "s14-w2",
+     "text": "e",
+     "start": 140.66,
+     "end": 141.62,
+     "probability": 0.501953125
+    },
+    {
+     "id": "s14-w3",
+     "text": "sao",
+     "start": 141.62,
+     "end": 141.86,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s14-w4",
+     "text": "baro",
+     "start": 141.86,
+     "end": 142.3,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s14-w5",
+     "text": "os",
+     "start": 142.3,
+     "end": 142.52,
+     "probability": 0.9033203125
+    },
+    {
+     "id": "s14-w6",
+     "text": "que",
+     "start": 142.52,
+     "end": 142.64,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s14-w7",
+     "text": "mais",
+     "start": 142.64,
+     "end": 142.8,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s14-w8",
+     "text": "baru",
+     "start": 142.8,
+     "end": 143.12,
+     "probability": 0.994384765625
+    },
+    {
+     "id": "s14-w9",
+     "text": "ne",
+     "start": 143.12,
+     "end": 143.32,
+     "probability": 0.375
+    },
+    {
+     "id": "s14-w10",
+     "text": "que",
+     "start": 143.32,
+     "end": 143.48,
+     "probability": 0.43017578125
+    },
+    {
+     "id": "s14-w11",
+     "text": "tambem",
+     "start": 143.48,
+     "end": 143.8,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s14-w12",
+     "text": "e",
+     "start": 143.8,
+     "end": 143.9,
+     "probability": 0.94775390625
+    },
+    {
+     "id": "s14-w13",
+     "text": "basa",
+     "start": 143.9,
+     "end": 144.22,
+     "probability": 0.663818359375
+    }
+   ]
+  },
+  {
+   "id": "s15",
+   "start": 144.22,
+   "end": 152.52,
+   "text": "de basi baso ou seja o babo ou seja o babo vai dizer basu este bata",
+   "words": [
+    {
+     "id": "s15-w1",
+     "text": "de",
+     "start": 144.22,
+     "end": 144.38,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s15-w2",
+     "text": "basi",
+     "start": 144.38,
+     "end": 144.58,
+     "probability": 0.9072265625
+    },
+    {
+     "id": "s15-w3",
+     "text": "baso",
+     "start": 144.58,
+     "end": 145.04,
+     "probability": 0.54931640625
+    },
+    {
+     "id": "s15-w4",
+     "text": "ou",
+     "start": 145.04,
+     "end": 146.14,
+     "probability": 0.94140625
+    },
+    {
+     "id": "s15-w5",
+     "text": "seja",
+     "start": 148.19,
+     "end": 148.33,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s15-w6",
+     "text": "o",
+     "start": 148.33,
+     "end": 148.47,
+     "probability": 0.5029296875
+    },
+    {
+     "id": "s15-w7",
+     "text": "babo",
+     "start": 148.47,
+     "end": 148.65,
+     "probability": 0.70166015625
+    },
+    {
+     "id": "s15-w8",
+     "text": "ou",
+     "start": 148.65,
+     "end": 149.61,
+     "probability": 0.2469482421875
+    },
+    {
+     "id": "s15-w9",
+     "text": "seja",
+     "start": 149.96,
+     "end": 150.08,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s15-w10",
+     "text": "o",
+     "start": 150.08,
+     "end": 150.42,
+     "probability": 0.96240234375
+    },
+    {
+     "id": "s15-w11",
+     "text": "vai",
+     "start": 150.42,
+     "end": 150.64,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s15-w12",
+     "text": "dizer",
+     "start": 150.64,
+     "end": 150.92,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s15-w13",
+     "text": "basu",
+     "start": 150.92,
+     "end": 151.88,
+     "probability": 0.743896484375
+    },
+    {
+     "id": "s15-w14",
+     "text": "este",
+     "start": 151.88,
+     "end": 152.06,
+     "probability": 0.9052734375
+    },
+    {
+     "id": "s15-w15",
+     "text": "bata",
+     "start": 152.06,
+     "end": 152.52,
+     "probability": 0.9586588541666666
+    }
+   ]
+  },
+  {
+   "id": "s16",
+   "start": 152.52,
+   "end": 157.5,
+   "text": "porque voce vai bate mais rapido a baba vai dizer bati bato porque",
+   "words": [
+    {
+     "id": "s16-w1",
+     "text": "porque",
+     "start": 152.52,
+     "end": 152.88,
+     "probability": 0.9521484375
+    },
+    {
+     "id": "s16-w2",
+     "text": "voce",
+     "start": 152.88,
+     "end": 153.14,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s16-w3",
+     "text": "vai",
+     "start": 153.14,
+     "end": 153.3,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s16-w4",
+     "text": "bate",
+     "start": 153.3,
+     "end": 153.56,
+     "probability": 0.95458984375
+    },
+    {
+     "id": "s16-w5",
+     "text": "mais",
+     "start": 153.56,
+     "end": 153.84,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s16-w6",
+     "text": "rapido",
+     "start": 153.84,
+     "end": 154.22,
+     "probability": 0.99267578125
+    },
+    {
+     "id": "s16-w7",
+     "text": "a",
+     "start": 154.22,
+     "end": 155.12,
+     "probability": 0.89306640625
+    },
+    {
+     "id": "s16-w8",
+     "text": "baba",
+     "start": 155.12,
+     "end": 155.44,
+     "probability": 0.9879557291666666
+    },
+    {
+     "id": "s16-w9",
+     "text": "vai",
+     "start": 155.44,
+     "end": 155.64,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s16-w10",
+     "text": "dizer",
+     "start": 155.64,
+     "end": 156.0,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s16-w11",
+     "text": "bati",
+     "start": 156.0,
+     "end": 156.66,
+     "probability": 0.564453125
+    },
+    {
+     "id": "s16-w12",
+     "text": "bato",
+     "start": 156.66,
+     "end": 157.12,
+     "probability": 0.405517578125
+    },
+    {
+     "id": "s16-w13",
+     "text": "porque",
+     "start": 157.12,
+     "end": 157.5,
+     "probability": 0.900390625
+    }
+   ]
+  },
+  {
+   "id": "s17",
+   "start": 157.5,
+   "end": 166.45,
+   "text": "voce vai ser batu para sempre bava mais bave de bapa bava mais",
+   "words": [
+    {
+     "id": "s17-w1",
+     "text": "voce",
+     "start": 157.5,
+     "end": 157.8,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s17-w2",
+     "text": "vai",
+     "start": 157.8,
+     "end": 158.06,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s17-w3",
+     "text": "ser",
+     "start": 158.06,
+     "end": 158.28,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s17-w4",
+     "text": "batu",
+     "start": 158.28,
+     "end": 158.66,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s17-w5",
+     "text": "para",
+     "start": 158.66,
+     "end": 158.92,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s17-w6",
+     "text": "sempre",
+     "start": 158.92,
+     "end": 159.34,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s17-w7",
+     "text": "bava",
+     "start": 160.53,
+     "end": 161.51,
+     "probability": 0.50341796875
+    },
+    {
+     "id": "s17-w8",
+     "text": "mais",
+     "start": 161.51,
+     "end": 161.81,
+     "probability": 0.96484375
+    },
+    {
+     "id": "s17-w9",
+     "text": "bave",
+     "start": 161.81,
+     "end": 162.09,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s17-w10",
+     "text": "de",
+     "start": 162.09,
+     "end": 162.29,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s17-w11",
+     "text": "bapa",
+     "start": 162.29,
+     "end": 162.57,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s17-w12",
+     "text": "bava",
+     "start": 162.57,
+     "end": 163.61,
+     "probability": 0.8828125
+    },
+    {
+     "id": "s17-w13",
+     "text": "mais",
+     "start": 166.17,
+     "end": 166.45,
+     "probability": 0.97021484375
+    }
+   ]
+  },
+  {
+   "id": "s18",
+   "start": 166.45,
+   "end": 178.15,
+   "text": "bave de bapa bavi o bata pode bavo em sete bavu o bata pode",
+   "words": [
+    {
+     "id": "s18-w1",
+     "text": "bave",
+     "start": 166.45,
+     "end": 166.69,
+     "probability": 0.9912109375
+    },
+    {
+     "id": "s18-w2",
+     "text": "de",
+     "start": 166.69,
+     "end": 166.85,
+     "probability": 0.9912109375
+    },
+    {
+     "id": "s18-w3",
+     "text": "bapa",
+     "start": 166.85,
+     "end": 167.13,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s18-w4",
+     "text": "bavi",
+     "start": 171.32,
+     "end": 172.66,
+     "probability": 0.85205078125
+    },
+    {
+     "id": "s18-w5",
+     "text": "o",
+     "start": 172.66,
+     "end": 173.5,
+     "probability": 0.83984375
+    },
+    {
+     "id": "s18-w6",
+     "text": "bata",
+     "start": 173.5,
+     "end": 173.76,
+     "probability": 0.9788411458333334
+    },
+    {
+     "id": "s18-w7",
+     "text": "pode",
+     "start": 173.76,
+     "end": 173.96,
+     "probability": 0.322021484375
+    },
+    {
+     "id": "s18-w8",
+     "text": "bavo",
+     "start": 173.96,
+     "end": 174.42,
+     "probability": 0.97216796875
+    },
+    {
+     "id": "s18-w9",
+     "text": "em",
+     "start": 174.42,
+     "end": 174.56,
+     "probability": 0.748046875
+    },
+    {
+     "id": "s18-w10",
+     "text": "sete",
+     "start": 174.56,
+     "end": 174.8,
+     "probability": 0.799072265625
+    },
+    {
+     "id": "s18-w11",
+     "text": "bavu",
+     "start": 174.8,
+     "end": 175.12,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s18-w12",
+     "text": "o",
+     "start": 175.12,
+     "end": 176.04,
+     "probability": 0.8203125
+    },
+    {
+     "id": "s18-w13",
+     "text": "bata",
+     "start": 177.67,
+     "end": 177.95,
+     "probability": 0.9775390625
+    },
+    {
+     "id": "s18-w14",
+     "text": "pode",
+     "start": 177.95,
+     "end": 178.15,
+     "probability": 0.81689453125
+    }
+   ]
+  },
+  {
+   "id": "s19",
+   "start": 178.15,
+   "end": 199.66,
+   "text": "bavo beba la sete bavu a bebe nao tem bebi de bebo e tipo",
+   "words": [
+    {
+     "id": "s19-w1",
+     "text": "bavo",
+     "start": 178.15,
+     "end": 178.65,
+     "probability": 0.4885031382242839
+    },
+    {
+     "id": "s19-w2",
+     "text": "beba",
+     "start": 178.65,
+     "end": 179.03,
+     "probability": 0.08758544921875
+    },
+    {
+     "id": "s19-w3",
+     "text": "la",
+     "start": 179.03,
+     "end": 179.25,
+     "probability": 0.97265625
+    },
+    {
+     "id": "s19-w4",
+     "text": "sete",
+     "start": 179.25,
+     "end": 179.75,
+     "probability": 0.740234375
+    },
+    {
+     "id": "s19-w5",
+     "text": "bavu",
+     "start": 179.75,
+     "end": 180.11,
+     "probability": 0.98828125
+    },
+    {
+     "id": "s19-w6",
+     "text": "a",
+     "start": 180.11,
+     "end": 180.45,
+     "probability": 0.2763671875
+    },
+    {
+     "id": "s19-w7",
+     "text": "bebe",
+     "start": 181.35,
+     "end": 182.97,
+     "probability": 0.9659830729166666
+    },
+    {
+     "id": "s19-w8",
+     "text": "nao",
+     "start": 182.97,
+     "end": 183.15,
+     "probability": 0.7431640625
+    },
+    {
+     "id": "s19-w9",
+     "text": "tem",
+     "start": 183.15,
+     "end": 183.51,
+     "probability": 0.26806640625
+    },
+    {
+     "id": "s19-w10",
+     "text": "bebi",
+     "start": 183.51,
+     "end": 183.89,
+     "probability": 0.8662109375
+    },
+    {
+     "id": "s19-w11",
+     "text": "de",
+     "start": 183.89,
+     "end": 184.11,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s19-w12",
+     "text": "bebo",
+     "start": 184.11,
+     "end": 184.55,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s19-w13",
+     "text": "e",
+     "start": 198.56,
+     "end": 199.44,
+     "probability": 0.61767578125
+    },
+    {
+     "id": "s19-w14",
+     "text": "tipo",
+     "start": 199.44,
+     "end": 199.66,
+     "probability": 0.83935546875
+    }
+   ]
+  },
+  {
+   "id": "s20",
+   "start": 199.66,
+   "end": 203.86,
+   "text": "bebu que beba la as beca bece elas beci tipo uma beco ta bali",
+   "words": [
+    {
+     "id": "s20-w1",
+     "text": "bebu",
+     "start": 199.66,
+     "end": 199.98,
+     "probability": 0.95947265625
+    },
+    {
+     "id": "s20-w2",
+     "text": "que",
+     "start": 199.98,
+     "end": 200.2,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s20-w3",
+     "text": "beba",
+     "start": 200.2,
+     "end": 200.42,
+     "probability": 0.56640625
+    },
+    {
+     "id": "s20-w4",
+     "text": "la",
+     "start": 200.42,
+     "end": 200.6,
+     "probability": 0.8642578125
+    },
+    {
+     "id": "s20-w5",
+     "text": "as",
+     "start": 200.6,
+     "end": 200.7,
+     "probability": 0.86474609375
+    },
+    {
+     "id": "s20-w6",
+     "text": "beca",
+     "start": 200.7,
+     "end": 200.94,
+     "probability": 0.9375
+    },
+    {
+     "id": "s20-w7",
+     "text": "bece",
+     "start": 200.94,
+     "end": 201.68,
+     "probability": 0.9220703125
+    },
+    {
+     "id": "s20-w8",
+     "text": "elas",
+     "start": 201.68,
+     "end": 201.92,
+     "probability": 0.52197265625
+    },
+    {
+     "id": "s20-w9",
+     "text": "beci",
+     "start": 201.92,
+     "end": 202.3,
+     "probability": 0.958740234375
+    },
+    {
+     "id": "s20-w10",
+     "text": "tipo",
+     "start": 202.3,
+     "end": 202.56,
+     "probability": 0.931640625
+    },
+    {
+     "id": "s20-w11",
+     "text": "uma",
+     "start": 202.56,
+     "end": 202.76,
+     "probability": 0.947265625
+    },
+    {
+     "id": "s20-w12",
+     "text": "beco",
+     "start": 202.76,
+     "end": 203.32,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s20-w13",
+     "text": "ta",
+     "start": 203.32,
+     "end": 203.52,
+     "probability": 0.7275390625
+    },
+    {
+     "id": "s20-w14",
+     "text": "bali",
+     "start": 203.52,
+     "end": 203.86,
+     "probability": 0.8515625
+    }
+   ]
+  },
+  {
+   "id": "s21",
+   "start": 203.86,
+   "end": 210.86,
+   "text": "tipo os becu ficam um beda negro ne tipo tem baba que nem bede tem mano",
+   "words": [
+    {
+     "id": "s21-w1",
+     "text": "tipo",
+     "start": 203.86,
+     "end": 204.8,
+     "probability": 0.52294921875
+    },
+    {
+     "id": "s21-w2",
+     "text": "os",
+     "start": 204.8,
+     "end": 204.96,
+     "probability": 0.94775390625
+    },
+    {
+     "id": "s21-w3",
+     "text": "becu",
+     "start": 204.96,
+     "end": 205.14,
+     "probability": 0.86572265625
+    },
+    {
+     "id": "s21-w4",
+     "text": "ficam",
+     "start": 205.14,
+     "end": 205.46,
+     "probability": 0.973876953125
+    },
+    {
+     "id": "s21-w5",
+     "text": "um",
+     "start": 205.46,
+     "end": 205.82,
+     "probability": 0.88623046875
+    },
+    {
+     "id": "s21-w6",
+     "text": "beda",
+     "start": 205.82,
+     "end": 206.4,
+     "probability": 0.963134765625
+    },
+    {
+     "id": "s21-w7",
+     "text": "negro",
+     "start": 206.4,
+     "end": 206.84,
+     "probability": 0.9736328125
+    },
+    {
+     "id": "s21-w8",
+     "text": "ne",
+     "start": 206.84,
+     "end": 208.0,
+     "probability": 0.85107421875
+    },
+    {
+     "id": "s21-w9",
+     "text": "tipo",
+     "start": 208.0,
+     "end": 208.3,
+     "probability": 0.90380859375
+    },
+    {
+     "id": "s21-w10",
+     "text": "tem",
+     "start": 208.3,
+     "end": 209.04,
+     "probability": 0.85205078125
+    },
+    {
+     "id": "s21-w11",
+     "text": "baba",
+     "start": 209.04,
+     "end": 209.34,
+     "probability": 0.9308268229166666
+    },
+    {
+     "id": "s21-w12",
+     "text": "que",
+     "start": 209.34,
+     "end": 209.52,
+     "probability": 0.95556640625
+    },
+    {
+     "id": "s21-w13",
+     "text": "nem",
+     "start": 209.52,
+     "end": 209.7,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s21-w14",
+     "text": "bede",
+     "start": 209.7,
+     "end": 210.24,
+     "probability": 0.958251953125
+    },
+    {
+     "id": "s21-w15",
+     "text": "tem",
+     "start": 210.24,
+     "end": 210.6,
+     "probability": 0.93359375
+    },
+    {
+     "id": "s21-w16",
+     "text": "mano",
+     "start": 210.6,
+     "end": 210.86,
+     "probability": 0.92724609375
+    }
+   ]
+  },
+  {
+   "id": "s22",
+   "start": 210.86,
+   "end": 216.68,
+   "text": "tipo por bedi pra voces bedo ne mas nem tem baba que nem bede tem e",
+   "words": [
+    {
+     "id": "s22-w1",
+     "text": "tipo",
+     "start": 210.86,
+     "end": 211.24,
+     "probability": 0.84375
+    },
+    {
+     "id": "s22-w2",
+     "text": "por",
+     "start": 211.24,
+     "end": 212.46,
+     "probability": 0.2080078125
+    },
+    {
+     "id": "s22-w3",
+     "text": "bedi",
+     "start": 212.46,
+     "end": 212.6,
+     "probability": 0.17041015625
+    },
+    {
+     "id": "s22-w4",
+     "text": "pra",
+     "start": 212.6,
+     "end": 212.76,
+     "probability": 0.61279296875
+    },
+    {
+     "id": "s22-w5",
+     "text": "voces",
+     "start": 212.76,
+     "end": 213.06,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s22-w6",
+     "text": "bedo",
+     "start": 213.06,
+     "end": 213.38,
+     "probability": 0.925537109375
+    },
+    {
+     "id": "s22-w7",
+     "text": "ne",
+     "start": 213.38,
+     "end": 213.52,
+     "probability": 0.87646484375
+    },
+    {
+     "id": "s22-w8",
+     "text": "mas",
+     "start": 213.52,
+     "end": 213.72,
+     "probability": 0.93603515625
+    },
+    {
+     "id": "s22-w9",
+     "text": "nem",
+     "start": 213.72,
+     "end": 213.86,
+     "probability": 0.7275390625
+    },
+    {
+     "id": "s22-w10",
+     "text": "tem",
+     "start": 213.86,
+     "end": 214.1,
+     "probability": 0.63427734375
+    },
+    {
+     "id": "s22-w11",
+     "text": "baba",
+     "start": 214.1,
+     "end": 214.44,
+     "probability": 0.95263671875
+    },
+    {
+     "id": "s22-w12",
+     "text": "que",
+     "start": 214.44,
+     "end": 214.56,
+     "probability": 0.96240234375
+    },
+    {
+     "id": "s22-w13",
+     "text": "nem",
+     "start": 214.56,
+     "end": 214.66,
+     "probability": 0.98193359375
+    },
+    {
+     "id": "s22-w14",
+     "text": "bede",
+     "start": 214.66,
+     "end": 215.02,
+     "probability": 0.9794921875
+    },
+    {
+     "id": "s22-w15",
+     "text": "tem",
+     "start": 215.02,
+     "end": 215.28,
+     "probability": 0.96484375
+    },
+    {
+     "id": "s22-w16",
+     "text": "e",
+     "start": 215.28,
+     "end": 216.68,
+     "probability": 0.86328125
+    }
+   ]
+  },
+  {
+   "id": "s23",
+   "start": 218.09,
+   "end": 221.83,
+   "text": "ai tem umas bedu sao befa tipo os nomes befe nada befi porque",
+   "words": [
+    {
+     "id": "s23-w1",
+     "text": "ai",
+     "start": 218.09,
+     "end": 218.21,
+     "probability": 0.9189453125
+    },
+    {
+     "id": "s23-w2",
+     "text": "tem",
+     "start": 218.21,
+     "end": 218.41,
+     "probability": 0.97900390625
+    },
+    {
+     "id": "s23-w3",
+     "text": "umas",
+     "start": 218.41,
+     "end": 218.59,
+     "probability": 0.7705078125
+    },
+    {
+     "id": "s23-w4",
+     "text": "bedu",
+     "start": 218.59,
+     "end": 219.01,
+     "probability": 0.972900390625
+    },
+    {
+     "id": "s23-w5",
+     "text": "sao",
+     "start": 219.01,
+     "end": 219.55,
+     "probability": 0.288330078125
+    },
+    {
+     "id": "s23-w6",
+     "text": "befa",
+     "start": 219.55,
+     "end": 219.81,
+     "probability": 0.158447265625
+    },
+    {
+     "id": "s23-w7",
+     "text": "tipo",
+     "start": 219.81,
+     "end": 220.35,
+     "probability": 0.79638671875
+    },
+    {
+     "id": "s23-w8",
+     "text": "os",
+     "start": 220.35,
+     "end": 220.55,
+     "probability": 0.607421875
+    },
+    {
+     "id": "s23-w9",
+     "text": "nomes",
+     "start": 220.55,
+     "end": 220.73,
+     "probability": 0.841552734375
+    },
+    {
+     "id": "s23-w10",
+     "text": "befe",
+     "start": 220.73,
+     "end": 221.19,
+     "probability": 0.8974609375
+    },
+    {
+     "id": "s23-w11",
+     "text": "nada",
+     "start": 221.19,
+     "end": 221.41,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s23-w12",
+     "text": "befi",
+     "start": 221.41,
+     "end": 221.67,
+     "probability": 0.478759765625
+    },
+    {
+     "id": "s23-w13",
+     "text": "porque",
+     "start": 221.67,
+     "end": 221.83,
+     "probability": 0.779296875
+    }
+   ]
+  },
+  {
+   "id": "s24",
+   "start": 221.83,
+   "end": 228.55,
+   "text": "befo e befu bega de bege ne e o cara bage la tem tipo musica",
+   "words": [
+    {
+     "id": "s24-w1",
+     "text": "befo",
+     "start": 221.83,
+     "end": 222.13,
+     "probability": 0.2125091552734375
+    },
+    {
+     "id": "s24-w2",
+     "text": "e",
+     "start": 222.13,
+     "end": 222.33,
+     "probability": 0.2607421875
+    },
+    {
+     "id": "s24-w3",
+     "text": "befu",
+     "start": 222.33,
+     "end": 222.49,
+     "probability": 0.6650390625
+    },
+    {
+     "id": "s24-w4",
+     "text": "bega",
+     "start": 222.49,
+     "end": 222.77,
+     "probability": 0.83203125
+    },
+    {
+     "id": "s24-w5",
+     "text": "de",
+     "start": 222.77,
+     "end": 222.87,
+     "probability": 0.9677734375
+    },
+    {
+     "id": "s24-w6",
+     "text": "bege",
+     "start": 222.87,
+     "end": 223.39,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s24-w7",
+     "text": "ne",
+     "start": 223.39,
+     "end": 223.63,
+     "probability": 0.74951171875
+    },
+    {
+     "id": "s24-w8",
+     "text": "e",
+     "start": 223.63,
+     "end": 224.51,
+     "probability": 0.052032470703125
+    },
+    {
+     "id": "s24-w9",
+     "text": "o",
+     "start": 227.01,
+     "end": 227.09,
+     "probability": 0.9208984375
+    },
+    {
+     "id": "s24-w10",
+     "text": "cara",
+     "start": 227.09,
+     "end": 227.21,
+     "probability": 0.99267578125
+    },
+    {
+     "id": "s24-w11",
+     "text": "bage",
+     "start": 227.21,
+     "end": 227.43,
+     "probability": 0.306640625
+    },
+    {
+     "id": "s24-w12",
+     "text": "la",
+     "start": 227.43,
+     "end": 227.71,
+     "probability": 0.61572265625
+    },
+    {
+     "id": "s24-w13",
+     "text": "tem",
+     "start": 227.71,
+     "end": 227.93,
+     "probability": 0.76220703125
+    },
+    {
+     "id": "s24-w14",
+     "text": "tipo",
+     "start": 227.93,
+     "end": 228.17,
+     "probability": 0.943359375
+    },
+    {
+     "id": "s24-w15",
+     "text": "musica",
+     "start": 228.17,
+     "end": 228.55,
+     "probability": 0.64501953125
+    }
+   ]
+  },
+  {
+   "id": "s25",
+   "start": 228.55,
+   "end": 238.84,
+   "text": "begi bego begu bela bele beli e tipo assim ta belo belu",
+   "words": [
+    {
+     "id": "s25-w1",
+     "text": "begi",
+     "start": 228.55,
+     "end": 229.57,
+     "probability": 0.9813232421875
+    },
+    {
+     "id": "s25-w2",
+     "text": "bego",
+     "start": 229.57,
+     "end": 230.89,
+     "probability": 0.7841796875
+    },
+    {
+     "id": "s25-w3",
+     "text": "begu",
+     "start": 231.37,
+     "end": 231.89,
+     "probability": 0.95947265625
+    },
+    {
+     "id": "s25-w4",
+     "text": "bela",
+     "start": 232.59,
+     "end": 234.17,
+     "probability": 0.96142578125
+    },
+    {
+     "id": "s25-w5",
+     "text": "bele",
+     "start": 234.17,
+     "end": 235.61,
+     "probability": 0.732421875
+    },
+    {
+     "id": "s25-w6",
+     "text": "beli",
+     "start": 235.68,
+     "end": 236.46,
+     "probability": 0.8779296875
+    },
+    {
+     "id": "s25-w7",
+     "text": "e",
+     "start": 236.46,
+     "end": 237.58,
+     "probability": 0.93896484375
+    },
+    {
+     "id": "s25-w8",
+     "text": "tipo",
+     "start": 238.02,
+     "end": 238.16,
+     "probability": 0.7490234375
+    },
+    {
+     "id": "s25-w9",
+     "text": "assim",
+     "start": 238.16,
+     "end": 238.36,
+     "probability": 0.9580078125
+    },
+    {
+     "id": "s25-w10",
+     "text": "ta",
+     "start": 238.36,
+     "end": 238.5,
+     "probability": 0.84228515625
+    },
+    {
+     "id": "s25-w11",
+     "text": "belo",
+     "start": 238.5,
+     "end": 238.64,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s25-w12",
+     "text": "belu",
+     "start": 238.64,
+     "end": 238.84,
+     "probability": 0.99853515625
+    }
+   ]
+  },
+  {
+   "id": "s26",
+   "start": 238.84,
+   "end": 245.7,
+   "text": "bema em beme em bemi bemo pra bemu validacao do que de bena seguir",
+   "words": [
+    {
+     "id": "s26-w1",
+     "text": "bema",
+     "start": 238.84,
+     "end": 239.78,
+     "probability": 0.981201171875
+    },
+    {
+     "id": "s26-w2",
+     "text": "em",
+     "start": 239.78,
+     "end": 240.1,
+     "probability": 0.9853515625
+    },
+    {
+     "id": "s26-w3",
+     "text": "beme",
+     "start": 240.1,
+     "end": 241.22,
+     "probability": 0.90869140625
+    },
+    {
+     "id": "s26-w4",
+     "text": "em",
+     "start": 241.22,
+     "end": 241.34,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s26-w5",
+     "text": "bemi",
+     "start": 241.34,
+     "end": 241.52,
+     "probability": 0.32275390625
+    },
+    {
+     "id": "s26-w6",
+     "text": "bemo",
+     "start": 241.52,
+     "end": 241.98,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s26-w7",
+     "text": "pra",
+     "start": 241.98,
+     "end": 243.0,
+     "probability": 0.7080078125
+    },
+    {
+     "id": "s26-w8",
+     "text": "bemu",
+     "start": 243.0,
+     "end": 243.26,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s26-w9",
+     "text": "validacao",
+     "start": 243.26,
+     "end": 244.06,
+     "probability": 0.8440755208333334
+    },
+    {
+     "id": "s26-w10",
+     "text": "do",
+     "start": 244.06,
+     "end": 244.26,
+     "probability": 0.90185546875
+    },
+    {
+     "id": "s26-w11",
+     "text": "que",
+     "start": 244.26,
+     "end": 244.42,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s26-w12",
+     "text": "de",
+     "start": 244.42,
+     "end": 244.68,
+     "probability": 0.7099609375
+    },
+    {
+     "id": "s26-w13",
+     "text": "bena",
+     "start": 244.68,
+     "end": 245.04,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s26-w14",
+     "text": "seguir",
+     "start": 245.04,
+     "end": 245.7,
+     "probability": 0.9736328125
+    }
+   ]
+  },
+  {
+   "id": "s27",
+   "start": 245.7,
+   "end": 254.12,
+   "text": "a bene ne beni e so voce beno bava benu de uma baba",
+   "words": [
+    {
+     "id": "s27-w1",
+     "text": "a",
+     "start": 245.7,
+     "end": 246.12,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s27-w2",
+     "text": "bene",
+     "start": 246.12,
+     "end": 246.68,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s27-w3",
+     "text": "ne",
+     "start": 246.68,
+     "end": 246.94,
+     "probability": 0.84765625
+    },
+    {
+     "id": "s27-w4",
+     "text": "beni",
+     "start": 246.94,
+     "end": 247.64,
+     "probability": 0.6851806640625
+    },
+    {
+     "id": "s27-w5",
+     "text": "e",
+     "start": 251.74,
+     "end": 252.28,
+     "probability": 0.68505859375
+    },
+    {
+     "id": "s27-w6",
+     "text": "so",
+     "start": 252.28,
+     "end": 252.42,
+     "probability": 0.9912109375
+    },
+    {
+     "id": "s27-w7",
+     "text": "voce",
+     "start": 252.42,
+     "end": 252.58,
+     "probability": 0.9375
+    },
+    {
+     "id": "s27-w8",
+     "text": "beno",
+     "start": 252.58,
+     "end": 252.9,
+     "probability": 0.986328125
+    },
+    {
+     "id": "s27-w9",
+     "text": "bava",
+     "start": 252.9,
+     "end": 253.08,
+     "probability": 0.0732421875
+    },
+    {
+     "id": "s27-w10",
+     "text": "benu",
+     "start": 253.08,
+     "end": 253.5,
+     "probability": 0.9541015625
+    },
+    {
+     "id": "s27-w11",
+     "text": "de",
+     "start": 253.5,
+     "end": 253.7,
+     "probability": 0.49462890625
+    },
+    {
+     "id": "s27-w12",
+     "text": "uma",
+     "start": 253.7,
+     "end": 253.8,
+     "probability": 0.9873046875
+    },
+    {
+     "id": "s27-w13",
+     "text": "baba",
+     "start": 253.8,
+     "end": 254.12,
+     "probability": 0.9959309895833334
+    }
+   ]
+  },
+  {
+   "id": "s28",
+   "start": 254.12,
+   "end": 260.73,
+   "text": "atual pra uma beco cara a baba la nao tem bepa nas bepe mas o",
+   "words": [
+    {
+     "id": "s28-w1",
+     "text": "atual",
+     "start": 254.12,
+     "end": 254.36,
+     "probability": 0.00356292724609375
+    },
+    {
+     "id": "s28-w2",
+     "text": "pra",
+     "start": 254.36,
+     "end": 254.52,
+     "probability": 0.30615234375
+    },
+    {
+     "id": "s28-w3",
+     "text": "uma",
+     "start": 254.52,
+     "end": 254.64,
+     "probability": 0.9501953125
+    },
+    {
+     "id": "s28-w4",
+     "text": "beco",
+     "start": 254.64,
+     "end": 255.08,
+     "probability": 0.981689453125
+    },
+    {
+     "id": "s28-w5",
+     "text": "cara",
+     "start": 255.37,
+     "end": 256.45,
+     "probability": 0.31494140625
+    },
+    {
+     "id": "s28-w6",
+     "text": "a",
+     "start": 256.45,
+     "end": 256.63,
+     "probability": 0.861328125
+    },
+    {
+     "id": "s28-w7",
+     "text": "baba",
+     "start": 256.63,
+     "end": 256.89,
+     "probability": 0.9820963541666666
+    },
+    {
+     "id": "s28-w8",
+     "text": "la",
+     "start": 256.89,
+     "end": 257.03,
+     "probability": 0.3115234375
+    },
+    {
+     "id": "s28-w9",
+     "text": "nao",
+     "start": 257.03,
+     "end": 257.17,
+     "probability": 0.96630859375
+    },
+    {
+     "id": "s28-w10",
+     "text": "tem",
+     "start": 257.17,
+     "end": 257.37,
+     "probability": 0.98681640625
+    },
+    {
+     "id": "s28-w11",
+     "text": "bepa",
+     "start": 257.37,
+     "end": 257.69,
+     "probability": 0.9903971354166666
+    },
+    {
+     "id": "s28-w12",
+     "text": "nas",
+     "start": 257.69,
+     "end": 258.05,
+     "probability": 0.88427734375
+    },
+    {
+     "id": "s28-w13",
+     "text": "bepe",
+     "start": 258.05,
+     "end": 258.61,
+     "probability": 0.987548828125
+    },
+    {
+     "id": "s28-w14",
+     "text": "mas",
+     "start": 258.61,
+     "end": 259.61,
+     "probability": 0.90234375
+    },
+    {
+     "id": "s28-w15",
+     "text": "o",
+     "start": 259.61,
+     "end": 260.73,
+     "probability": 0.9501953125
+    }
+   ]
+  },
+  {
+   "id": "s29",
+   "start": 260.73,
+   "end": 306.33,
+   "text": "bepi e o mesmo e tem bepo tem uma baba aqui o baba bepu da",
+   "words": [
+    {
+     "id": "s29-w1",
+     "text": "bepi",
+     "start": 260.73,
+     "end": 261.53,
+     "probability": 0.9171142578125
+    },
+    {
+     "id": "s29-w2",
+     "text": "e",
+     "start": 261.53,
+     "end": 261.73,
+     "probability": 0.9609375
+    },
+    {
+     "id": "s29-w3",
+     "text": "o",
+     "start": 261.73,
+     "end": 261.81,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s29-w4",
+     "text": "mesmo",
+     "start": 261.81,
+     "end": 262.11,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s29-w5",
+     "text": "e",
+     "start": 262.11,
+     "end": 262.97,
+     "probability": 0.1884765625
+    },
+    {
+     "id": "s29-w6",
+     "text": "tem",
+     "start": 303.67,
+     "end": 303.79,
+     "probability": 0.9267578125
+    },
+    {
+     "id": "s29-w7",
+     "text": "bepo",
+     "start": 303.79,
+     "end": 304.03,
+     "probability": 0.951171875
+    },
+    {
+     "id": "s29-w8",
+     "text": "tem",
+     "start": 304.03,
+     "end": 304.27,
+     "probability": 0.36279296875
+    },
+    {
+     "id": "s29-w9",
+     "text": "uma",
+     "start": 304.27,
+     "end": 304.43,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s29-w10",
+     "text": "baba",
+     "start": 304.43,
+     "end": 304.73,
+     "probability": 0.9879557291666666
+    },
+    {
+     "id": "s29-w11",
+     "text": "aqui",
+     "start": 304.73,
+     "end": 304.89,
+     "probability": 0.7568359375
+    },
+    {
+     "id": "s29-w12",
+     "text": "o",
+     "start": 304.89,
+     "end": 305.01,
+     "probability": 0.68994140625
+    },
+    {
+     "id": "s29-w13",
+     "text": "baba",
+     "start": 305.01,
+     "end": 305.51,
+     "probability": 0.87744140625
+    },
+    {
+     "id": "s29-w14",
+     "text": "bepu",
+     "start": 305.51,
+     "end": 306.11,
+     "probability": 0.933349609375
+    },
+    {
+     "id": "s29-w15",
+     "text": "da",
+     "start": 306.11,
+     "end": 306.33,
+     "probability": 0.81298828125
+    }
+   ]
+  },
+  {
+   "id": "s30",
+   "start": 306.33,
+   "end": 313.35,
+   "text": "bera bama de 80 bere para quem beri se bero e a justificativa era beru o",
+   "words": [
+    {
+     "id": "s30-w1",
+     "text": "bera",
+     "start": 306.33,
+     "end": 307.05,
+     "probability": 0.565673828125
+    },
+    {
+     "id": "s30-w2",
+     "text": "bama",
+     "start": 307.05,
+     "end": 308.35,
+     "probability": 0.7998046875
+    },
+    {
+     "id": "s30-w3",
+     "text": "de",
+     "start": 308.35,
+     "end": 308.53,
+     "probability": 0.9873046875
+    },
+    {
+     "id": "s30-w4",
+     "text": "80",
+     "start": 308.53,
+     "end": 308.89,
+     "probability": 0.88134765625
+    },
+    {
+     "id": "s30-w5",
+     "text": "bere",
+     "start": 308.89,
+     "end": 309.47,
+     "probability": 0.97021484375
+    },
+    {
+     "id": "s30-w6",
+     "text": "para",
+     "start": 309.47,
+     "end": 309.75,
+     "probability": 0.5498046875
+    },
+    {
+     "id": "s30-w7",
+     "text": "quem",
+     "start": 309.75,
+     "end": 309.93,
+     "probability": 0.98046875
+    },
+    {
+     "id": "s30-w8",
+     "text": "beri",
+     "start": 309.93,
+     "end": 310.09,
+     "probability": 0.67529296875
+    },
+    {
+     "id": "s30-w9",
+     "text": "se",
+     "start": 310.09,
+     "end": 310.21,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s30-w10",
+     "text": "bero",
+     "start": 310.21,
+     "end": 310.69,
+     "probability": 0.96533203125
+    },
+    {
+     "id": "s30-w11",
+     "text": "e",
+     "start": 310.69,
+     "end": 311.83,
+     "probability": 0.97216796875
+    },
+    {
+     "id": "s30-w12",
+     "text": "a",
+     "start": 311.83,
+     "end": 311.93,
+     "probability": 0.90380859375
+    },
+    {
+     "id": "s30-w13",
+     "text": "justificativa",
+     "start": 311.93,
+     "end": 312.47,
+     "probability": 0.9833984375
+    },
+    {
+     "id": "s30-w14",
+     "text": "era",
+     "start": 312.47,
+     "end": 312.73,
+     "probability": 0.962890625
+    },
+    {
+     "id": "s30-w15",
+     "text": "beru",
+     "start": 312.73,
+     "end": 313.17,
+     "probability": 0.936279296875
+    },
+    {
+     "id": "s30-w16",
+     "text": "o",
+     "start": 313.17,
+     "end": 313.35,
+     "probability": 0.99365234375
+    }
+   ]
+  },
+  {
+   "id": "s31",
+   "start": 313.35,
+   "end": 318.59,
+   "text": "besa de uma bese besi e uma beso para besu apos beta",
+   "words": [
+    {
+     "id": "s31-w1",
+     "text": "besa",
+     "start": 313.35,
+     "end": 313.75,
+     "probability": 0.995361328125
+    },
+    {
+     "id": "s31-w2",
+     "text": "de",
+     "start": 313.75,
+     "end": 313.85,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s31-w3",
+     "text": "uma",
+     "start": 313.85,
+     "end": 313.97,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s31-w4",
+     "text": "bese",
+     "start": 313.97,
+     "end": 314.41,
+     "probability": 0.9736328125
+    },
+    {
+     "id": "s31-w5",
+     "text": "besi",
+     "start": 314.41,
+     "end": 314.95,
+     "probability": 0.98681640625
+    },
+    {
+     "id": "s31-w6",
+     "text": "e",
+     "start": 314.95,
+     "end": 315.97,
+     "probability": 0.9833984375
+    },
+    {
+     "id": "s31-w7",
+     "text": "uma",
+     "start": 315.97,
+     "end": 316.11,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s31-w8",
+     "text": "beso",
+     "start": 316.11,
+     "end": 316.57,
+     "probability": 0.943603515625
+    },
+    {
+     "id": "s31-w9",
+     "text": "para",
+     "start": 316.57,
+     "end": 316.73,
+     "probability": 0.875
+    },
+    {
+     "id": "s31-w10",
+     "text": "besu",
+     "start": 316.73,
+     "end": 317.47,
+     "probability": 0.9249267578125
+    },
+    {
+     "id": "s31-w11",
+     "text": "apos",
+     "start": 317.47,
+     "end": 318.27,
+     "probability": 0.9775390625
+    },
+    {
+     "id": "s31-w12",
+     "text": "beta",
+     "start": 318.27,
+     "end": 318.59,
+     "probability": 0.986328125
+    }
+   ]
+  },
+  {
+   "id": "s32",
+   "start": 318.59,
+   "end": 325.88,
+   "text": "bete beti beto betu e beva a bama e aqui o beta",
+   "words": [
+    {
+     "id": "s32-w1",
+     "text": "bete",
+     "start": 318.59,
+     "end": 319.07,
+     "probability": 0.989501953125
+    },
+    {
+     "id": "s32-w2",
+     "text": "beti",
+     "start": 319.07,
+     "end": 319.35,
+     "probability": 0.77392578125
+    },
+    {
+     "id": "s32-w3",
+     "text": "beto",
+     "start": 319.35,
+     "end": 319.79,
+     "probability": 0.785888671875
+    },
+    {
+     "id": "s32-w4",
+     "text": "betu",
+     "start": 319.79,
+     "end": 320.07,
+     "probability": 0.98193359375
+    },
+    {
+     "id": "s32-w5",
+     "text": "e",
+     "start": 320.07,
+     "end": 320.27,
+     "probability": 0.71630859375
+    },
+    {
+     "id": "s32-w6",
+     "text": "beva",
+     "start": 320.27,
+     "end": 320.69,
+     "probability": 0.9765625
+    },
+    {
+     "id": "s32-w7",
+     "text": "a",
+     "start": 320.69,
+     "end": 320.89,
+     "probability": 0.8466796875
+    },
+    {
+     "id": "s32-w8",
+     "text": "bama",
+     "start": 320.89,
+     "end": 321.97,
+     "probability": 0.991943359375
+    },
+    {
+     "id": "s32-w9",
+     "text": "e",
+     "start": 325.08,
+     "end": 325.28,
+     "probability": 0.8896484375
+    },
+    {
+     "id": "s32-w10",
+     "text": "aqui",
+     "start": 325.28,
+     "end": 325.46,
+     "probability": 0.96142578125
+    },
+    {
+     "id": "s32-w11",
+     "text": "o",
+     "start": 325.46,
+     "end": 325.58,
+     "probability": 0.299072265625
+    },
+    {
+     "id": "s32-w12",
+     "text": "beta",
+     "start": 325.58,
+     "end": 325.88,
+     "probability": 0.9560546875
+    }
+   ]
+  },
+  {
+   "id": "s33",
+   "start": 325.88,
+   "end": 330.84,
+   "text": "beca beve bevi de bevo bevu de biba ou bibe de",
+   "words": [
+    {
+     "id": "s33-w1",
+     "text": "beca",
+     "start": 325.88,
+     "end": 326.32,
+     "probability": 0.65576171875
+    },
+    {
+     "id": "s33-w2",
+     "text": "beve",
+     "start": 326.32,
+     "end": 326.92,
+     "probability": 0.962158203125
+    },
+    {
+     "id": "s33-w3",
+     "text": "bevi",
+     "start": 326.92,
+     "end": 327.6,
+     "probability": 0.96240234375
+    },
+    {
+     "id": "s33-w4",
+     "text": "de",
+     "start": 327.6,
+     "end": 327.8,
+     "probability": 0.90576171875
+    },
+    {
+     "id": "s33-w5",
+     "text": "bevo",
+     "start": 327.8,
+     "end": 328.3,
+     "probability": 0.970703125
+    },
+    {
+     "id": "s33-w6",
+     "text": "bevu",
+     "start": 328.3,
+     "end": 329.28,
+     "probability": 0.4148356119791667
+    },
+    {
+     "id": "s33-w7",
+     "text": "de",
+     "start": 329.28,
+     "end": 329.52,
+     "probability": 0.9111328125
+    },
+    {
+     "id": "s33-w8",
+     "text": "biba",
+     "start": 329.52,
+     "end": 329.86,
+     "probability": 0.97802734375
+    },
+    {
+     "id": "s33-w9",
+     "text": "ou",
+     "start": 329.86,
+     "end": 330.12,
+     "probability": 0.62890625
+    },
+    {
+     "id": "s33-w10",
+     "text": "bibe",
+     "start": 330.12,
+     "end": 330.64,
+     "probability": 0.7132568359375
+    },
+    {
+     "id": "s33-w11",
+     "text": "de",
+     "start": 330.64,
+     "end": 330.84,
+     "probability": 0.98779296875
+    }
+   ]
+  },
+  {
+   "id": "s34",
+   "start": 330.84,
+   "end": 336.62,
+   "text": "musica bibi bibo o bibu bica bice nessa faixa de 50 bici para befu a",
+   "words": [
+    {
+     "id": "s34-w1",
+     "text": "musica",
+     "start": 330.84,
+     "end": 331.24,
+     "probability": 0.919921875
+    },
+    {
+     "id": "s34-w2",
+     "text": "bibi",
+     "start": 331.24,
+     "end": 332.36,
+     "probability": 0.681640625
+    },
+    {
+     "id": "s34-w3",
+     "text": "bibo",
+     "start": 332.36,
+     "end": 332.7,
+     "probability": 0.9248046875
+    },
+    {
+     "id": "s34-w4",
+     "text": "o",
+     "start": 332.7,
+     "end": 332.86,
+     "probability": 0.91259765625
+    },
+    {
+     "id": "s34-w5",
+     "text": "bibu",
+     "start": 332.86,
+     "end": 333.02,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s34-w6",
+     "text": "bica",
+     "start": 333.02,
+     "end": 333.5,
+     "probability": 0.833251953125
+    },
+    {
+     "id": "s34-w7",
+     "text": "bice",
+     "start": 333.5,
+     "end": 333.86,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s34-w8",
+     "text": "nessa",
+     "start": 333.86,
+     "end": 334.06,
+     "probability": 0.95849609375
+    },
+    {
+     "id": "s34-w9",
+     "text": "faixa",
+     "start": 334.06,
+     "end": 334.4,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s34-w10",
+     "text": "de",
+     "start": 334.4,
+     "end": 334.58,
+     "probability": 0.9814453125
+    },
+    {
+     "id": "s34-w11",
+     "text": "50",
+     "start": 334.58,
+     "end": 335.0,
+     "probability": 0.84326171875
+    },
+    {
+     "id": "s34-w12",
+     "text": "bici",
+     "start": 335.0,
+     "end": 335.96,
+     "probability": 0.89501953125
+    },
+    {
+     "id": "s34-w13",
+     "text": "para",
+     "start": 335.96,
+     "end": 336.2,
+     "probability": 0.744140625
+    },
+    {
+     "id": "s34-w14",
+     "text": "befu",
+     "start": 336.2,
+     "end": 336.48,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s34-w15",
+     "text": "a",
+     "start": 336.48,
+     "end": 336.62,
+     "probability": 0.97412109375
+    }
+   ]
+  },
+  {
+   "id": "s35",
+   "start": 336.62,
+   "end": 342.96,
+   "text": "bico a bicu ou bida bide e bidi de fora ou seja uma",
+   "words": [
+    {
+     "id": "s35-w1",
+     "text": "bico",
+     "start": 336.62,
+     "end": 337.12,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s35-w2",
+     "text": "a",
+     "start": 337.12,
+     "end": 337.36,
+     "probability": 0.53857421875
+    },
+    {
+     "id": "s35-w3",
+     "text": "bicu",
+     "start": 337.36,
+     "end": 337.86,
+     "probability": 0.77618408203125
+    },
+    {
+     "id": "s35-w4",
+     "text": "ou",
+     "start": 337.86,
+     "end": 338.02,
+     "probability": 0.923828125
+    },
+    {
+     "id": "s35-w5",
+     "text": "bida",
+     "start": 338.02,
+     "end": 338.28,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s35-w6",
+     "text": "bide",
+     "start": 338.28,
+     "end": 339.56,
+     "probability": 0.6416015625
+    },
+    {
+     "id": "s35-w7",
+     "text": "e",
+     "start": 339.56,
+     "end": 339.74,
+     "probability": 0.9599609375
+    },
+    {
+     "id": "s35-w8",
+     "text": "bidi",
+     "start": 339.74,
+     "end": 340.04,
+     "probability": 0.726806640625
+    },
+    {
+     "id": "s35-w9",
+     "text": "de",
+     "start": 340.04,
+     "end": 340.24,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s35-w10",
+     "text": "fora",
+     "start": 340.24,
+     "end": 340.5,
+     "probability": 0.97265625
+    },
+    {
+     "id": "s35-w11",
+     "text": "ou",
+     "start": 340.98,
+     "end": 342.12,
+     "probability": 0.837890625
+    },
+    {
+     "id": "s35-w12",
+     "text": "seja",
+     "start": 342.12,
+     "end": 342.38,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s35-w13",
+     "text": "uma",
+     "start": 342.38,
+     "end": 342.96,
+     "probability": 0.85400390625
+    }
+   ]
+  },
+  {
+   "id": "s36",
+   "start": 342.96,
+   "end": 374.78,
+   "text": "beco um bido e as que ninguem tem de cara porque a baba nao e melhor",
+   "words": [
+    {
+     "id": "s36-w1",
+     "text": "beco",
+     "start": 342.96,
+     "end": 343.38,
+     "probability": 0.990478515625
+    },
+    {
+     "id": "s36-w2",
+     "text": "um",
+     "start": 345.26,
+     "end": 346.24,
+     "probability": 0.337158203125
+    },
+    {
+     "id": "s36-w3",
+     "text": "bido",
+     "start": 346.24,
+     "end": 346.64,
+     "probability": 0.8619791666666666
+    },
+    {
+     "id": "s36-w4",
+     "text": "e",
+     "start": 346.64,
+     "end": 347.62,
+     "probability": 0.5458984375
+    },
+    {
+     "id": "s36-w5",
+     "text": "as",
+     "start": 371.05,
+     "end": 371.15,
+     "probability": 0.56396484375
+    },
+    {
+     "id": "s36-w6",
+     "text": "que",
+     "start": 371.15,
+     "end": 371.25,
+     "probability": 0.876953125
+    },
+    {
+     "id": "s36-w7",
+     "text": "ninguem",
+     "start": 371.25,
+     "end": 371.41,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s36-w8",
+     "text": "tem",
+     "start": 371.41,
+     "end": 371.81,
+     "probability": 0.35986328125
+    },
+    {
+     "id": "s36-w9",
+     "text": "de",
+     "start": 371.81,
+     "end": 371.99,
+     "probability": 0.98193359375
+    },
+    {
+     "id": "s36-w10",
+     "text": "cara",
+     "start": 371.99,
+     "end": 372.23,
+     "probability": 0.91015625
+    },
+    {
+     "id": "s36-w11",
+     "text": "porque",
+     "start": 372.23,
+     "end": 372.63,
+     "probability": 0.94970703125
+    },
+    {
+     "id": "s36-w12",
+     "text": "a",
+     "start": 372.63,
+     "end": 373.73,
+     "probability": 0.90576171875
+    },
+    {
+     "id": "s36-w13",
+     "text": "baba",
+     "start": 373.98,
+     "end": 374.28,
+     "probability": 0.9676106770833334
+    },
+    {
+     "id": "s36-w14",
+     "text": "nao",
+     "start": 374.28,
+     "end": 374.52,
+     "probability": 0.63818359375
+    },
+    {
+     "id": "s36-w15",
+     "text": "e",
+     "start": 374.52,
+     "end": 374.66,
+     "probability": 0.89111328125
+    },
+    {
+     "id": "s36-w16",
+     "text": "melhor",
+     "start": 374.66,
+     "end": 374.78,
+     "probability": 0.8447265625
+    }
+   ]
+  },
+  {
+   "id": "s37",
+   "start": 374.78,
+   "end": 377.2,
+   "text": "com o babo porque ela bidu um babi melhor",
+   "words": [
+    {
+     "id": "s37-w1",
+     "text": "com",
+     "start": 374.78,
+     "end": 374.96,
+     "probability": 0.625
+    },
+    {
+     "id": "s37-w2",
+     "text": "o",
+     "start": 374.96,
+     "end": 375.06,
+     "probability": 0.88134765625
+    },
+    {
+     "id": "s37-w3",
+     "text": "babo",
+     "start": 375.06,
+     "end": 375.32,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s37-w4",
+     "text": "porque",
+     "start": 375.32,
+     "end": 375.64,
+     "probability": 0.86865234375
+    },
+    {
+     "id": "s37-w5",
+     "text": "ela",
+     "start": 375.64,
+     "end": 375.78,
+     "probability": 0.9814453125
+    },
+    {
+     "id": "s37-w6",
+     "text": "bidu",
+     "start": 375.78,
+     "end": 376.04,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s37-w7",
+     "text": "um",
+     "start": 376.04,
+     "end": 376.26,
+     "probability": 0.9052734375
+    },
+    {
+     "id": "s37-w8",
+     "text": "babi",
+     "start": 376.26,
+     "end": 376.7,
+     "probability": 0.88720703125
+    },
+    {
+     "id": "s37-w9",
+     "text": "melhor",
+     "start": 376.7,
+     "end": 377.2,
+     "probability": 0.99365234375
+    }
+   ]
+  },
+  {
+   "id": "s38",
+   "start": 377.2,
+   "end": 382.93,
+   "text": "a baba e melhor que o babo porque ela bifa bife que o babo",
+   "words": [
+    {
+     "id": "s38-w1",
+     "text": "a",
+     "start": 377.2,
+     "end": 377.66,
+     "probability": 0.006656646728515625
+    },
+    {
+     "id": "s38-w2",
+     "text": "baba",
+     "start": 377.66,
+     "end": 379.22,
+     "probability": 0.9002278645833334
+    },
+    {
+     "id": "s38-w3",
+     "text": "e",
+     "start": 379.22,
+     "end": 379.36,
+     "probability": 0.233154296875
+    },
+    {
+     "id": "s38-w4",
+     "text": "melhor",
+     "start": 379.36,
+     "end": 379.58,
+     "probability": 0.98046875
+    },
+    {
+     "id": "s38-w5",
+     "text": "que",
+     "start": 379.58,
+     "end": 379.74,
+     "probability": 0.7880859375
+    },
+    {
+     "id": "s38-w6",
+     "text": "o",
+     "start": 379.74,
+     "end": 379.82,
+     "probability": 0.90869140625
+    },
+    {
+     "id": "s38-w7",
+     "text": "babo",
+     "start": 379.82,
+     "end": 380.22,
+     "probability": 0.9873046875
+    },
+    {
+     "id": "s38-w8",
+     "text": "porque",
+     "start": 380.22,
+     "end": 381.44,
+     "probability": 0.53125
+    },
+    {
+     "id": "s38-w9",
+     "text": "ela",
+     "start": 381.51,
+     "end": 381.65,
+     "probability": 0.84619140625
+    },
+    {
+     "id": "s38-w10",
+     "text": "bifa",
+     "start": 381.65,
+     "end": 381.91,
+     "probability": 0.99267578125
+    },
+    {
+     "id": "s38-w11",
+     "text": "bife",
+     "start": 381.91,
+     "end": 382.25,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s38-w12",
+     "text": "que",
+     "start": 382.25,
+     "end": 382.45,
+     "probability": 0.9482421875
+    },
+    {
+     "id": "s38-w13",
+     "text": "o",
+     "start": 382.45,
+     "end": 382.53,
+     "probability": 0.95849609375
+    },
+    {
+     "id": "s38-w14",
+     "text": "babo",
+     "start": 382.53,
+     "end": 382.93,
+     "probability": 0.99365234375
+    }
+   ]
+  },
+  {
+   "id": "s39",
+   "start": 384.09,
+   "end": 389.36,
+   "text": "bifi o que a baba bifo uma bifu o babo ele vai criar uma",
+   "words": [
+    {
+     "id": "s39-w1",
+     "text": "bifi",
+     "start": 384.09,
+     "end": 384.49,
+     "probability": 0.7811279296875
+    },
+    {
+     "id": "s39-w2",
+     "text": "o",
+     "start": 384.81,
+     "end": 385.21,
+     "probability": 0.6962890625
+    },
+    {
+     "id": "s39-w3",
+     "text": "que",
+     "start": 385.21,
+     "end": 385.35,
+     "probability": 0.7255859375
+    },
+    {
+     "id": "s39-w4",
+     "text": "a",
+     "start": 385.35,
+     "end": 385.81,
+     "probability": 0.303955078125
+    },
+    {
+     "id": "s39-w5",
+     "text": "baba",
+     "start": 385.81,
+     "end": 386.11,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s39-w6",
+     "text": "bifo",
+     "start": 386.11,
+     "end": 386.33,
+     "probability": 0.873291015625
+    },
+    {
+     "id": "s39-w7",
+     "text": "uma",
+     "start": 386.33,
+     "end": 386.45,
+     "probability": 0.9306640625
+    },
+    {
+     "id": "s39-w8",
+     "text": "bifu",
+     "start": 386.45,
+     "end": 387.09,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s39-w9",
+     "text": "o",
+     "start": 387.09,
+     "end": 388.11,
+     "probability": 0.86962890625
+    },
+    {
+     "id": "s39-w10",
+     "text": "babo",
+     "start": 388.24,
+     "end": 388.64,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s39-w11",
+     "text": "ele",
+     "start": 388.64,
+     "end": 388.84,
+     "probability": 0.72119140625
+    },
+    {
+     "id": "s39-w12",
+     "text": "vai",
+     "start": 388.84,
+     "end": 388.98,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s39-w13",
+     "text": "criar",
+     "start": 388.98,
+     "end": 389.18,
+     "probability": 0.9853515625
+    },
+    {
+     "id": "s39-w14",
+     "text": "uma",
+     "start": 389.18,
+     "end": 389.36,
+     "probability": 0.97607421875
+    }
+   ]
+  },
+  {
+   "id": "s40",
+   "start": 389.36,
+   "end": 394.9,
+   "text": "biga a baba vai criar um bige voce nao vai no i balo porque se bigi",
+   "words": [
+    {
+     "id": "s40-w1",
+     "text": "biga",
+     "start": 389.36,
+     "end": 390.02,
+     "probability": 0.94091796875
+    },
+    {
+     "id": "s40-w2",
+     "text": "a",
+     "start": 390.02,
+     "end": 390.88,
+     "probability": 0.91455078125
+    },
+    {
+     "id": "s40-w3",
+     "text": "baba",
+     "start": 390.88,
+     "end": 391.26,
+     "probability": 0.9982096354166666
+    },
+    {
+     "id": "s40-w4",
+     "text": "vai",
+     "start": 391.26,
+     "end": 391.42,
+     "probability": 0.98583984375
+    },
+    {
+     "id": "s40-w5",
+     "text": "criar",
+     "start": 391.42,
+     "end": 391.68,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s40-w6",
+     "text": "um",
+     "start": 391.68,
+     "end": 391.82,
+     "probability": 0.9345703125
+    },
+    {
+     "id": "s40-w7",
+     "text": "bige",
+     "start": 391.82,
+     "end": 392.22,
+     "probability": 0.994384765625
+    },
+    {
+     "id": "s40-w8",
+     "text": "voce",
+     "start": 392.76,
+     "end": 393.64,
+     "probability": 0.4619140625
+    },
+    {
+     "id": "s40-w9",
+     "text": "nao",
+     "start": 393.64,
+     "end": 393.74,
+     "probability": 0.896484375
+    },
+    {
+     "id": "s40-w10",
+     "text": "vai",
+     "start": 393.74,
+     "end": 393.86,
+     "probability": 0.98779296875
+    },
+    {
+     "id": "s40-w11",
+     "text": "no",
+     "start": 393.86,
+     "end": 393.98,
+     "probability": 0.73876953125
+    },
+    {
+     "id": "s40-w12",
+     "text": "i",
+     "start": 393.98,
+     "end": 394.06,
+     "probability": 0.328369140625
+    },
+    {
+     "id": "s40-w13",
+     "text": "balo",
+     "start": 394.06,
+     "end": 394.18,
+     "probability": 0.439453125
+    },
+    {
+     "id": "s40-w14",
+     "text": "porque",
+     "start": 394.18,
+     "end": 394.44,
+     "probability": 0.84716796875
+    },
+    {
+     "id": "s40-w15",
+     "text": "se",
+     "start": 394.44,
+     "end": 394.68,
+     "probability": 0.748046875
+    },
+    {
+     "id": "s40-w16",
+     "text": "bigi",
+     "start": 394.68,
+     "end": 394.9,
+     "probability": 0.6103515625
+    }
+   ]
+  },
+  {
+   "id": "s41",
+   "start": 394.9,
+   "end": 401.8,
+   "text": "i balo voce vai porque voce tem bigo bigu entao por exemplo voce nao",
+   "words": [
+    {
+     "id": "s41-w1",
+     "text": "i",
+     "start": 394.9,
+     "end": 395.1,
+     "probability": 0.1749267578125
+    },
+    {
+     "id": "s41-w2",
+     "text": "balo",
+     "start": 395.1,
+     "end": 395.36,
+     "probability": 0.953125
+    },
+    {
+     "id": "s41-w3",
+     "text": "voce",
+     "start": 395.36,
+     "end": 396.28,
+     "probability": 0.6650390625
+    },
+    {
+     "id": "s41-w4",
+     "text": "vai",
+     "start": 396.28,
+     "end": 396.36,
+     "probability": 0.802734375
+    },
+    {
+     "id": "s41-w5",
+     "text": "porque",
+     "start": 396.36,
+     "end": 396.5,
+     "probability": 0.78369140625
+    },
+    {
+     "id": "s41-w6",
+     "text": "voce",
+     "start": 396.5,
+     "end": 396.66,
+     "probability": 0.79248046875
+    },
+    {
+     "id": "s41-w7",
+     "text": "tem",
+     "start": 396.66,
+     "end": 396.8,
+     "probability": 0.98681640625
+    },
+    {
+     "id": "s41-w8",
+     "text": "bigo",
+     "start": 396.8,
+     "end": 397.16,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s41-w9",
+     "text": "bigu",
+     "start": 397.16,
+     "end": 398.26,
+     "probability": 0.9210611979166666
+    },
+    {
+     "id": "s41-w10",
+     "text": "entao",
+     "start": 400.98,
+     "end": 401.3,
+     "probability": 0.6015625
+    },
+    {
+     "id": "s41-w11",
+     "text": "por",
+     "start": 401.3,
+     "end": 401.4,
+     "probability": 0.95556640625
+    },
+    {
+     "id": "s41-w12",
+     "text": "exemplo",
+     "start": 401.4,
+     "end": 401.56,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s41-w13",
+     "text": "voce",
+     "start": 401.56,
+     "end": 401.7,
+     "probability": 0.5859375
+    },
+    {
+     "id": "s41-w14",
+     "text": "nao",
+     "start": 401.7,
+     "end": 401.8,
+     "probability": 0.9736328125
+    }
+   ]
+  },
+  {
+   "id": "s42",
+   "start": 401.8,
+   "end": 405.92,
+   "text": "bila no i balo porque se bigi i balo voce bila no i balo porque a bile",
+   "words": [
+    {
+     "id": "s42-w1",
+     "text": "bila",
+     "start": 401.8,
+     "end": 402.04,
+     "probability": 0.939453125
+    },
+    {
+     "id": "s42-w2",
+     "text": "no",
+     "start": 402.04,
+     "end": 402.18,
+     "probability": 0.9111328125
+    },
+    {
+     "id": "s42-w3",
+     "text": "i",
+     "start": 402.18,
+     "end": 402.28,
+     "probability": 0.86474609375
+    },
+    {
+     "id": "s42-w4",
+     "text": "balo",
+     "start": 402.28,
+     "end": 402.5,
+     "probability": 0.974609375
+    },
+    {
+     "id": "s42-w5",
+     "text": "porque",
+     "start": 402.5,
+     "end": 402.96,
+     "probability": 0.70263671875
+    },
+    {
+     "id": "s42-w6",
+     "text": "se",
+     "start": 402.96,
+     "end": 403.14,
+     "probability": 0.79150390625
+    },
+    {
+     "id": "s42-w7",
+     "text": "bigi",
+     "start": 403.14,
+     "end": 403.32,
+     "probability": 0.82470703125
+    },
+    {
+     "id": "s42-w8",
+     "text": "i",
+     "start": 403.32,
+     "end": 403.52,
+     "probability": 0.476806640625
+    },
+    {
+     "id": "s42-w9",
+     "text": "balo",
+     "start": 403.52,
+     "end": 403.78,
+     "probability": 0.974609375
+    },
+    {
+     "id": "s42-w10",
+     "text": "voce",
+     "start": 403.78,
+     "end": 404.68,
+     "probability": 0.7060546875
+    },
+    {
+     "id": "s42-w11",
+     "text": "bila",
+     "start": 404.68,
+     "end": 404.84,
+     "probability": 0.965087890625
+    },
+    {
+     "id": "s42-w12",
+     "text": "no",
+     "start": 404.84,
+     "end": 405.0,
+     "probability": 0.7626953125
+    },
+    {
+     "id": "s42-w13",
+     "text": "i",
+     "start": 405.0,
+     "end": 405.06,
+     "probability": 0.80615234375
+    },
+    {
+     "id": "s42-w14",
+     "text": "balo",
+     "start": 405.06,
+     "end": 405.22,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s42-w15",
+     "text": "porque",
+     "start": 405.22,
+     "end": 405.4,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s42-w16",
+     "text": "a",
+     "start": 405.4,
+     "end": 405.44,
+     "probability": 0.258544921875
+    },
+    {
+     "id": "s42-w17",
+     "text": "bile",
+     "start": 405.44,
+     "end": 405.92,
+     "probability": 0.991943359375
+    }
+   ]
+  },
+  {
+   "id": "s43",
+   "start": 405.92,
+   "end": 411.33,
+   "text": "bili humana que e o que bilo e voce nao vai na baba porque voce",
+   "words": [
+    {
+     "id": "s43-w1",
+     "text": "bili",
+     "start": 405.92,
+     "end": 406.5,
+     "probability": 0.971923828125
+    },
+    {
+     "id": "s43-w2",
+     "text": "humana",
+     "start": 406.5,
+     "end": 407.06,
+     "probability": 0.741455078125
+    },
+    {
+     "id": "s43-w3",
+     "text": "que",
+     "start": 407.06,
+     "end": 407.2,
+     "probability": 0.5576171875
+    },
+    {
+     "id": "s43-w4",
+     "text": "e",
+     "start": 407.2,
+     "end": 407.28,
+     "probability": 0.89013671875
+    },
+    {
+     "id": "s43-w5",
+     "text": "o",
+     "start": 407.28,
+     "end": 407.34,
+     "probability": 0.98486328125
+    },
+    {
+     "id": "s43-w6",
+     "text": "que",
+     "start": 407.34,
+     "end": 407.5,
+     "probability": 0.89501953125
+    },
+    {
+     "id": "s43-w7",
+     "text": "bilo",
+     "start": 407.5,
+     "end": 408.0,
+     "probability": 0.73876953125
+    },
+    {
+     "id": "s43-w8",
+     "text": "e",
+     "start": 408.0,
+     "end": 409.0,
+     "probability": 0.76953125
+    },
+    {
+     "id": "s43-w9",
+     "text": "voce",
+     "start": 410.25,
+     "end": 410.33,
+     "probability": 0.69482421875
+    },
+    {
+     "id": "s43-w10",
+     "text": "nao",
+     "start": 410.33,
+     "end": 410.41,
+     "probability": 0.96630859375
+    },
+    {
+     "id": "s43-w11",
+     "text": "vai",
+     "start": 410.41,
+     "end": 410.55,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s43-w12",
+     "text": "na",
+     "start": 410.55,
+     "end": 410.67,
+     "probability": 0.96630859375
+    },
+    {
+     "id": "s43-w13",
+     "text": "baba",
+     "start": 410.67,
+     "end": 411.03,
+     "probability": 0.9986979166666666
+    },
+    {
+     "id": "s43-w14",
+     "text": "porque",
+     "start": 411.03,
+     "end": 411.19,
+     "probability": 0.94970703125
+    },
+    {
+     "id": "s43-w15",
+     "text": "voce",
+     "start": 411.19,
+     "end": 411.33,
+     "probability": 0.81201171875
+    }
+   ]
+  },
+  {
+   "id": "s44",
+   "start": 411.33,
+   "end": 417.09,
+   "text": "tem bigo porque voce vai para bilu e isso que o babo nao bima babu",
+   "words": [
+    {
+     "id": "s44-w1",
+     "text": "tem",
+     "start": 411.33,
+     "end": 411.47,
+     "probability": 0.05914306640625
+    },
+    {
+     "id": "s44-w2",
+     "text": "bigo",
+     "start": 411.47,
+     "end": 411.83,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s44-w3",
+     "text": "porque",
+     "start": 411.83,
+     "end": 412.71,
+     "probability": 0.20703125
+    },
+    {
+     "id": "s44-w4",
+     "text": "voce",
+     "start": 412.71,
+     "end": 413.05,
+     "probability": 0.48046875
+    },
+    {
+     "id": "s44-w5",
+     "text": "vai",
+     "start": 413.05,
+     "end": 413.25,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s44-w6",
+     "text": "para",
+     "start": 413.25,
+     "end": 413.43,
+     "probability": 0.8115234375
+    },
+    {
+     "id": "s44-w7",
+     "text": "bilu",
+     "start": 413.43,
+     "end": 414.05,
+     "probability": 0.98779296875
+    },
+    {
+     "id": "s44-w8",
+     "text": "e",
+     "start": 414.05,
+     "end": 415.05,
+     "probability": 0.39990234375
+    },
+    {
+     "id": "s44-w9",
+     "text": "isso",
+     "start": 415.37,
+     "end": 415.47,
+     "probability": 0.9072265625
+    },
+    {
+     "id": "s44-w10",
+     "text": "que",
+     "start": 415.47,
+     "end": 415.59,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s44-w11",
+     "text": "o",
+     "start": 415.59,
+     "end": 415.65,
+     "probability": 0.96630859375
+    },
+    {
+     "id": "s44-w12",
+     "text": "babo",
+     "start": 415.65,
+     "end": 415.89,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s44-w13",
+     "text": "nao",
+     "start": 415.89,
+     "end": 416.13,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s44-w14",
+     "text": "bima",
+     "start": 416.13,
+     "end": 416.51,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s44-w15",
+     "text": "babu",
+     "start": 416.51,
+     "end": 417.09,
+     "probability": 0.99609375
+    }
+   ]
+  },
+  {
+   "id": "s45",
+   "start": 417.92,
+   "end": 422.58,
+   "text": "ou seja no bem que tem beba la 90 milhoes de bime nenhum bimi",
+   "words": [
+    {
+     "id": "s45-w1",
+     "text": "ou",
+     "start": 417.92,
+     "end": 418.7,
+     "probability": 0.830078125
+    },
+    {
+     "id": "s45-w2",
+     "text": "seja",
+     "start": 418.7,
+     "end": 418.84,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s45-w3",
+     "text": "no",
+     "start": 418.84,
+     "end": 419.08,
+     "probability": 0.3359375
+    },
+    {
+     "id": "s45-w4",
+     "text": "bem",
+     "start": 419.08,
+     "end": 419.34,
+     "probability": 0.37744140625
+    },
+    {
+     "id": "s45-w5",
+     "text": "que",
+     "start": 419.34,
+     "end": 419.52,
+     "probability": 0.96435546875
+    },
+    {
+     "id": "s45-w6",
+     "text": "tem",
+     "start": 419.52,
+     "end": 419.72,
+     "probability": 0.9365234375
+    },
+    {
+     "id": "s45-w7",
+     "text": "beba",
+     "start": 419.72,
+     "end": 419.88,
+     "probability": 0.6455078125
+    },
+    {
+     "id": "s45-w8",
+     "text": "la",
+     "start": 419.88,
+     "end": 420.06,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s45-w9",
+     "text": "90",
+     "start": 420.06,
+     "end": 420.52,
+     "probability": 0.8505859375
+    },
+    {
+     "id": "s45-w10",
+     "text": "milhoes",
+     "start": 420.52,
+     "end": 420.8,
+     "probability": 0.81005859375
+    },
+    {
+     "id": "s45-w11",
+     "text": "de",
+     "start": 420.8,
+     "end": 420.98,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s45-w12",
+     "text": "bime",
+     "start": 420.98,
+     "end": 421.48,
+     "probability": 0.872802734375
+    },
+    {
+     "id": "s45-w13",
+     "text": "nenhum",
+     "start": 421.48,
+     "end": 422.36,
+     "probability": 0.890625
+    },
+    {
+     "id": "s45-w14",
+     "text": "bimi",
+     "start": 422.36,
+     "end": 422.58,
+     "probability": 0.984375
+    }
+   ]
+  },
+  {
+   "id": "s46",
+   "start": 422.58,
+   "end": 434.0,
+   "text": "bime e bige bimo e o babo bimu que bina voce bine beba la",
+   "words": [
+    {
+     "id": "s46-w1",
+     "text": "bime",
+     "start": 422.58,
+     "end": 423.1,
+     "probability": 0.94140625
+    },
+    {
+     "id": "s46-w2",
+     "text": "e",
+     "start": 423.1,
+     "end": 423.18,
+     "probability": 0.625
+    },
+    {
+     "id": "s46-w3",
+     "text": "bige",
+     "start": 423.18,
+     "end": 423.5,
+     "probability": 0.890625
+    },
+    {
+     "id": "s46-w4",
+     "text": "bimo",
+     "start": 423.95,
+     "end": 425.05,
+     "probability": 0.8037109375
+    },
+    {
+     "id": "s46-w5",
+     "text": "e",
+     "start": 425.05,
+     "end": 426.13,
+     "probability": 0.52490234375
+    },
+    {
+     "id": "s46-w6",
+     "text": "o",
+     "start": 429.68,
+     "end": 429.76,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s46-w7",
+     "text": "babo",
+     "start": 429.76,
+     "end": 430.0,
+     "probability": 0.95703125
+    },
+    {
+     "id": "s46-w8",
+     "text": "bimu",
+     "start": 430.0,
+     "end": 430.44,
+     "probability": 0.98681640625
+    },
+    {
+     "id": "s46-w9",
+     "text": "que",
+     "start": 430.44,
+     "end": 430.64,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s46-w10",
+     "text": "bina",
+     "start": 430.64,
+     "end": 431.7,
+     "probability": 0.9313151041666666
+    },
+    {
+     "id": "s46-w11",
+     "text": "voce",
+     "start": 431.76,
+     "end": 432.92,
+     "probability": 0.94580078125
+    },
+    {
+     "id": "s46-w12",
+     "text": "bine",
+     "start": 432.92,
+     "end": 433.28,
+     "probability": 0.92333984375
+    },
+    {
+     "id": "s46-w13",
+     "text": "beba",
+     "start": 433.28,
+     "end": 433.8,
+     "probability": 0.8271484375
+    },
+    {
+     "id": "s46-w14",
+     "text": "la",
+     "start": 433.8,
+     "end": 434.0,
+     "probability": 0.990234375
+    }
+   ]
+  },
+  {
+   "id": "s47",
+   "start": 434.0,
+   "end": 437.66,
+   "text": "bala bini pro cara, entao por exemplo, voce bine o meu bape agora, eu vou te bino...",
+   "words": [
+    {
+     "id": "s47-w1",
+     "text": "bala",
+     "start": 434.0,
+     "end": 434.26,
+     "probability": 0.1719970703125
+    },
+    {
+     "id": "s47-w2",
+     "text": "bini",
+     "start": 434.26,
+     "end": 434.88,
+     "probability": 0.61474609375
+    },
+    {
+     "id": "s47-w3",
+     "text": "pro",
+     "start": 434.88,
+     "end": 435.08,
+     "probability": 0.84912109375
+    },
+    {
+     "id": "s47-w4",
+     "text": "cara,",
+     "start": 435.08,
+     "end": 435.36,
+     "probability": 0.9013671875
+    },
+    {
+     "id": "s47-w5",
+     "text": "entao",
+     "start": 435.54,
+     "end": 435.58,
+     "probability": 0.8623046875
+    },
+    {
+     "id": "s47-w6",
+     "text": "por",
+     "start": 435.58,
+     "end": 435.8,
+     "probability": 0.88818359375
+    },
+    {
+     "id": "s47-w7",
+     "text": "exemplo,",
+     "start": 435.8,
+     "end": 435.96,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s47-w8",
+     "text": "voce",
+     "start": 436.12,
+     "end": 436.18,
+     "probability": 0.452392578125
+    },
+    {
+     "id": "s47-w9",
+     "text": "bine",
+     "start": 436.18,
+     "end": 436.42,
+     "probability": 0.89990234375
+    },
+    {
+     "id": "s47-w10",
+     "text": "o",
+     "start": 436.42,
+     "end": 436.54,
+     "probability": 0.377197265625
+    },
+    {
+     "id": "s47-w11",
+     "text": "meu",
+     "start": 436.54,
+     "end": 436.72,
+     "probability": 0.97021484375
+    },
+    {
+     "id": "s47-w12",
+     "text": "bape",
+     "start": 436.72,
+     "end": 436.98,
+     "probability": 0.98681640625
+    },
+    {
+     "id": "s47-w13",
+     "text": "agora,",
+     "start": 436.98,
+     "end": 437.28,
+     "probability": 0.98583984375
+    },
+    {
+     "id": "s47-w14",
+     "text": "eu",
+     "start": 437.32,
+     "end": 437.4,
+     "probability": 0.70751953125
+    },
+    {
+     "id": "s47-w15",
+     "text": "vou",
+     "start": 437.4,
+     "end": 437.48,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s47-w16",
+     "text": "te",
+     "start": 437.48,
+     "end": 437.58,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s47-w17",
+     "text": "bino...",
+     "start": 437.58,
+     "end": 437.64,
+     "probability": 0.6845703125
+    }
+   ]
+  },
+  {
+   "id": "s48",
+   "start": 437.66,
+   "end": 442.87,
+   "text": "cinco bere de bini nao e assim que voce vai binu bina nao e",
+   "words": [
+    {
+     "id": "s48-w1",
+     "text": "cinco",
+     "start": 437.66,
+     "end": 437.94,
+     "probability": 0.67822265625
+    },
+    {
+     "id": "s48-w2",
+     "text": "bere",
+     "start": 437.94,
+     "end": 438.32,
+     "probability": 0.96923828125
+    },
+    {
+     "id": "s48-w3",
+     "text": "de",
+     "start": 438.32,
+     "end": 438.46,
+     "probability": 0.2454833984375
+    },
+    {
+     "id": "s48-w4",
+     "text": "bini",
+     "start": 438.46,
+     "end": 438.92,
+     "probability": 0.940185546875
+    },
+    {
+     "id": "s48-w5",
+     "text": "nao",
+     "start": 438.92,
+     "end": 439.18,
+     "probability": 0.93701171875
+    },
+    {
+     "id": "s48-w6",
+     "text": "e",
+     "start": 439.18,
+     "end": 439.3,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s48-w7",
+     "text": "assim",
+     "start": 439.3,
+     "end": 439.52,
+     "probability": 0.97265625
+    },
+    {
+     "id": "s48-w8",
+     "text": "que",
+     "start": 439.52,
+     "end": 439.66,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s48-w9",
+     "text": "voce",
+     "start": 439.66,
+     "end": 439.76,
+     "probability": 0.875
+    },
+    {
+     "id": "s48-w10",
+     "text": "vai",
+     "start": 439.76,
+     "end": 439.88,
+     "probability": 0.98486328125
+    },
+    {
+     "id": "s48-w11",
+     "text": "binu",
+     "start": 439.88,
+     "end": 440.18,
+     "probability": 0.974609375
+    },
+    {
+     "id": "s48-w12",
+     "text": "bina",
+     "start": 440.18,
+     "end": 440.9,
+     "probability": 0.8668619791666666
+    },
+    {
+     "id": "s48-w13",
+     "text": "nao",
+     "start": 440.9,
+     "end": 441.88,
+     "probability": 0.93701171875
+    },
+    {
+     "id": "s48-w14",
+     "text": "e",
+     "start": 442.75,
+     "end": 442.87,
+     "probability": 0.9970703125
+    }
+   ]
+  },
+  {
+   "id": "s49",
+   "start": 442.87,
+   "end": 450.44,
+   "text": "com ponto nao e com bipa ne nao e com nada bipe a baba bipi que a bina",
+   "words": [
+    {
+     "id": "s49-w1",
+     "text": "com",
+     "start": 442.87,
+     "end": 442.97,
+     "probability": 0.0537109375
+    },
+    {
+     "id": "s49-w2",
+     "text": "ponto",
+     "start": 442.97,
+     "end": 443.53,
+     "probability": 0.248779296875
+    },
+    {
+     "id": "s49-w3",
+     "text": "nao",
+     "start": 443.53,
+     "end": 443.85,
+     "probability": 0.31396484375
+    },
+    {
+     "id": "s49-w4",
+     "text": "e",
+     "start": 443.85,
+     "end": 443.95,
+     "probability": 0.9873046875
+    },
+    {
+     "id": "s49-w5",
+     "text": "com",
+     "start": 443.95,
+     "end": 444.11,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s49-w6",
+     "text": "bipa",
+     "start": 444.11,
+     "end": 444.67,
+     "probability": 0.884765625
+    },
+    {
+     "id": "s49-w7",
+     "text": "ne",
+     "start": 444.67,
+     "end": 444.93,
+     "probability": 0.375
+    },
+    {
+     "id": "s49-w8",
+     "text": "nao",
+     "start": 444.93,
+     "end": 445.05,
+     "probability": 0.1767578125
+    },
+    {
+     "id": "s49-w9",
+     "text": "com",
+     "start": 445.05,
+     "end": 445.15,
+     "probability": 0.91259765625
+    },
+    {
+     "id": "s49-w10",
+     "text": "nada",
+     "start": 445.15,
+     "end": 445.35,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s49-w11",
+     "text": "bipe",
+     "start": 445.35,
+     "end": 445.73,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s49-w12",
+     "text": "a",
+     "start": 445.73,
+     "end": 446.73,
+     "probability": 0.68505859375
+    },
+    {
+     "id": "s49-w13",
+     "text": "baba",
+     "start": 448.14,
+     "end": 448.72,
+     "probability": 0.9737955729166666
+    },
+    {
+     "id": "s49-w14",
+     "text": "bipi",
+     "start": 448.72,
+     "end": 449.54,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s49-w15",
+     "text": "que",
+     "start": 449.54,
+     "end": 449.72,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s49-w16",
+     "text": "a",
+     "start": 449.72,
+     "end": 449.84,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s49-w17",
+     "text": "bina",
+     "start": 449.84,
+     "end": 450.44,
+     "probability": 0.9235026041666666
+    }
+   ]
+  },
+  {
+   "id": "s50",
+   "start": 450.44,
+   "end": 457.14,
+   "text": "ela se bine com bipo bipo entao por exemplo voce nao deixa de bino o bipu",
+   "words": [
+    {
+     "id": "s50-w1",
+     "text": "ela",
+     "start": 450.44,
+     "end": 450.6,
+     "probability": 0.9697265625
+    },
+    {
+     "id": "s50-w2",
+     "text": "se",
+     "start": 450.6,
+     "end": 450.76,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s50-w3",
+     "text": "bine",
+     "start": 450.76,
+     "end": 451.0,
+     "probability": 0.93896484375
+    },
+    {
+     "id": "s50-w4",
+     "text": "com",
+     "start": 451.0,
+     "end": 451.24,
+     "probability": 0.487060546875
+    },
+    {
+     "id": "s50-w5",
+     "text": "bipo",
+     "start": 451.24,
+     "end": 451.76,
+     "probability": 0.849609375
+    },
+    {
+     "id": "s50-w6",
+     "text": "bipo",
+     "start": 451.76,
+     "end": 452.74,
+     "probability": 0.73828125
+    },
+    {
+     "id": "s50-w7",
+     "text": "entao",
+     "start": 452.74,
+     "end": 453.7,
+     "probability": 0.5595703125
+    },
+    {
+     "id": "s50-w8",
+     "text": "por",
+     "start": 455.58,
+     "end": 455.72,
+     "probability": 0.9775390625
+    },
+    {
+     "id": "s50-w9",
+     "text": "exemplo",
+     "start": 455.72,
+     "end": 455.9,
+     "probability": 0.9990234375
+    },
+    {
+     "id": "s50-w10",
+     "text": "voce",
+     "start": 455.9,
+     "end": 456.12,
+     "probability": 0.295654296875
+    },
+    {
+     "id": "s50-w11",
+     "text": "nao",
+     "start": 456.12,
+     "end": 456.24,
+     "probability": 0.97314453125
+    },
+    {
+     "id": "s50-w12",
+     "text": "deixa",
+     "start": 456.24,
+     "end": 456.42,
+     "probability": 0.98388671875
+    },
+    {
+     "id": "s50-w13",
+     "text": "de",
+     "start": 456.42,
+     "end": 456.6,
+     "probability": 0.982421875
+    },
+    {
+     "id": "s50-w14",
+     "text": "bino",
+     "start": 456.6,
+     "end": 456.72,
+     "probability": 0.94677734375
+    },
+    {
+     "id": "s50-w15",
+     "text": "o",
+     "start": 456.72,
+     "end": 456.86,
+     "probability": 0.951171875
+    },
+    {
+     "id": "s50-w16",
+     "text": "bipu",
+     "start": 456.86,
+     "end": 457.14,
+     "probability": 0.25262451171875
+    }
+   ]
+  },
+  {
+   "id": "s51",
+   "start": 457.14,
+   "end": 465.44,
+   "text": "para o bira porque ele e bire voce nao deixa voce deixa de bino o bipu porque",
+   "words": [
+    {
+     "id": "s51-w1",
+     "text": "para",
+     "start": 457.14,
+     "end": 457.7,
+     "probability": 0.61279296875
+    },
+    {
+     "id": "s51-w2",
+     "text": "o",
+     "start": 457.7,
+     "end": 457.8,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s51-w3",
+     "text": "bira",
+     "start": 457.8,
+     "end": 458.12,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s51-w4",
+     "text": "porque",
+     "start": 458.12,
+     "end": 459.2,
+     "probability": 0.93115234375
+    },
+    {
+     "id": "s51-w5",
+     "text": "ele",
+     "start": 459.2,
+     "end": 459.34,
+     "probability": 0.94091796875
+    },
+    {
+     "id": "s51-w6",
+     "text": "e",
+     "start": 459.34,
+     "end": 459.46,
+     "probability": 0.974609375
+    },
+    {
+     "id": "s51-w7",
+     "text": "bire",
+     "start": 459.46,
+     "end": 459.74,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s51-w8",
+     "text": "voce",
+     "start": 459.84,
+     "end": 460.92,
+     "probability": 0.9697265625
+    },
+    {
+     "id": "s51-w9",
+     "text": "nao",
+     "start": 460.92,
+     "end": 461.36,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s51-w10",
+     "text": "deixa",
+     "start": 461.36,
+     "end": 461.86,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s51-w11",
+     "text": "voce",
+     "start": 461.86,
+     "end": 463.02,
+     "probability": 0.93701171875
+    },
+    {
+     "id": "s51-w12",
+     "text": "deixa",
+     "start": 463.12,
+     "end": 463.54,
+     "probability": 0.9736328125
+    },
+    {
+     "id": "s51-w13",
+     "text": "de",
+     "start": 463.54,
+     "end": 463.7,
+     "probability": 0.96923828125
+    },
+    {
+     "id": "s51-w14",
+     "text": "bino",
+     "start": 463.7,
+     "end": 463.84,
+     "probability": 0.93603515625
+    },
+    {
+     "id": "s51-w15",
+     "text": "o",
+     "start": 463.84,
+     "end": 464.02,
+     "probability": 0.91455078125
+    },
+    {
+     "id": "s51-w16",
+     "text": "bipu",
+     "start": 464.02,
+     "end": 464.72,
+     "probability": 0.734619140625
+    },
+    {
+     "id": "s51-w17",
+     "text": "porque",
+     "start": 464.72,
+     "end": 465.44,
+     "probability": 0.828125
+    }
+   ]
+  },
+  {
+   "id": "s52",
+   "start": 465.44,
+   "end": 474.07,
+   "text": "voce se biri biro e a bipo e o motor mas sim mais biru que existe",
+   "words": [
+    {
+     "id": "s52-w1",
+     "text": "voce",
+     "start": 465.44,
+     "end": 465.68,
+     "probability": 0.9697265625
+    },
+    {
+     "id": "s52-w2",
+     "text": "se",
+     "start": 465.68,
+     "end": 465.88,
+     "probability": 0.73681640625
+    },
+    {
+     "id": "s52-w3",
+     "text": "biri",
+     "start": 465.88,
+     "end": 466.04,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s52-w4",
+     "text": "biro",
+     "start": 466.04,
+     "end": 466.56,
+     "probability": 0.98486328125
+    },
+    {
+     "id": "s52-w5",
+     "text": "e",
+     "start": 466.56,
+     "end": 467.54,
+     "probability": 0.91015625
+    },
+    {
+     "id": "s52-w6",
+     "text": "a",
+     "start": 469.33,
+     "end": 469.41,
+     "probability": 0.990234375
+    },
+    {
+     "id": "s52-w7",
+     "text": "bipo",
+     "start": 469.41,
+     "end": 469.87,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s52-w8",
+     "text": "e",
+     "start": 469.87,
+     "end": 470.39,
+     "probability": 0.84033203125
+    },
+    {
+     "id": "s52-w9",
+     "text": "o",
+     "start": 470.39,
+     "end": 470.49,
+     "probability": 0.92431640625
+    },
+    {
+     "id": "s52-w10",
+     "text": "motor",
+     "start": 470.49,
+     "end": 470.95,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s52-w11",
+     "text": "mas",
+     "start": 470.95,
+     "end": 471.69,
+     "probability": 0.71142578125
+    },
+    {
+     "id": "s52-w12",
+     "text": "sim",
+     "start": 471.69,
+     "end": 471.91,
+     "probability": 0.358154296875
+    },
+    {
+     "id": "s52-w13",
+     "text": "mais",
+     "start": 471.91,
+     "end": 472.87,
+     "probability": 0.9794921875
+    },
+    {
+     "id": "s52-w14",
+     "text": "biru",
+     "start": 472.87,
+     "end": 473.49,
+     "probability": 0.973876953125
+    },
+    {
+     "id": "s52-w15",
+     "text": "que",
+     "start": 473.49,
+     "end": 473.75,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s52-w16",
+     "text": "existe",
+     "start": 473.75,
+     "end": 474.07,
+     "probability": 0.9833984375
+    }
+   ]
+  },
+  {
+   "id": "s53",
+   "start": 474.07,
+   "end": 489.39,
+   "text": "e o babo bisa bise la em bisi isso de biso, biso, biso.",
+   "words": [
+    {
+     "id": "s53-w1",
+     "text": "e",
+     "start": 474.07,
+     "end": 475.19,
+     "probability": 0.1597900390625
+    },
+    {
+     "id": "s53-w2",
+     "text": "o",
+     "start": 475.19,
+     "end": 476.96999999999997,
+     "probability": 0.93994140625
+    },
+    {
+     "id": "s53-w3",
+     "text": "babo",
+     "start": 476.96999999999997,
+     "end": 477.46999999999997,
+     "probability": 0.9755859375
+    },
+    {
+     "id": "s53-w4",
+     "text": "bisa",
+     "start": 477.46999999999997,
+     "end": 478.15,
+     "probability": 0.932373046875
+    },
+    {
+     "id": "s53-w5",
+     "text": "bise",
+     "start": 478.15,
+     "end": 478.46999999999997,
+     "probability": 0.6553955078125
+    },
+    {
+     "id": "s53-w6",
+     "text": "la",
+     "start": 478.46999999999997,
+     "end": 478.84999999999997,
+     "probability": 0.2490234375
+    },
+    {
+     "id": "s53-w7",
+     "text": "em",
+     "start": 478.84999999999997,
+     "end": 479.01,
+     "probability": 0.693359375
+    },
+    {
+     "id": "s53-w8",
+     "text": "bisi",
+     "start": 479.01,
+     "end": 479.31,
+     "probability": 0.4730224609375
+    },
+    {
+     "id": "s53-w9",
+     "text": "isso",
+     "start": 479.31,
+     "end": 479.46999999999997,
+     "probability": 0.70947265625
+    },
+    {
+     "id": "s53-w10",
+     "text": "de",
+     "start": 479.46999999999997,
+     "end": 479.69,
+     "probability": 0.84814453125
+    },
+    {
+     "id": "s53-w11",
+     "text": "biso,",
+     "start": 479.69,
+     "end": 480.09,
+     "probability": 0.7288818359375
+    },
+    {
+     "id": "s53-w12",
+     "text": "biso,",
+     "start": 480.09,
+     "end": 481.83,
+     "probability": 0.961181640625
+    },
+    {
+     "id": "s53-w13",
+     "text": "biso.",
+     "start": 481.83,
+     "end": 487.90999999999997,
+     "probability": 0.833251953125
+    }
+   ]
+  },
+  {
+   "id": "s54",
+   "start": 489.39,
+   "end": 495.47,
+   "text": "biso rate que a biso biso e bisu os bime ou bita que",
+   "words": [
+    {
+     "id": "s54-w1",
+     "text": "biso",
+     "start": 489.39,
+     "end": 489.87,
+     "probability": 0.806396484375
+    },
+    {
+     "id": "s54-w2",
+     "text": "rate",
+     "start": 489.87,
+     "end": 490.21,
+     "probability": 0.71240234375
+    },
+    {
+     "id": "s54-w3",
+     "text": "que",
+     "start": 490.21,
+     "end": 490.61,
+     "probability": 0.460205078125
+    },
+    {
+     "id": "s54-w4",
+     "text": "a",
+     "start": 490.61,
+     "end": 490.75,
+     "probability": 0.25927734375
+    },
+    {
+     "id": "s54-w5",
+     "text": "biso",
+     "start": 490.75,
+     "end": 491.43,
+     "probability": 0.8330078125
+    },
+    {
+     "id": "s54-w6",
+     "text": "biso",
+     "start": 491.43,
+     "end": 491.79,
+     "probability": 0.9013671875
+    },
+    {
+     "id": "s54-w7",
+     "text": "e",
+     "start": 491.79,
+     "end": 491.89,
+     "probability": 0.92626953125
+    },
+    {
+     "id": "s54-w8",
+     "text": "bisu",
+     "start": 491.89,
+     "end": 492.45,
+     "probability": 0.987060546875
+    },
+    {
+     "id": "s54-w9",
+     "text": "os",
+     "start": 492.45,
+     "end": 492.81,
+     "probability": 0.95751953125
+    },
+    {
+     "id": "s54-w10",
+     "text": "bime",
+     "start": 492.81,
+     "end": 493.63,
+     "probability": 0.985107421875
+    },
+    {
+     "id": "s54-w11",
+     "text": "ou",
+     "start": 493.63,
+     "end": 494.11,
+     "probability": 0.9619140625
+    },
+    {
+     "id": "s54-w12",
+     "text": "bita",
+     "start": 494.11,
+     "end": 494.49,
+     "probability": 0.98291015625
+    },
+    {
+     "id": "s54-w13",
+     "text": "que",
+     "start": 494.49,
+     "end": 495.47,
+     "probability": 0.97119140625
+    }
+   ]
+  },
+  {
+   "id": "s55",
+   "start": 495.47,
+   "end": 505.49,
+   "text": "bite o grupo e biti durante um bito bitu o que seria o biso",
+   "words": [
+    {
+     "id": "s55-w1",
+     "text": "bite",
+     "start": 495.47,
+     "end": 495.97,
+     "probability": 0.844482421875
+    },
+    {
+     "id": "s55-w2",
+     "text": "o",
+     "start": 495.97,
+     "end": 496.15,
+     "probability": 0.92919921875
+    },
+    {
+     "id": "s55-w3",
+     "text": "grupo",
+     "start": 496.15,
+     "end": 496.43,
+     "probability": 0.9970703125
+    },
+    {
+     "id": "s55-w4",
+     "text": "e",
+     "start": 496.43,
+     "end": 496.91,
+     "probability": 0.60302734375
+    },
+    {
+     "id": "s55-w5",
+     "text": "biti",
+     "start": 496.91,
+     "end": 497.63,
+     "probability": 0.988037109375
+    },
+    {
+     "id": "s55-w6",
+     "text": "durante",
+     "start": 497.63,
+     "end": 497.91,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s55-w7",
+     "text": "um",
+     "start": 497.91,
+     "end": 498.09,
+     "probability": 0.9716796875
+    },
+    {
+     "id": "s55-w8",
+     "text": "bito",
+     "start": 498.09,
+     "end": 498.33,
+     "probability": 0.9931640625
+    },
+    {
+     "id": "s55-w9",
+     "text": "bitu",
+     "start": 498.33,
+     "end": 499.11,
+     "probability": 0.96923828125
+    },
+    {
+     "id": "s55-w10",
+     "text": "o",
+     "start": 504.01,
+     "end": 504.73,
+     "probability": 0.378662109375
+    },
+    {
+     "id": "s55-w11",
+     "text": "que",
+     "start": 504.73,
+     "end": 504.83,
+     "probability": 0.96142578125
+    },
+    {
+     "id": "s55-w12",
+     "text": "seria",
+     "start": 504.83,
+     "end": 505.07,
+     "probability": 0.93212890625
+    },
+    {
+     "id": "s55-w13",
+     "text": "o",
+     "start": 505.07,
+     "end": 505.19,
+     "probability": 0.7763671875
+    },
+    {
+     "id": "s55-w14",
+     "text": "biso",
+     "start": 505.19,
+     "end": 505.49,
+     "probability": 0.97119140625
+    }
+   ]
+  },
+  {
+   "id": "s56",
+   "start": 505.49,
+   "end": 512.55,
+   "text": "biso e bisu a biva que vai bive a bama de bivi ou da",
+   "words": [
+    {
+     "id": "s56-w1",
+     "text": "biso",
+     "start": 505.49,
+     "end": 505.87,
+     "probability": 0.7427978515625
+    },
+    {
+     "id": "s56-w2",
+     "text": "e",
+     "start": 505.87,
+     "end": 505.97,
+     "probability": 0.8662109375
+    },
+    {
+     "id": "s56-w3",
+     "text": "bisu",
+     "start": 505.97,
+     "end": 506.47,
+     "probability": 0.989990234375
+    },
+    {
+     "id": "s56-w4",
+     "text": "a",
+     "start": 506.47,
+     "end": 506.63,
+     "probability": 0.935546875
+    },
+    {
+     "id": "s56-w5",
+     "text": "biva",
+     "start": 506.63,
+     "end": 506.95,
+     "probability": 0.973388671875
+    },
+    {
+     "id": "s56-w6",
+     "text": "que",
+     "start": 506.95,
+     "end": 507.19,
+     "probability": 0.99072265625
+    },
+    {
+     "id": "s56-w7",
+     "text": "vai",
+     "start": 507.19,
+     "end": 507.51,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s56-w8",
+     "text": "bive",
+     "start": 507.67,
+     "end": 509.55,
+     "probability": 0.672119140625
+    },
+    {
+     "id": "s56-w9",
+     "text": "a",
+     "start": 509.55,
+     "end": 509.75,
+     "probability": 0.39404296875
+    },
+    {
+     "id": "s56-w10",
+     "text": "bama",
+     "start": 509.75,
+     "end": 510.35,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s56-w11",
+     "text": "de",
+     "start": 510.35,
+     "end": 510.57,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s56-w12",
+     "text": "bivi",
+     "start": 510.57,
+     "end": 511.51,
+     "probability": 0.9853515625
+    },
+    {
+     "id": "s56-w13",
+     "text": "ou",
+     "start": 511.51,
+     "end": 512.45,
+     "probability": 0.9501953125
+    },
+    {
+     "id": "s56-w14",
+     "text": "da",
+     "start": 512.45,
+     "end": 512.55,
+     "probability": 0.85791015625
+    }
+   ]
+  },
+  {
+   "id": "s57",
+   "start": 512.55,
+   "end": 518.24,
+   "text": "bivo de bime e de bivu de uma boba em um tempo bitu voce nao",
+   "words": [
+    {
+     "id": "s57-w1",
+     "text": "bivo",
+     "start": 512.55,
+     "end": 512.81,
+     "probability": 0.4384422302246094
+    },
+    {
+     "id": "s57-w2",
+     "text": "de",
+     "start": 512.81,
+     "end": 512.93,
+     "probability": 0.97021484375
+    },
+    {
+     "id": "s57-w3",
+     "text": "bime",
+     "start": 512.93,
+     "end": 513.53,
+     "probability": 0.96435546875
+    },
+    {
+     "id": "s57-w4",
+     "text": "e",
+     "start": 513.53,
+     "end": 513.65,
+     "probability": 0.9306640625
+    },
+    {
+     "id": "s57-w5",
+     "text": "de",
+     "start": 513.65,
+     "end": 513.77,
+     "probability": 0.94775390625
+    },
+    {
+     "id": "s57-w6",
+     "text": "bivu",
+     "start": 513.77,
+     "end": 514.23,
+     "probability": 0.931640625
+    },
+    {
+     "id": "s57-w7",
+     "text": "de",
+     "start": 514.23,
+     "end": 514.39,
+     "probability": 0.9853515625
+    },
+    {
+     "id": "s57-w8",
+     "text": "uma",
+     "start": 514.39,
+     "end": 514.57,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s57-w9",
+     "text": "boba",
+     "start": 514.57,
+     "end": 514.99,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s57-w10",
+     "text": "em",
+     "start": 514.99,
+     "end": 515.87,
+     "probability": 0.96044921875
+    },
+    {
+     "id": "s57-w11",
+     "text": "um",
+     "start": 515.87,
+     "end": 515.99,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s57-w12",
+     "text": "tempo",
+     "start": 515.99,
+     "end": 516.19,
+     "probability": 0.99365234375
+    },
+    {
+     "id": "s57-w13",
+     "text": "bitu",
+     "start": 516.19,
+     "end": 517.09,
+     "probability": 0.980224609375
+    },
+    {
+     "id": "s57-w14",
+     "text": "voce",
+     "start": 517.5,
+     "end": 518.14,
+     "probability": 0.1319580078125
+    },
+    {
+     "id": "s57-w15",
+     "text": "nao",
+     "start": 518.14,
+     "end": 518.24,
+     "probability": 0.94091796875
+    }
+   ]
+  },
+  {
+   "id": "s58",
+   "start": 518.24,
+   "end": 531.42,
+   "text": "bobe isso ne ou seja ate ou seja ate a palavra befe e se ou bobi ne e a",
+   "words": [
+    {
+     "id": "s58-w1",
+     "text": "bobe",
+     "start": 518.24,
+     "end": 518.4,
+     "probability": 0.5283610026041666
+    },
+    {
+     "id": "s58-w2",
+     "text": "isso",
+     "start": 518.4,
+     "end": 518.74,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s58-w3",
+     "text": "ne",
+     "start": 518.74,
+     "end": 518.9,
+     "probability": 0.68359375
+    },
+    {
+     "id": "s58-w4",
+     "text": "ou",
+     "start": 518.9,
+     "end": 519.8,
+     "probability": 0.49951171875
+    },
+    {
+     "id": "s58-w5",
+     "text": "seja",
+     "start": 524.28,
+     "end": 524.58,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s58-w6",
+     "text": "ate",
+     "start": 524.58,
+     "end": 525.48,
+     "probability": 0.86083984375
+    },
+    {
+     "id": "s58-w7",
+     "text": "ou",
+     "start": 525.48,
+     "end": 526.46,
+     "probability": 0.310302734375
+    },
+    {
+     "id": "s58-w8",
+     "text": "seja",
+     "start": 526.53,
+     "end": 526.71,
+     "probability": 0.98974609375
+    },
+    {
+     "id": "s58-w9",
+     "text": "ate",
+     "start": 526.71,
+     "end": 526.91,
+     "probability": 0.9169921875
+    },
+    {
+     "id": "s58-w10",
+     "text": "a",
+     "start": 526.91,
+     "end": 527.01,
+     "probability": 0.33984375
+    },
+    {
+     "id": "s58-w11",
+     "text": "palavra",
+     "start": 527.01,
+     "end": 527.19,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s58-w12",
+     "text": "befe",
+     "start": 527.19,
+     "end": 527.73,
+     "probability": 0.727783203125
+    },
+    {
+     "id": "s58-w13",
+     "text": "e",
+     "start": 527.73,
+     "end": 527.97,
+     "probability": 0.463623046875
+    },
+    {
+     "id": "s58-w14",
+     "text": "se",
+     "start": 527.97,
+     "end": 528.11,
+     "probability": 0.8134765625
+    },
+    {
+     "id": "s58-w15",
+     "text": "ou",
+     "start": 528.11,
+     "end": 528.75,
+     "probability": 0.238525390625
+    },
+    {
+     "id": "s58-w16",
+     "text": "bobi",
+     "start": 528.75,
+     "end": 529.23,
+     "probability": 0.55889892578125
+    },
+    {
+     "id": "s58-w17",
+     "text": "ne",
+     "start": 529.23,
+     "end": 529.41,
+     "probability": 0.87109375
+    },
+    {
+     "id": "s58-w18",
+     "text": "e",
+     "start": 529.41,
+     "end": 530.39,
+     "probability": 0.8984375
+    },
+    {
+     "id": "s58-w19",
+     "text": "a",
+     "start": 531.32,
+     "end": 531.42,
+     "probability": 0.98291015625
+    }
+   ]
+  },
+  {
+   "id": "s59",
+   "start": 531.42,
+   "end": 542.11,
+   "text": "baba vai bobo isso de bobu bimo porque porque a baba boca",
+   "words": [
+    {
+     "id": "s59-w1",
+     "text": "baba",
+     "start": 531.42,
+     "end": 531.72,
+     "probability": 0.9832356770833334
+    },
+    {
+     "id": "s59-w2",
+     "text": "vai",
+     "start": 531.72,
+     "end": 531.9,
+     "probability": 0.865234375
+    },
+    {
+     "id": "s59-w3",
+     "text": "bobo",
+     "start": 531.9,
+     "end": 532.18,
+     "probability": 0.98583984375
+    },
+    {
+     "id": "s59-w4",
+     "text": "isso",
+     "start": 532.18,
+     "end": 532.32,
+     "probability": 0.94775390625
+    },
+    {
+     "id": "s59-w5",
+     "text": "de",
+     "start": 532.32,
+     "end": 532.46,
+     "probability": 0.994140625
+    },
+    {
+     "id": "s59-w6",
+     "text": "bobu",
+     "start": 532.46,
+     "end": 532.92,
+     "probability": 0.978759765625
+    },
+    {
+     "id": "s59-w7",
+     "text": "bimo",
+     "start": 532.92,
+     "end": 533.5,
+     "probability": 0.830078125
+    },
+    {
+     "id": "s59-w8",
+     "text": "porque",
+     "start": 533.5,
+     "end": 534.72,
+     "probability": 0.67919921875
+    },
+    {
+     "id": "s59-w9",
+     "text": "porque",
+     "start": 540.67,
+     "end": 541.03,
+     "probability": 0.86181640625
+    },
+    {
+     "id": "s59-w10",
+     "text": "a",
+     "start": 541.03,
+     "end": 541.33,
+     "probability": 0.9853515625
+    },
+    {
+     "id": "s59-w11",
+     "text": "baba",
+     "start": 541.33,
+     "end": 541.59,
+     "probability": 0.9954427083333334
+    },
+    {
+     "id": "s59-w12",
+     "text": "boca",
+     "start": 541.59,
+     "end": 542.11,
+     "probability": 0.9861653645833334
+    }
+   ]
+  },
+  {
+   "id": "s60",
+   "start": 542.11,
+   "end": 547.17,
+   "text": "bife que beta boce do babi nao boci que todas as boce no",
+   "words": [
+    {
+     "id": "s60-w1",
+     "text": "bife",
+     "start": 542.11,
+     "end": 542.43,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s60-w2",
+     "text": "que",
+     "start": 542.43,
+     "end": 542.77,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s60-w3",
+     "text": "beta",
+     "start": 542.77,
+     "end": 543.37,
+     "probability": 0.958984375
+    },
+    {
+     "id": "s60-w4",
+     "text": "boce",
+     "start": 543.37,
+     "end": 543.77,
+     "probability": 0.978515625
+    },
+    {
+     "id": "s60-w5",
+     "text": "do",
+     "start": 543.77,
+     "end": 543.93,
+     "probability": 0.7958984375
+    },
+    {
+     "id": "s60-w6",
+     "text": "babi",
+     "start": 543.93,
+     "end": 544.17,
+     "probability": 0.52392578125
+    },
+    {
+     "id": "s60-w7",
+     "text": "nao",
+     "start": 544.17,
+     "end": 544.47,
+     "probability": 0.541015625
+    },
+    {
+     "id": "s60-w8",
+     "text": "boci",
+     "start": 544.47,
+     "end": 545.09,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s60-w9",
+     "text": "que",
+     "start": 545.09,
+     "end": 546.03,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s60-w10",
+     "text": "todas",
+     "start": 546.03,
+     "end": 546.41,
+     "probability": 0.9921875
+    },
+    {
+     "id": "s60-w11",
+     "text": "as",
+     "start": 546.41,
+     "end": 546.69,
+     "probability": 0.99609375
+    },
+    {
+     "id": "s60-w12",
+     "text": "boce",
+     "start": 546.69,
+     "end": 546.95,
+     "probability": 0.9990234375
+    },
+    {
+     "id": "s60-w13",
+     "text": "no",
+     "start": 546.95,
+     "end": 547.17,
+     "probability": 0.33837890625
+    }
+   ]
+  },
+  {
+   "id": "s61",
+   "start": 547.17,
+   "end": 551.29,
+   "text": "belu no fundo elas boco sentido no que elas bocu boda ne por",
+   "words": [
+    {
+     "id": "s61-w1",
+     "text": "belu",
+     "start": 547.17,
+     "end": 547.53,
+     "probability": 0.99658203125
+    },
+    {
+     "id": "s61-w2",
+     "text": "no",
+     "start": 547.53,
+     "end": 547.87,
+     "probability": 0.953125
+    },
+    {
+     "id": "s61-w3",
+     "text": "fundo",
+     "start": 547.87,
+     "end": 548.19,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s61-w4",
+     "text": "elas",
+     "start": 548.19,
+     "end": 548.39,
+     "probability": 0.9443359375
+    },
+    {
+     "id": "s61-w5",
+     "text": "boco",
+     "start": 548.39,
+     "end": 548.71,
+     "probability": 0.971923828125
+    },
+    {
+     "id": "s61-w6",
+     "text": "sentido",
+     "start": 548.71,
+     "end": 549.17,
+     "probability": 0.75732421875
+    },
+    {
+     "id": "s61-w7",
+     "text": "no",
+     "start": 549.17,
+     "end": 549.39,
+     "probability": 0.43408203125
+    },
+    {
+     "id": "s61-w8",
+     "text": "que",
+     "start": 549.39,
+     "end": 549.45,
+     "probability": 0.96435546875
+    },
+    {
+     "id": "s61-w9",
+     "text": "elas",
+     "start": 549.45,
+     "end": 549.59,
+     "probability": 0.984375
+    },
+    {
+     "id": "s61-w10",
+     "text": "bocu",
+     "start": 549.59,
+     "end": 549.75,
+     "probability": 0.865234375
+    },
+    {
+     "id": "s61-w11",
+     "text": "boda",
+     "start": 549.75,
+     "end": 550.11,
+     "probability": 0.99853515625
+    },
+    {
+     "id": "s61-w12",
+     "text": "ne",
+     "start": 550.11,
+     "end": 550.39,
+     "probability": 0.7080078125
+    },
+    {
+     "id": "s61-w13",
+     "text": "por",
+     "start": 550.39,
+     "end": 551.29,
+     "probability": 0.6943359375
+    }
+   ]
+  },
+  {
+   "id": "s62",
+   "start": 552.5500000000001,
+   "end": 557.0,
+   "text": "por exemplo, se voce nao quer um bape, voce quer um sentido, e o sentido e um...",
+   "words": [
+    {
+     "id": "s62-w1",
+     "text": "por",
+     "start": 552.5500000000001,
+     "end": 552.8700000000001,
+     "probability": 0.71435546875
+    },
+    {
+     "id": "s62-w2",
+     "text": "exemplo,",
+     "start": 552.8700000000001,
+     "end": 553.0500000000001,
+     "probability": 0.9990234375
+    },
+    {
+     "id": "s62-w3",
+     "text": "se",
+     "start": 553.11,
+     "end": 553.1700000000001,
+     "probability": 0.65087890625
+    },
+    {
+     "id": "s62-w4",
+     "text": "voce",
+     "start": 553.1700000000001,
+     "end": 553.2500000000001,
+     "probability": 0.76708984375
+    },
+    {
+     "id": "s62-w5",
+     "text": "quer",
+     "start": 553.2500000000001,
+     "end": 553.3700000000001,
+     "probability": 0.9169921875
+    },
+    {
+     "id": "s62-w6",
+     "text": "um",
+     "start": 553.3700000000001,
+     "end": 553.5100000000001,
+     "probability": 0.9541015625
+    },
+    {
+     "id": "s62-w7",
+     "text": "bape,",
+     "start": 553.5100000000001,
+     "end": 553.7900000000001,
+     "probability": 0.90771484375
+    },
+    {
+     "id": "s62-w8",
+     "text": "voce",
+     "start": 554.0100000000001,
+     "end": 554.11,
+     "probability": 0.5966796875
+    },
+    {
+     "id": "s62-w9",
+     "text": "quer",
+     "start": 554.11,
+     "end": 554.3100000000001,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s62-w10",
+     "text": "um",
+     "start": 554.3100000000001,
+     "end": 554.6300000000001,
+     "probability": 0.97900390625
+    },
+    {
+     "id": "s62-w11",
+     "text": "sentido,",
+     "start": 554.6300000000001,
+     "end": 555.07,
+     "probability": 0.9892578125
+    },
+    {
+     "id": "s62-w12",
+     "text": "e",
+     "start": 556.3900000000001,
+     "end": 556.4100000000001,
+     "probability": 0.285888671875
+    },
+    {
+     "id": "s62-w13",
+     "text": "o",
+     "start": 556.4100000000001,
+     "end": 556.5500000000001,
+     "probability": 0.96826171875
+    },
+    {
+     "id": "s62-w14",
+     "text": "sentido",
+     "start": 556.5500000000001,
+     "end": 556.7700000000001,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s62-w15",
+     "text": "e",
+     "start": 556.7700000000001,
+     "end": 556.9100000000001,
+     "probability": 0.7021484375
+    },
+    {
+     "id": "s62-w16",
+     "text": "um...",
+     "start": 556.9100000000001,
+     "end": 556.97,
+     "probability": 0.421875
+    }
+   ]
+  },
+  {
+   "id": "s63",
+   "start": 557.0,
+   "end": 565.51,
+   "text": "bafu bape que ele nao tem uma bode ne mano ou seja o babo",
+   "words": [
+    {
+     "id": "s63-w1",
+     "text": "bafu",
+     "start": 557.0,
+     "end": 557.14,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s63-w2",
+     "text": "bape",
+     "start": 557.14,
+     "end": 557.5,
+     "probability": 0.986328125
+    },
+    {
+     "id": "s63-w3",
+     "text": "que",
+     "start": 557.5,
+     "end": 557.84,
+     "probability": 0.98779296875
+    },
+    {
+     "id": "s63-w4",
+     "text": "ele",
+     "start": 557.84,
+     "end": 558.24,
+     "probability": 0.95654296875
+    },
+    {
+     "id": "s63-w5",
+     "text": "nao",
+     "start": 558.24,
+     "end": 558.38,
+     "probability": 0.998046875
+    },
+    {
+     "id": "s63-w6",
+     "text": "tem",
+     "start": 558.38,
+     "end": 558.56,
+     "probability": 0.9765625
+    },
+    {
+     "id": "s63-w7",
+     "text": "uma",
+     "start": 558.56,
+     "end": 558.68,
+     "probability": 0.99560546875
+    },
+    {
+     "id": "s63-w8",
+     "text": "bode",
+     "start": 558.68,
+     "end": 559.48,
+     "probability": 0.9685872395833334
+    },
+    {
+     "id": "s63-w9",
+     "text": "ne",
+     "start": 559.48,
+     "end": 559.66,
+     "probability": 0.74072265625
+    },
+    {
+     "id": "s63-w10",
+     "text": "mano",
+     "start": 559.66,
+     "end": 559.86,
+     "probability": 0.8740234375
+    },
+    {
+     "id": "s63-w11",
+     "text": "ou",
+     "start": 559.86,
+     "end": 559.9,
+     "probability": 0.46044921875
+    },
+    {
+     "id": "s63-w12",
+     "text": "seja",
+     "start": 564.25,
+     "end": 565.13,
+     "probability": 0.99951171875
+    },
+    {
+     "id": "s63-w13",
+     "text": "o",
+     "start": 565.13,
+     "end": 565.27,
+     "probability": 0.830078125
+    },
+    {
+     "id": "s63-w14",
+     "text": "babo",
+     "start": 565.27,
+     "end": 565.51,
+     "probability": 0.9912109375
+    }
+   ]
+  },
+  {
+   "id": "s64",
+   "start": 565.51,
+   "end": 571.15,
+   "text": "vai bodi bata a baba vai bapa a bebe com base no novo bodo",
+   "words": [
+    {
+     "id": "s64-w1",
+     "text": "vai",
+     "start": 565.51,
+     "end": 565.71,
+     "probability": 0.303955078125
+    },
+    {
+     "id": "s64-w2",
+     "text": "bodi",
+     "start": 565.71,
+     "end": 565.93,
+     "probability": 0.687744140625
+    },
+    {
+     "id": "s64-w3",
+     "text": "bata",
+     "start": 565.93,
+     "end": 566.63,
+     "probability": 0.7991536458333334
+    },
+    {
+     "id": "s64-w4",
+     "text": "a",
+     "start": 566.63,
+     "end": 567.61,
+     "probability": 0.9345703125
+    },
+    {
+     "id": "s64-w5",
+     "text": "baba",
+     "start": 567.61,
+     "end": 567.99,
+     "probability": 0.98583984375
+    },
+    {
+     "id": "s64-w6",
+     "text": "vai",
+     "start": 567.99,
+     "end": 568.13,
+     "probability": 0.939453125
+    },
+    {
+     "id": "s64-w7",
+     "text": "bapa",
+     "start": 568.13,
+     "end": 568.37,
+     "probability": 0.96826171875
+    },
+    {
+     "id": "s64-w8",
+     "text": "a",
+     "start": 568.37,
+     "end": 568.51,
+     "probability": 0.7509765625
+    },
+    {
+     "id": "s64-w9",
+     "text": "bebe",
+     "start": 568.51,
+     "end": 569.07,
+     "probability": 0.97607421875
+    },
+    {
+     "id": "s64-w10",
+     "text": "com",
+     "start": 569.07,
+     "end": 569.93,
+     "probability": 0.96728515625
+    },
+    {
+     "id": "s64-w11",
+     "text": "base",
+     "start": 569.93,
+     "end": 570.19,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s64-w12",
+     "text": "no",
+     "start": 570.19,
+     "end": 570.41,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s64-w13",
+     "text": "novo",
+     "start": 570.41,
+     "end": 570.63,
+     "probability": 0.8935546875
+    },
+    {
+     "id": "s64-w14",
+     "text": "bodo",
+     "start": 570.63,
+     "end": 571.15,
+     "probability": 0.984130859375
+    }
+   ]
+  },
+  {
+   "id": "s65",
+   "start": 571.15,
+   "end": 581.18,
+   "text": "porque eles bodu o beni bodo um bata vai usar se eu bofa fora a",
+   "words": [
+    {
+     "id": "s65-w1",
+     "text": "porque",
+     "start": 571.15,
+     "end": 571.39,
+     "probability": 0.3212890625
+    },
+    {
+     "id": "s65-w2",
+     "text": "eles",
+     "start": 571.39,
+     "end": 571.55,
+     "probability": 0.9580078125
+    },
+    {
+     "id": "s65-w3",
+     "text": "bodu",
+     "start": 571.55,
+     "end": 571.89,
+     "probability": 0.9755859375
+    },
+    {
+     "id": "s65-w4",
+     "text": "o",
+     "start": 571.89,
+     "end": 572.01,
+     "probability": 0.7177734375
+    },
+    {
+     "id": "s65-w5",
+     "text": "beni",
+     "start": 572.01,
+     "end": 572.15,
+     "probability": 0.898193359375
+    },
+    {
+     "id": "s65-w6",
+     "text": "bodo",
+     "start": 572.15,
+     "end": 572.79,
+     "probability": 0.983154296875
+    },
+    {
+     "id": "s65-w7",
+     "text": "um",
+     "start": 572.79,
+     "end": 573.73,
+     "probability": 0.255615234375
+    },
+    {
+     "id": "s65-w8",
+     "text": "bata",
+     "start": 578.5,
+     "end": 578.78,
+     "probability": 0.96337890625
+    },
+    {
+     "id": "s65-w9",
+     "text": "vai",
+     "start": 578.78,
+     "end": 578.94,
+     "probability": 0.1513671875
+    },
+    {
+     "id": "s65-w10",
+     "text": "usar",
+     "start": 578.94,
+     "end": 579.24,
+     "probability": 0.99169921875
+    },
+    {
+     "id": "s65-w11",
+     "text": "se",
+     "start": 579.24,
+     "end": 579.52,
+     "probability": 0.64501953125
+    },
+    {
+     "id": "s65-w12",
+     "text": "eu",
+     "start": 579.52,
+     "end": 579.58,
+     "probability": 0.81298828125
+    },
+    {
+     "id": "s65-w13",
+     "text": "bofa",
+     "start": 579.58,
+     "end": 579.76,
+     "probability": 0.98828125
+    },
+    {
+     "id": "s65-w14",
+     "text": "fora",
+     "start": 579.76,
+     "end": 580.2,
+     "probability": 0.98876953125
+    },
+    {
+     "id": "s65-w15",
+     "text": "a",
+     "start": 580.2,
+     "end": 581.18,
+     "probability": 0.7099609375
+    }
+   ]
+  },
+  {
+   "id": "s66",
+   "start": 581.18,
+   "end": 583.7,
+   "text": "baba nao voce vai bofe la pra sempre dentro de voce",
+   "words": [
+    {
+     "id": "s66-w1",
+     "text": "baba",
+     "start": 581.18,
+     "end": 581.5,
+     "probability": 0.9954427083333334
+    },
+    {
+     "id": "s66-w2",
+     "text": "nao",
+     "start": 581.5,
+     "end": 581.7,
+     "probability": 0.94287109375
+    },
+    {
+     "id": "s66-w3",
+     "text": "voce",
+     "start": 581.7,
+     "end": 581.92,
+     "probability": 0.77392578125
+    },
+    {
+     "id": "s66-w4",
+     "text": "vai",
+     "start": 581.92,
+     "end": 582.04,
+     "probability": 0.99462890625
+    },
+    {
+     "id": "s66-w5",
+     "text": "bofe",
+     "start": 582.04,
+     "end": 582.42,
+     "probability": 0.98095703125
+    },
+    {
+     "id": "s66-w6",
+     "text": "la",
+     "start": 582.42,
+     "end": 582.54,
+     "probability": 0.8623046875
+    },
+    {
+     "id": "s66-w7",
+     "text": "pra",
+     "start": 582.54,
+     "end": 582.7,
+     "probability": 0.5927734375
+    },
+    {
+     "id": "s66-w8",
+     "text": "sempre",
+     "start": 582.7,
+     "end": 583.02,
+     "probability": 0.9990234375
+    },
+    {
+     "id": "s66-w9",
+     "text": "dentro",
+     "start": 583.02,
+     "end": 583.28,
+     "probability": 0.9951171875
+    },
+    {
+     "id": "s66-w10",
+     "text": "de",
+     "start": 583.28,
+     "end": 583.44,
+     "probability": 0.99755859375
+    },
+    {
+     "id": "s66-w11",
+     "text": "voce",
+     "start": 583.44,
+     "end": 583.7,
+     "probability": 0.99560546875
+    }
+   ]
+  }
+ ],
+ "requested_config": {
+  "model": "small",
+  "device": "cuda",
+  "compute_type": "int8_float16",
+  "language": "pt",
+  "cpu_fallback": true,
+  "batch_size": 1,
+  "refine_uncertain": true
+ },
+ "actual_config": {
+  "model": "small",
+  "device": "cuda",
+  "compute_type": "int8_float16",
+  "language": "pt",
+  "cpu_fallback": true,
+  "batch_size": 1,
+  "refine_uncertain": true,
+  "model_reused": false,
+  "model_load_seconds": 3.8280000000013388,
+  "transcribe_seconds": 37.01499999999942,
+  "refinement": {
+   "state": "complete",
+   "revisited": 8,
+   "replaced_ids": [
+    "s3",
+    "s4",
+    "s47",
+    "s53",
+    "s62"
+   ]
+  }
+ }
+}

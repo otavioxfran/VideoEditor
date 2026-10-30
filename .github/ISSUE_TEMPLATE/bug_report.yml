@@ -1,0 +1,41 @@
+name: Problema (bug)
+description: Algo não funcionou como deveria
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por avisar! Não anexe vídeos nem transcrições pessoais; um print da tela já ajuda muito.
+  - type: textarea
+    id: what
+    attributes:
+      label: O que aconteceu?
+      description: O que você fez, o que esperava e o que apareceu.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Como reproduzir
+      placeholder: |
+        1. Abri o Studio
+        2. Cliquei em Novo corte
+        3. ...
+  - type: dropdown
+    id: os
+    attributes:
+      label: Sistema operacional
+      options: [Windows, macOS, Linux, Docker]
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: Placa de vídeo
+      placeholder: "Ex.: NVIDIA RTX 2060 6 GB, ou sem GPU"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Mensagem de erro
+      description: Copie o que apareceu no terminal ou na tela, se houver.
+      render: text

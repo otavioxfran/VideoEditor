@@ -1,0 +1,7 @@
+faster-whisper==1.2.1
+ctranslate2==4.8.1
+pydantic==2.13.4
+fastapi==0.141.1
+uvicorn==0.52.3
+numpy==2.4.6
+opencv-python-headless>=4.8

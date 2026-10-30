@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VideoEditor · Filmoteca</title>
+  <link rel="stylesheet" href="/assets/style.css?v=20261030g">
+</head>
+<body class="studio-page">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="VideoEditor, Filmoteca">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="3" y="6" width="11" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <rect x="18" y="6" width="11" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M14 12h4M14 20h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text"><strong>VideoEditor</strong><small>Estúdio local</small></span>
+    </a>
+    <span class="crumb">Filmoteca</span>
+    <span class="spacer"></span>
+    <div class="topbar-actions">
+      <button class="btn ghost small" id="open-command" type="button" aria-label="Abrir comandos">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-command"></use></svg>
+        <span class="kbd">Ctrl K</span>
+      </button>
+      <button class="btn small" id="open-settings" type="button" aria-label="Configurações">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-gear-six"></use></svg>
+        <span class="label">Configurações</span>
+      </button>
+      <button class="btn primary" id="open-new" type="button" aria-label="Novo corte">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-plus"></use></svg>
+        <span class="label">Novo corte</span>
+      </button>
+    </div>
+  </header>
+
+  <p id="message" role="status" aria-live="polite"></p>
+
+  <main class="page-shell">
+    <section class="page-head">
+      <div>
+        <h1>Filmoteca</h1>
+        <p class="sub">Escolha um raw, faça o corte automático e revise só o que precisa de decisão. O arquivo original nunca é alterado.</p>
+      </div>
+      <div class="page-meta">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Local</span>
+        <span aria-hidden="true">·</span>
+        <span id="library-count">Carregando</span>
+      </div>
+    </section>
+
+    <section id="jobs" aria-label="Jobs preparados">
+      <div class="job-grid" aria-hidden="true">
+        <article class="job-card skeleton-card">
+          <div class="job-thumb"></div>
+          <div class="job-body"><span class="skeleton-line"></span><span class="skeleton-line short"></span><span class="skeleton-line short"></span></div>
+        </article>
+        <article class="job-card skeleton-card">
+          <div class="job-thumb"></div>
+          <div class="job-body"><span class="skeleton-line"></span><span class="skeleton-line short"></span><span class="skeleton-line short"></span></div>
+        </article>
+        <article class="job-card skeleton-card">
+          <div class="job-thumb"></div>
+          <div class="job-body"><span class="skeleton-line"></span><span class="skeleton-line short"></span><span class="skeleton-line short"></span></div>
+        </article>
+        <article class="job-card skeleton-card">
+          <div class="job-thumb"></div>
+          <div class="job-body"><span class="skeleton-line"></span><span class="skeleton-line short"></span><span class="skeleton-line short"></span></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="dialog" id="new-job-dialog" aria-labelledby="new-job-title">
+    <div class="dialog-head">
+      <div>
+        <h2 id="new-job-title">Novo corte</h2>
+        <p>Transcreva com o modelo local e receba um MP4 + SRT. O Gemini é opcional e só recebe texto.</p>
+      </div>
+      <button class="btn ghost icon-only close" type="button" data-close="new-job-dialog" aria-label="Fechar">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-x"></use></svg>
+      </button>
+    </div>
+    <form id="prepare">
+      <div class="dialog-body new-job-form">
+        <div class="source-row">
+          <label class="field">
+            <span class="field-label">Gravação</span>
+            <select class="select" id="source">
+              <option value="">Escolha um vídeo</option>
+            </select>
+          </label>
+          <button class="btn" id="refresh-library" type="button" title="Atualizar lista de vídeos">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-arrow-counter-clockwise"></use></svg>
+            Atualizar
+          </button>
+        </div>
+
+        <details class="advanced">
+          <summary>Opções avançadas</summary>
+          <div class="advanced-body">
+            <div class="form-grid">
+              <label class="field">
+                <span class="field-label">Caminho completo</span>
+                <input class="input" id="path" placeholder="C:\Users\voce\Videos\video.mp4" spellcheck="false">
+              </label>
+              <label class="field">
+                <span class="field-label">Dispositivo</span>
+                <select class="select" id="device">
+                  <option value="cuda">RTX / CUDA</option>
+                  <option value="cpu">CPU</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-label">Modelo de transcrição</span>
+                <select class="select" id="model">
+                  <option>large-v3-turbo</option>
+                  <option>large-v3</option>
+                  <option>medium</option>
+                  <option>small</option>
+                  <option>base</option>
+                  <option>tiny</option>
+                </select>
+              </label>
+            </div>
+            <label class="check">
+              <input id="automatic-consent" type="checkbox">
+              <span>Autorizar análise textual pelo Gemini gratuito para este vídeo. Áudio e vídeo ficam no PC.</span>
+            </label>
+            <label class="check">
+              <input id="evaluation-mode" type="checkbox">
+              <span>Gerar edição experimental. Pode usar a análise textual autorizada; a naturalidade ainda está em avaliação.</span>
+            </label>
+          </div>
+        </details>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn" type="submit" value="manual">Só transcrever</button>
+        <button class="btn primary" type="submit" value="automatic">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-scissors"></use></svg>
+          Editar automaticamente
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog" id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-head">
+      <div>
+        <h2 id="settings-title">Configurações</h2>
+        <p>Transcrição, assistência textual e caminhos do estúdio.</p>
+      </div>
+      <button class="btn ghost icon-only close" type="button" data-close="settings-dialog" aria-label="Fechar">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#ph-x"></use></svg>
+      </button>
+    </div>
+    <div class="dialog-body settings-stack">
+      <section class="settings-section">
+        <h3>Transcrição</h3>
+        <p class="hint">O modelo padrão é <span class="mono">large-v3-turbo</span>, local. Os pesos são baixados uma vez e ficam no cache do Hugging Face (<span class="mono">HF_HOME</span>).</p>
+        <div class="provider-status">
+          <span class="badge success">Local</span>
+          <span>Whisper + VAD no seu PC</span>
+        </div>
+      </section>
+
+      <section class="settings-section" id="provider-setup">
+        <h3>Assistência textual · Gemini gratuito</h3>
+        <p class="hint">O Gemini recebe somente texto da transcrição. O gratuito tem quotas e o Google pode usar os textos para melhorar produtos. Sem assistência, a limpeza local termina normalmente. Não há fallback pago.</p>
+        <div class="provider-status">
+          <span class="badge neutral" id="provider-badge">Desconhecido</span>
+          <span id="provider-status">Carregando…</span>
+        </div>
+        <form id="provider-form" class="provider-form">
+          <label class="field">
+            <span class="field-label">Chave Gemini</span>
+            <input class="input" id="provider-key" type="password" autocomplete="off" spellcheck="false" placeholder="Insira a chave aqui; ela não será exibida">
+          </label>
+          <label class="check">
+            <input id="provider-free" type="checkbox">
+            <span>Confirmo que a chave pertence a um projeto sem faturamento ativado.</span>
+          </label>
+          <label class="check">
+            <input id="provider-consent" type="checkbox">
+            <span>Autorizo análise textual nos próximos vídeos e compreendo o uso dos textos no gratuito.</span>
+          </label>
+          <label class="check">
+            <input id="provider-enabled" type="checkbox">
+            <span>Usar assistência textual Gemini.</span>
+          </label>
+          <div class="actions">
+            <button class="btn primary" type="submit">Salvar configuração</button>
+            <a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer">Criar chave no Google AI Studio</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="settings-section">
+        <h3>Caminhos</h3>
+        <p class="hint">Raws em <span class="mono" id="source-dir">pasta de vídeos</span>; jobs em <span class="mono">jobs\</span>. A fonte é somente leitura.</p>
+      </section>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn" type="button" data-close="settings-dialog">Fechar</button>
+    </div>
+  </dialog>
+
+  <dialog class="dialog command" id="command-dialog" aria-label="Comandos">
+    <div class="dialog-body">
+      <input id="command-input" type="search" placeholder="Buscar comando…" autocomplete="off">
+      <div class="command-list" id="command-list"></div>
+    </div>
+  </dialog>
+
+  <script type="module" src="/assets/studio.js?v=studio-v3"></script>
+</body>
+</html>

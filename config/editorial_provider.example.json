@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "provider": "gemini-free",
+  "model": "gemini-3.5-flash",
+  "api_key": "",
+  "free_tier_confirmed": false
+}
