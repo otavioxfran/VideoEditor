@@ -27,6 +27,31 @@ def load_edit(jobs, job_id):
 
 DECISION_ACTIONS = {'cut': 'applied', 'restore': 'kept', 'protect': 'protected'}
 
+SEAL_MAX = 0.6  # silent keep left between two cuts: a flash, not a breath
+
+
+def _seal_new_cut(edit, cut, transcript):
+    """Extend a fresh cut over short silent gaps left against its neighbors."""
+    words = [w for segment in transcript.get('segments', []) for w in segment.get('words', [])]
+    protected = edit.get('protected', [])
+
+    def blocked(start, end):
+        return any(w['start'] < end and w['end'] > start for w in words) or any(
+            p['start'] < end and p['end'] > start for p in protected)
+
+    cuts = sorted(edit['cuts'], key=lambda item: (item['start'], item['end']))
+    index = next(i for i, item in enumerate(cuts) if item is cut)
+    if index:
+        left = cuts[index - 1]
+        gap = cut['start'] - left['end']
+        if 0 < gap <= SEAL_MAX and not blocked(left['end'], cut['start']):
+            cut['start'] = left['end']
+    if index + 1 < len(cuts):
+        right = cuts[index + 1]
+        gap = right['start'] - cut['end']
+        if 0 < gap <= SEAL_MAX and not blocked(cut['end'], right['start']):
+            cut['end'] = right['start']
+
 
 def decisions(edit):
     """Latest human decision per suggestion, replaying history the way undo unwinds it."""
@@ -122,7 +147,9 @@ def mutate(jobs, job_id, request):
             for start, end in targets or [(start, end)]:
                 start, end = interval(start, end, duration)
                 if action == 'cut':
-                    edit['cuts'].append(dict(start=start, end=end, origin='human', suggestion_id=sid))
+                    cut = dict(start=start, end=end, origin='human', suggestion_id=sid)
+                    edit['cuts'].append(cut)
+                    _seal_new_cut(edit, cut, transcript)
                 else:
                     edit['cuts'] = subtract(edit['cuts'], start, end)
                     if action == 'protect':

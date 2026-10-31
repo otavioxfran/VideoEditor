@@ -42,6 +42,34 @@ def test_changed_transcript_cannot_reapply_edit(jobs, ready):
         mutate(jobs, job['job_id'], dict(expected_revision=0, action='cut', start=3, end=8))
 
 
+def test_cut_seals_short_silent_gap_between_neighbor_cuts(jobs, ready):
+    jid = ready()['job_id']
+    mutate(jobs, jid, dict(expected_revision=0, action='cut', start=3, end=8))
+    mutate(jobs, jid, dict(expected_revision=1, action='cut', start=8.3, end=9))
+    assert view(jobs, jid)['timeline']['cuts'] == [[3, 9]]
+
+
+def test_cut_keeps_gap_that_has_speech(jobs, ready):
+    segments = [
+        dict(start=1, end=2, text='Primeira.', words=[dict(word='Primeira.', start=1, end=2)]),
+        dict(start=8.05, end=8.25, text='fala', words=[dict(word='fala', start=8.05, end=8.25)]),
+        dict(start=15, end=16, text='Última.', words=[dict(word='Última.', start=15, end=16)]),
+    ]
+    jid = ready(segments=segments)['job_id']
+    mutate(jobs, jid, dict(expected_revision=0, action='cut', start=3, end=8))
+    mutate(jobs, jid, dict(expected_revision=1, action='cut', start=8.3, end=9))
+    assert view(jobs, jid)['timeline']['cuts'] == [[3, 8], [8.3, 9]]
+
+
+def test_cut_keeps_protected_and_long_gaps(jobs, ready):
+    jid = ready()['job_id']
+    mutate(jobs, jid, dict(expected_revision=0, action='protect', start=8, end=8.3))
+    mutate(jobs, jid, dict(expected_revision=1, action='cut', start=3, end=8))
+    mutate(jobs, jid, dict(expected_revision=2, action='cut', start=8.3, end=9))
+    mutate(jobs, jid, dict(expected_revision=3, action='cut', start=10, end=11))
+    assert view(jobs, jid)['timeline']['cuts'] == [[3, 8], [8.3, 9], [10, 11]]
+
+
 def test_decisions_follow_history_and_undo(jobs, ready):
     jid = ready()['job_id']
     jobs.write(jid, 'suggestions.json', [
