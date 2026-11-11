@@ -3,6 +3,15 @@
 O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto
 usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 
+## [Não lançado]
+
+### Corrigido
+- Ausência na frente da câmera (cadeira vazia) agora funciona em gravação de tela com a
+  webcam num canto: a comparação usa só a região da pessoa, e a referência de cena vazia
+  precisa estar parada. Pessoa de cabeça baixa ou inclinada não vira mais ausência, e
+  ausências com menos de 3 s são ignoradas. Quando não dá para decidir, a análise registra
+  quanto tempo havia rosto em cena.
+
 ## [1.2.0] — 2026-10-30
 
 ### Adicionado

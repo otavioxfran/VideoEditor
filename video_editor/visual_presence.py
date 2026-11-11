@@ -14,17 +14,23 @@ from video_editor import media, storage
 from video_editor.settings import BASE_DIR
 from video_editor.timeline import build_timeline, digest
 
-VERSION = 1
+VERSION = 2
 SAMPLE_FPS = 1.0
 WIDTH = 320
 HEIGHT = 180
 FRAME_BYTES = WIDTH * HEIGHT * 3
 FACE_THRESHOLD = .7
-EMPTY_MAD = 25.0
-MIN_ABSENCE = 1.5
+EMPTY_MAD = 20.0
+MIN_ABSENCE = 3.0
+STATIC_MOTION = 4.0
+NEIGHBOR_SECONDS = 2.0
 MIN_SUGGESTION = .5
 MAX_EXTEND = 2.0
 PAD = .4
+ROI_WIDTH = 2.5
+ROI_HEIGHT = 3.0
+ROI_DROP = .5
+NO_FACE_MIN = 3.0
 MODEL_PATH = BASE_DIR / "config" / "models" / "face_detection_yunet_2023mar.onnx"
 
 
@@ -59,12 +65,16 @@ def _frames(source, detector, cv2):
             _, faces = detector.detect(image)
             count = 0 if faces is None else len(faces)
             score = 0.0 if not count else max(float(face[-1]) for face in faces)
+            box = None
+            if count:
+                best_face = max(faces, key=lambda face: float(face[-1]))
+                box = tuple(round(float(value), 1) for value in best_face[0:4])
             motion = (
                 0.0
                 if previous is None
                 else float(np.mean(np.abs(gray.astype(np.float32) - previous)))
             )
-            yield index / SAMPLE_FPS, count, score, motion, gray
+            yield index / SAMPLE_FPS, count, score, motion, gray, box
             previous = gray.astype(np.float32)
             index += 1
     finally:
@@ -87,6 +97,9 @@ def runs(samples, min_seconds=MIN_ABSENCE, fps=SAMPLE_FPS):
         start = current[0]["t"]
         seconds = end - start
         if seconds >= min_seconds:
+            motions = [sample.get("roi_motion", 0.0) for sample in current]
+            if median(motions) > STATIC_MOTION:
+                return
             values = [sample["mad"] for sample in current]
             result.append(
                 dict(
@@ -107,6 +120,61 @@ def runs(samples, min_seconds=MIN_ABSENCE, fps=SAMPLE_FPS):
     if current:
         flush(samples[-1]["t"] + 1 / fps)
     return result
+
+
+def no_face_runs(samples, min_seconds=NO_FACE_MIN, fps=SAMPLE_FPS):
+    result, current = [], []
+
+    def flush(end):
+        if not current:
+            return
+        start = current[0]["t"]
+        seconds = end - start
+        if seconds >= min_seconds:
+            result.append(
+                dict(start=round(start, 3), end=round(end, 3), seconds=round(seconds, 3))
+            )
+
+    for sample in samples:
+        if sample.get("faces"):
+            if current:
+                flush(sample["t"])
+                current = []
+        else:
+            current.append(sample)
+    if current:
+        flush(samples[-1]["t"] + 1 / fps)
+    return result
+
+
+def _face_roi(boxes):
+    boxes = [box for box in boxes if box]
+    if not boxes:
+        return [0.0, 0.0, float(WIDTH), float(HEIGHT)]
+    x = median(float(box[0]) for box in boxes)
+    y = median(float(box[1]) for box in boxes)
+    width = median(float(box[2]) for box in boxes)
+    height = median(float(box[3]) for box in boxes)
+    if width <= 0 or height <= 0:
+        return [0.0, 0.0, float(WIDTH), float(HEIGHT)]
+    center_x = x + width / 2
+    center_y = y + height / 2 + ROI_DROP * height
+    left = max(0.0, center_x - ROI_WIDTH * width / 2)
+    top = max(0.0, center_y - ROI_HEIGHT * height / 2)
+    right = min(float(WIDTH), center_x + ROI_WIDTH * width / 2)
+    bottom = min(float(HEIGHT), center_y + ROI_HEIGHT * height / 2)
+    return [round(left, 1), round(top, 1), round(right, 1), round(bottom, 1)]
+
+
+def _roi_mad(gray, reference, roi):
+    left, top, right, bottom = (int(round(value)) for value in roi)
+    left = max(0, min(WIDTH, left))
+    top = max(0, min(HEIGHT, top))
+    right = max(left + 1, min(WIDTH, right))
+    bottom = max(top + 1, min(HEIGHT, bottom))
+    window = reference[top:bottom, left:right].astype(np.float32)
+    sample = gray[top:bottom, left:right].astype(np.float32)
+    return float(np.mean(np.abs(sample - window)))
 
 
 def _cache(cache_path, value):
@@ -153,8 +221,15 @@ def analyze(source, identity, duration, silences=(), cache_path=None):
     )
     try:
         samples = [
-            dict(t=t, faces=faces, score=round(score, 3), motion=round(motion, 2), gray=gray)
-            for t, faces, score, motion, gray in _frames(source, detector, cv2)
+            dict(
+                t=t,
+                faces=faces,
+                score=round(score, 3),
+                motion=round(motion, 2),
+                gray=gray,
+                box=box,
+            )
+            for t, faces, score, motion, gray, box in _frames(source, detector, cv2)
         ]
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
         return dict(state="failed", reason=str(error)[:300])
@@ -166,19 +241,47 @@ def analyze(source, identity, duration, silences=(), cache_path=None):
         for silence in silences
         if float(silence.get("end", 0)) - float(silence.get("start", 0)) >= 2.0
     ]
+    value = _evaluate(samples, long_silences, duration, identity, silences_hash)
+    _cache(cache_path, value)
+    return value
+
+
+def _evaluate(samples, long_silences, duration, identity, silences_hash):
+    roi = _face_roi([sample.get("box") for sample in samples])
+    previous = None
+    for sample in samples:
+        motion = (
+            0.0
+            if previous is None
+            else _roi_mad(sample["gray"], previous["gray"].astype(np.float32), roi)
+        )
+        sample["roi_motion"] = round(motion, 2)
+        previous = sample
+    face_share = round(sum(1 for sample in samples if sample["faces"]) / len(samples), 3)
+    no_face = no_face_runs(samples)
     best = None
     for sample in samples:
-        if sample["faces"]:
+        if sample["faces"] or sample["roi_motion"] > STATIC_MOTION:
+            continue
+        neighbors = [
+            other
+            for other in samples
+            if other is not sample
+            and not other["faces"]
+            and abs(other["t"] - sample["t"]) <= NEIGHBOR_SECONDS
+            and other["roi_motion"] <= STATIC_MOTION
+        ]
+        if len(neighbors) < 2:
             continue
         for silence in long_silences:
             left, right = float(silence["start"]), float(silence["end"])
             if left <= sample["t"] <= right:
-                score = (sample["motion"], abs(sample["t"] - (left + right) / 2))
+                score = (sample["roi_motion"], abs(sample["t"] - (left + right) / 2))
                 if best is None or score < best[0]:
                     best = (score, sample)
                 break
     if best is None:
-        value = dict(
+        return dict(
             state="insufficient_reference",
             version=VERSION,
             identity=identity,
@@ -186,20 +289,21 @@ def analyze(source, identity, duration, silences=(), cache_path=None):
             duration=round(duration, 3),
             sample_fps=SAMPLE_FPS,
             reason="no_empty_reference",
+            roi=roi,
+            face_share=face_share,
+            no_face_runs=no_face,
         )
-        _cache(cache_path, value)
-        return value
 
     reference = best[1]["gray"].astype(np.float32)
     present = []
     for sample in samples:
-        mad = float(np.mean(np.abs(sample["gray"].astype(np.float32) - reference)))
+        mad = _roi_mad(sample["gray"], reference, roi)
         sample["mad"] = round(mad, 2)
         if sample["faces"]:
             present.append(mad)
         sample["empty"] = bool(sample["faces"] == 0 and mad <= EMPTY_MAD)
     if len(present) < 3 or median(present) < EMPTY_MAD * 1.5:
-        value = dict(
+        return dict(
             state="insufficient_separation",
             version=VERSION,
             identity=identity,
@@ -208,11 +312,12 @@ def analyze(source, identity, duration, silences=(), cache_path=None):
             sample_fps=SAMPLE_FPS,
             reference_t=best[1]["t"],
             reason="empty_reference_too_similar_to_speaker",
+            roi=roi,
+            face_share=face_share,
+            no_face_runs=no_face,
         )
-        _cache(cache_path, value)
-        return value
 
-    value = dict(
+    return dict(
         state="ok",
         version=VERSION,
         identity=identity,
@@ -220,11 +325,10 @@ def analyze(source, identity, duration, silences=(), cache_path=None):
         duration=round(duration, 3),
         sample_fps=SAMPLE_FPS,
         reference_t=best[1]["t"],
+        roi=roi,
         absence_runs=runs(samples),
         samples=[{k: v for k, v in sample.items() if k != "gray"} for sample in samples],
     )
-    _cache(cache_path, value)
-    return value
 
 
 def candidates(jobs, job_id, job, edit, transcript):
