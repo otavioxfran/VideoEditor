@@ -49,6 +49,11 @@ def main():
     report = sub.add_parser('report', help='Métricas de naturalidade da edição atual, somente leitura')
     report.add_argument('job_id')
     report.add_argument('--json', action='store_true')
+    ledger = sub.add_parser('ledger', help='Registro de decisões humanas e replay da política atual')
+    ledger_sub = ledger.add_subparsers(dest='ledger_command', required=True)
+    ledger_sub.add_parser('build')
+    ledger_replay = ledger_sub.add_parser('replay')
+    ledger_replay.add_argument('--json', action='store_true')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -67,6 +72,26 @@ def main():
         print(json.dumps(value, indent=2, ensure_ascii=False) if args.json else edit_report.text(value))
     elif args.command == 'migrate':
         print(jobs.migrate(args.job_id)['job_id'])
+    elif args.command == 'ledger':
+        import json
+        from video_editor import decision_ledger
+        if args.ledger_command == 'build':
+            result = decision_ledger.build(jobs)
+            print(
+                f"{result['examples']} exemplo(s) de {result['jobs']} job(s) "
+                f"gravados em {result['path']}"
+            )
+        else:
+            try:
+                examples = decision_ledger.load()
+            except FileNotFoundError:
+                parser.error('Rode python cli.py ledger build primeiro.')
+            value = decision_ledger.replay(examples)
+            print(
+                json.dumps(value, ensure_ascii=False, indent=2)
+                if args.json
+                else decision_ledger.text(value)
+            )
     elif args.command == 'export':
         with jobs.runtime_lock():
             item = app.state.exports.request(args.job_id, args.revision)

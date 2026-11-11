@@ -5,6 +5,12 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
 
+### Adicionado
+- `python cli.py ledger build` reúne as decisões humanas de todos os cortes (aceitar,
+  recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
+  `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,
+  quanto você corta quando é perguntado e o que passou sem sugestão.
+
 ### Corrigido
 - Ausência na frente da câmera (cadeira vazia) agora funciona em gravação de tela com a
   webcam num canto: a comparação usa só a região da pessoa, e a referência de cena vazia
