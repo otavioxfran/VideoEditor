@@ -8,7 +8,7 @@ const MARK_Y = 70;
 const MARK_H = 8;
 const RULER_Y = 16;
 const DRAG_MIN_PX = 4;
-const REVIEW_KINDS = ["repeated_block", "visual_absence", "repeated_idea", "retake", "false_start", "contextual_restart", "correction"];
+const REVIEW_KINDS = ["repeated_block", "visual_absence", "repeated_idea", "retake", "false_start", "contextual_restart", "correction", "background_voice"];
 
 let latest = null;
 let playhead = null;

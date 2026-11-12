@@ -54,6 +54,18 @@ def main():
     ledger_sub.add_parser('build')
     ledger_replay = ledger_sub.add_parser('replay')
     ledger_replay.add_argument('--json', action='store_true')
+    glossary = sub.add_parser('glossary', help='Glossário de nomes: OCR dos slides e correção conservadora')
+    glossary_sub = glossary.add_subparsers(dest='glossary_command', required=True)
+    glossary_scan = glossary_sub.add_parser('scan')
+    glossary_scan.add_argument('job_id')
+    glossary_apply = glossary_sub.add_parser('apply')
+    glossary_apply.add_argument('job_id')
+    glossary_apply.add_argument('--dry-run', action='store_true')
+    voice = sub.add_parser('voice', help='Detector de voz de fundo (locutor diferente do criador)')
+    voice_sub = voice.add_subparsers(dest='voice_command', required=True)
+    voice_scan = voice_sub.add_parser('scan')
+    voice_scan.add_argument('job_id')
+    voice_scan.add_argument('--json', action='store_true')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -92,6 +104,84 @@ def main():
                 if args.json
                 else decision_ledger.text(value)
             )
+    elif args.command == 'glossary':
+        from video_editor import glossary
+        from video_editor.timeline import digest
+        job = jobs.info(args.job_id)
+        duration = float(job['media']['duration'])
+        cache = jobs.path(args.job_id, 'visual/screen_terms.json')
+        if args.glossary_command == 'scan':
+            value = glossary.screen_terms(
+                job['source']['path'], duration, cache_path=cache
+            )
+            print(
+                f"OCR: {value['state']} "
+                f"({value.get('frames', 0)} quadros; cache: {cache})"
+            )
+            print('Termos da tela:', ', '.join(value.get('terms') or []) or '(nenhum)')
+            user = glossary.user_terms()
+            if user:
+                print('Glossário do usuário:', ', '.join(user))
+            hints = glossary.hotwords(user + list(value.get('terms') or []))
+            print('Hotwords:', hints or '(vazio)')
+        else:
+            transcript = jobs.read(args.job_id, 'transcript.json')
+            terms = glossary.user_terms()
+            if not terms:
+                parser.error('Nenhum termo em config/glossary.local.json.')
+            corrected, changes = glossary.correct(transcript, terms)
+            rejected = glossary.skipped(transcript, terms)
+            for change in changes:
+                print(
+                    f"{change['start']:.2f}-{change['end']:.2f}s "
+                    f"{change['word_id']}: \"{change['before']}\" -> "
+                    f"\"{change['after']}\" (termo: {change['term']})"
+                )
+            for item in rejected:
+                print(
+                    f"não aplicado (proteção): \"{item['text']}\" ~ "
+                    f"\"{item['term']}\" (prob={item['probability']:.3f})"
+                )
+            if args.dry_run:
+                print(f"{len(changes)} troca(s); dry-run, nada foi gravado.")
+            else:
+                backup = jobs.path(args.job_id, 'transcript.raw.json')
+                if not backup.exists():
+                    jobs.write(args.job_id, 'transcript.raw.json', transcript)
+                jobs.write(args.job_id, 'transcript.json', corrected)
+                edit_path = jobs.path(args.job_id, 'edit.json')
+                if edit_path.exists():
+                    edit = jobs.read(args.job_id, 'edit.json')
+                    if edit.get('transcript_hash') != digest(corrected):
+                        edit['transcript_hash'] = digest(corrected)
+                        jobs.write(args.job_id, 'edit.json', edit)
+                print(
+                    f"{len(changes)} troca(s) gravada(s); backup: {backup}"
+                )
+    elif args.command == 'voice':
+        import json
+        from video_editor import voice_presence
+        job = jobs.info(args.job_id)
+        transcript = jobs.read(args.job_id, 'transcript.json')
+        presence_path = jobs.path(args.job_id, 'visual/presence.json')
+        presence = (
+            jobs.read(args.job_id, 'visual/presence.json')
+            if presence_path.exists()
+            else None
+        )
+        value = voice_presence.analyze(
+            jobs.path(args.job_id, 'audio/extracted_16k.wav'),
+            transcript,
+            float(job['media']['duration']),
+            job['source'],
+            presence=presence,
+            cache_path=jobs.path(args.job_id, 'voice/voice_presence.json'),
+        )
+        print(
+            json.dumps(value, ensure_ascii=False, indent=2)
+            if args.json
+            else voice_presence.text(value)
+        )
     elif args.command == 'export':
         with jobs.runtime_lock():
             item = app.state.exports.request(args.job_id, args.revision)

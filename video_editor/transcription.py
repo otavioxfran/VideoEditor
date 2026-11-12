@@ -66,13 +66,13 @@ def normalize(segments, source, allow_imprecise=False):
     return dict(schema=1, source_hash=digest(source), segments=output)
 
 
-def transcribe(path, config, source):
+def transcribe(path, config, source, hotwords=None):
     # The queue owns GPU inference; the lock also protects direct Python callers.
     with _model_lock:
-        return _transcribe(path, config, source)
+        return _transcribe(path, config, source, hotwords)
 
 
-def _transcribe(path, config, source):
+def _transcribe(path, config, source, hotwords=None):
     actual = dict(config)
     if actual['device'] == 'cpu':
         actual['compute_type'] = 'int8'
@@ -87,8 +87,15 @@ def _transcribe(path, config, source):
             from faster_whisper import BatchedInferencePipeline
             engine = BatchedInferencePipeline(model=model)
             extra['batch_size'] = batch
-        segments, _ = engine.transcribe(str(path), language=actual['language'], word_timestamps=True,
-                                       vad_filter=True, vad_parameters={'min_silence_duration_ms': 400}, **extra)
+        segments, _ = engine.transcribe(
+            str(path),
+            language=actual['language'],
+            word_timestamps=True,
+            vad_filter=True,
+            vad_parameters={'min_silence_duration_ms': 400},
+            **extra,
+            **({'hotwords': hotwords} if hotwords else {}),
+        )
         result = _serialize(segments)
         actual['transcribe_seconds'] = time.monotonic() - tick
         return result
@@ -117,7 +124,7 @@ def _transcribe(path, config, source):
             segments = execute()
         transcript = normalize(segments, source)
         if config.get('refine_uncertain') and actual['model'] == 'small':
-            transcript, refinement = refine(path, transcript, actual)
+            transcript, refinement = refine(path, transcript, actual, hotwords=hotwords)
             actual['refinement'] = refinement
         return transcript, actual
     except Exception:
@@ -125,7 +132,7 @@ def _transcribe(path, config, source):
         raise
 
 
-def refine(path, transcript, actual, segment_ids=None):
+def refine(path, transcript, actual, segment_ids=None, hotwords=None):
     """Only revisit low-confidence short sentences; unavailable medium stays explicit."""
     from copy import deepcopy
     uncertain = [s for s in transcript['segments'] if (segment_ids is None or s['id'] in segment_ids)
@@ -157,7 +164,8 @@ def refine(path, transcript, actual, segment_ids=None):
         if right<=left:continue
         try:
             pieces, _ = model.transcribe(audio[int(left*16000):int(right*16000)],
-                                        language=actual['language'], word_timestamps=True, vad_filter=False)
+                                        language=actual['language'], word_timestamps=True, vad_filter=False,
+                                        **({'hotwords': hotwords} if hotwords else {}))
             recognized = _serialize(pieces)
             from video_editor.cuts import tokens
             old=tokens(segment['text']);new=tokens(' '.join(s['text'] for s in recognized))

@@ -11,6 +11,7 @@ __pycache__/
 config/editorial_provider.local.json
 config/asr_calibration.local.json
 config/channel_profile.local.json
+config/glossary.local.json
 channel_profile.json
 venv/
 env/
@@ -26,6 +27,7 @@ htmlcov/
 *.srt
 videos/
 jobs/
+config/models/voice/
 editor_memory/
 learning/
 scratch/

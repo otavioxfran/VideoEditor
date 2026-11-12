@@ -1,0 +1,3 @@
+# Optional. Screen OCR used by `python cli.py glossary scan/apply`.
+# Without it, the glossary falls back to config/glossary.local.json only.
+rapidocr_onnxruntime==1.4.4

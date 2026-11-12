@@ -7,9 +7,11 @@ export const REVIEW_KINDS = new Set([
   "repeated_idea",
   "false_start",
   "contextual_restart",
+  "background_voice",
 ]);
 
 const KIND_LABELS = {
+  background_voice: "Voz de fundo",
   repeated_block: "Tomada repetida",
   visual_absence: "Ausência",
   repeated_idea: "Ideia repetida",
@@ -90,6 +92,17 @@ function evidenceNode(s, base) {
     box.append(image);
     if (evidence.speech?.length) {
       box.append(element("p", `Fala no trecho: “${evidence.speech.join(" ")}”`, "rc-speech"));
+    }
+    return box;
+  }
+  if (s.kind === "background_voice") {
+    const box = element("div", undefined, "rc-evidence");
+    if (evidence.speech?.length) {
+      box.append(element("p", `Fala no trecho: "${evidence.speech.join(" ")}"`, "rc-speech"));
+    }
+    const score = Number(evidence.score);
+    if (Number.isFinite(score)) {
+      box.append(element("p", `Parece outra voz (similaridade ${score.toFixed(2)})`, "rc-speech"));
     }
     return box;
   }

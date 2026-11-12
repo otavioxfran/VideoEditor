@@ -10,6 +10,16 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
   `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,
   quanto você corta quando é perguntado e o que passou sem sugestão.
+- Glossário de nomes próprios: `config/glossary.local.json` (veja
+  `config/glossary.example.json`) e, com `requirements-ocr.txt`, os nomes lidos nos slides.
+  `python cli.py glossary apply JOB_ID --dry-run` mostra as trocas (ex.: "Hwang" → "Huang")
+  antes de gravar; a transcrição original fica em `transcript.raw.json`. Dicas ao Whisper
+  (`glossary_hotwords`) ficam desligadas por padrão porque causaram repetições.
+- Voz de fundo: com `requirements-voice.txt`, o corte automático compara a voz de cada trecho
+  com a do criador e sugere para revisão a fala de outra pessoa (um vídeo tocando no fundo,
+  por exemplo). Nunca corta sozinho. `python cli.py voice scan JOB_ID` mostra o relatório.
+  O modelo (WeSpeaker ResNet34, Apache-2.0/CC-BY-4.0) é baixado na primeira vez e conferido
+  por SHA-256.
 
 ### Corrigido
 - Ausência na frente da câmera (cadeira vazia) agora funciona em gravação de tela com a

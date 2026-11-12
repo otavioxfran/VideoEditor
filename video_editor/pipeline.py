@@ -5,6 +5,7 @@ from video_editor.cuts import find_candidates
 from video_editor.cut_policy import apply_policy
 from video_editor.timeline import digest, interval
 from video_editor.safety import source_identity, validate_source
+from video_editor.settings import user_settings
 
 
 class Pipeline:
@@ -125,9 +126,37 @@ class Pipeline:
             if transcript['source_hash'] != signature or transcript.get('requested_config') != job['config']:
                 raise ValueError("Checkpoint ASR incompatível; crie outro job para outra configuração.")
         else:
-            transcript, actual = transcription.transcribe(wav, job['config'], job['source'])
+            from video_editor import glossary
+            screen = (
+                glossary.screen_terms(
+                    job['source']['path'],
+                    info['duration'],
+                    cache_path=jobs.path(job_id, 'visual/screen_terms.json'),
+                )
+                if glossary.ocr_available()
+                else dict(state='unavailable', terms=[])
+            )
+            user = glossary.user_terms()
+            terms = user + list(screen.get('terms') or [])
+            hints = glossary.hotwords(terms)
+            enabled = bool(user_settings().get('glossary_hotwords', False))
+            if hints and enabled:
+                transcript, actual = transcription.transcribe(
+                    wav, job['config'], job['source'], hotwords=hints
+                )
+            else:
+                transcript, actual = transcription.transcribe(
+                    wav, job['config'], job['source']
+                )
             for segment in transcript['segments']:
                 interval(segment['start'], segment['end'], info['duration'])
             transcript.update(requested_config=job['config'], actual_config=actual)
+            if terms:
+                transcript['glossary'] = dict(
+                    screen_terms=list(screen.get('terms') or []),
+                    user_terms=user,
+                    hotwords=hints,
+                    hotwords_used=bool(hints and enabled),
+                )
             jobs.write(job_id, 'transcript.json', transcript)
         return transcript,time.monotonic()-tick

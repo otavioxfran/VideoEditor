@@ -34,5 +34,8 @@ deste repositório:
 | FastAPI, Uvicorn, Pydantic, NumPy | `pip` | MIT / BSD |
 | OpenCV (`opencv-python-headless`) | `pip` | Apache 2.0 |
 | google-genai (opcional, assistência editorial) | `pip` | Apache 2.0 |
+| RapidOCR (`rapidocr_onnxruntime`, opcional, glossário por OCR) e modelos PP-OCRv4 derivados do PaddleOCR | `pip` e modelos empacotados no pacote | Apache 2.0 (código e modelos; modelos convertidos do PaddleOCR, copyright Baidu/PaddleOCR) |
+| kaldi-native-fbank (opcional, voz de fundo) | `pip` | Apache 2.0 |
+| WeSpeaker ResNet34-LM ONNX (`wespeaker_resnet34_lm.onnx`, opcional, voz de fundo) | download sob demanda no primeiro uso | Apache 2.0 (código WeSpeaker; cópia ONNX de hbredin) e CC-BY-4.0 (pesos treinados no VoxCeleb) |
 
 Ao trocar a build do FFmpeg ou a versão do Python do instalador, atualize esta página.

@@ -17,6 +17,7 @@ REVIEW_KINDS = {
     'repeated_idea',
     'false_start',
     'contextual_restart',
+    'background_voice',
 }
 OUTPUT_PATH = DATA_DIR / 'learning' / 'decisions.jsonl'
 

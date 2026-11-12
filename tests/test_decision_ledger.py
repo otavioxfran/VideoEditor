@@ -222,3 +222,15 @@ def test_build_rewrites_the_ledger_idempotently(tmp_path, jobs, ready, monkeypat
     second = decision_ledger.build(jobs)
     assert first['examples'] == second['examples'] == 1
     assert len(decision_ledger.load(second['path'])) == 1
+
+def test_ledger_replays_background_voice(jobs, ready):
+    job_id = _job(
+        jobs,
+        ready,
+        [_suggestion('voice-1', kind='background_voice')],
+        [dict(action='cut', suggestion_id='voice-1', at='2026-01-01T00:00:00Z')],
+    )
+    examples = decision_ledger.extract(jobs, job_id)
+    assert examples[0]['kind'] == 'background_voice'
+    value = decision_ledger.replay(examples)
+    assert value['by_kind']['background_voice']['asked_cut'] == 1
