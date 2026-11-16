@@ -66,6 +66,22 @@ def main():
     voice_scan = voice_sub.add_parser('scan')
     voice_scan.add_argument('job_id')
     voice_scan.add_argument('--json', action='store_true')
+    finish = sub.add_parser('finish', help='Acabamento: overlays, cards, tarjas, CapCut e render')
+    finish_sub = finish.add_subparsers(dest='finish_command', required=True)
+    finish_render = finish_sub.add_parser('render')
+    finish_render.add_argument('job_id')
+    finish_render.add_argument('--plan', required=True)
+    finish_render.add_argument('--base')
+    finish_render.add_argument('--output')
+    finish_capcut = finish_sub.add_parser('capcut')
+    finish_capcut.add_argument('job_id')
+    finish_capcut.add_argument('--plan', required=True)
+    finish_capcut.add_argument('--template', required=True)
+    finish_capcut.add_argument('--target')
+    finish_capcut.add_argument('--name')
+    finish_fetch = finish_sub.add_parser('fetch-images')
+    finish_fetch.add_argument('--query', action='append', required=True)
+    finish_fetch.add_argument('--out')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -182,6 +198,53 @@ def main():
             if args.json
             else voice_presence.text(value)
         )
+    elif args.command == 'finish':
+        import json
+        from video_editor.finishing import assets, capcut, models
+        from video_editor.finishing import render as finishing_render
+        if args.finish_command == 'fetch-images':
+            from video_editor.settings import DATA_DIR
+            out = Path(args.out) if args.out else DATA_DIR / 'scratch' / 'finishing-images'
+            records = assets.fetch_images(args.query, out)
+            print(f'{len(records)} imagem(ns) em {out}')
+            for record in records:
+                print(record['path'], record['license'])
+        else:
+            jobs.info(args.job_id)
+            plan = models.load_plan(args.plan)
+            if args.finish_command == 'render':
+                if args.base:
+                    base = Path(args.base)
+                else:
+                    exports = jobs.path(args.job_id, 'exports')
+                    candidates = []
+                    if exports.is_dir():
+                        for directory in exports.iterdir():
+                            video = directory / 'video.mp4'
+                            record = directory / 'export.json'
+                            if not video.is_file():
+                                continue
+                            complete = True
+                            if record.is_file():
+                                try:
+                                    complete = json.loads(
+                                        record.read_text(encoding='utf-8')
+                                    ).get('state') == 'complete'
+                                except (OSError, ValueError):
+                                    complete = False
+                            if complete:
+                                candidates.append(video)
+                    if not candidates:
+                        parser.error('Nenhum export completo; informe --base.')
+                    base = max(candidates, key=lambda item: item.stat().st_mtime)
+                output = Path(args.output) if args.output else base.with_name(base.stem + '-final.mp4')
+                result = finishing_render.render(base, plan, output)
+                print(json.dumps(result, ensure_ascii=False, indent=2))
+            else:
+                result = capcut.export_draft(
+                    args.template, plan, target=args.target, name=args.name
+                )
+                print(json.dumps(result, ensure_ascii=False, indent=2))
     elif args.command == 'export':
         with jobs.runtime_lock():
             item = app.state.exports.request(args.job_id, args.revision)

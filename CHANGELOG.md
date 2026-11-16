@@ -6,6 +6,20 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 ## [Não lançado]
 
 ### Adicionado
+- Acabamento (`video_editor/finishing/`), guiado por um plano JSON por vídeo:
+  - **Imagens sobre o vídeo**, sempre com o buraco da webcam transparente. Modos: `cover` e `contain`
+    (imagem pura, upscale até 1,6x), `cutout` (pessoa recortada; com `requirements-rembg.txt` remove o
+    fundo de fotos comuns), `badge` (logo num selo branco), `fill`, `panel_white`, `panel_dark` e `dark`.
+  - **Telas pretas de CORREÇÃO/ATENÇÃO**, inseridas no tempo. O vídeo, o áudio e a legenda (`.srt`)
+    andam junto.
+  - **Tarjas de correção** no topo.
+  - `python cli.py finish render JOB_ID --plan plano.json` renderiza em pedaços (NVENC quando
+    disponível) e reaproveita o áudio.
+  - `python cli.py finish capcut JOB_ID --plan plano.json --template PROJETO` grava uma cópia nova do
+    projeto do CapCut com as camadas em faixas próprias. Não mexe no original nem nas fotos já
+    colocadas, e recusa gravar com o CapCut aberto.
+  - `python cli.py finish fetch-images --query ...` busca imagens livres no Wikimedia Commons e grava
+    os créditos.
 - `python cli.py ledger build` reúne as decisões humanas de todos os cortes (aceitar,
   recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
   `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,

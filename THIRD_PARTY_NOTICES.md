@@ -37,5 +37,9 @@ deste repositório:
 | RapidOCR (`rapidocr_onnxruntime`, opcional, glossário por OCR) e modelos PP-OCRv4 derivados do PaddleOCR | `pip` e modelos empacotados no pacote | Apache 2.0 (código e modelos; modelos convertidos do PaddleOCR, copyright Baidu/PaddleOCR) |
 | kaldi-native-fbank (opcional, voz de fundo) | `pip` | Apache 2.0 |
 | WeSpeaker ResNet34-LM ONNX (`wespeaker_resnet34_lm.onnx`, opcional, voz de fundo) | download sob demanda no primeiro uso | Apache 2.0 (código WeSpeaker; cópia ONNX de hbredin) e CC-BY-4.0 (pesos treinados no VoxCeleb) |
+| Pillow (acabamento: camadas, cards e tarjas) | `pip` | MIT-CMU (HPND) |
+| rembg (opcional, recorte de pessoas no acabamento) | `pip` | MIT |
+| Modelo U²-Net `u2net_human_seg` (opcional, usado pelo rembg) | download sob demanda pelo rembg no primeiro uso | Apache 2.0 |
+| Imagens do Wikimedia Commons (`cli.py finish fetch-images`) | baixadas só quando a pessoa pede | a licença de cada arquivo (CC/domínio público), registrada em `creditos.txt` |
 
 Ao trocar a build do FFmpeg ou a versão do Python do instalador, atualize esta página.

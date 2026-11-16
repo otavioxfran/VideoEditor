@@ -1,0 +1,3 @@
+# Optional. Person cutout (u2net_human_seg) is used only when requested;
+# the rest of the finishing package works without rembg.
+rembg>=2.0
