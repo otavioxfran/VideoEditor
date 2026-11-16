@@ -11,7 +11,6 @@ def policy_hash():
     sources = {
         name: (root / name).read_text(encoding="utf-8")
         for name in (
-            "automatic.py",
             "automatic_evaluation.py",
             "contextual.py",
             "noise_profile.py",
@@ -34,6 +33,9 @@ def policy_hash():
         )
     }
     from video_editor.settings import PERSONA_PATH
+
+    for path in sorted((root / "automatic").glob("*.py")):
+        sources[str(path.relative_to(root))] = path.read_text(encoding="utf-8")
 
     persona = PERSONA_PATH
     sources["author_style"] = (
