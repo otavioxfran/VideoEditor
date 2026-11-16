@@ -1,0 +1,141 @@
+{
+  "edit": {
+    "cuts": [],
+    "history": [],
+    "markers": [],
+    "protected": [],
+    "revision": 0,
+    "schema": 1,
+    "undo": []
+  },
+  "report": {
+    "applied": 0,
+    "applied_cuts": [],
+    "background_profile": {
+      "state": "not_available"
+    },
+    "background_voice": {
+      "state": "not_available"
+    },
+    "coherence": "strict_replacements_preserve_original_order",
+    "contextual": {
+      "protected": [],
+      "state": "disabled"
+    },
+    "contextual_applied": 0,
+    "contextual_refinement": {
+      "state": "not_requested"
+    },
+    "contextual_result": "not_requested",
+    "editorial_delivery": "local_cleanup",
+    "human_validation": "pending_five_videos",
+    "message": "Nenhum corte seguro encontrado",
+    "mode": "standard",
+    "notes": [],
+    "output_seconds": 8.0,
+    "performance": {
+      "asr": null,
+      "preparation": {}
+    },
+    "policy": 3,
+    "provider": "disabled",
+    "removed_seconds": 0.0,
+    "result": "no_safe_cuts",
+    "revision": 0,
+    "schema": 1,
+    "sequence_audit": {
+      "restored": [],
+      "state": "not_requested"
+    },
+    "source_seconds": 8,
+    "suggestions": [
+      {
+        "auto": false,
+        "end": 3.9,
+        "evaluation": {
+          "acoustic_context": {},
+          "expressive_pause": true,
+          "local_pause_seconds": 1.8,
+          "policy": 3
+        },
+        "evidence": {},
+        "id": "pause",
+        "kind": "silence",
+        "reason": "Pausa possivelmente expressiva; preservada para manter seu ritmo.",
+        "start": 2.4
+      }
+    ],
+    "uncertain": 1
+  },
+  "status": {
+    "applied_revision": 0,
+    "engine_stale": false,
+    "options": {
+      "export": false,
+      "mode": "standard",
+      "send_text": false
+    },
+    "report": {
+      "applied": 0,
+      "applied_cuts": [],
+      "background_profile": {
+        "state": "not_available"
+      },
+      "background_voice": {
+        "state": "not_available"
+      },
+      "coherence": "strict_replacements_preserve_original_order",
+      "contextual": {
+        "protected": [],
+        "state": "disabled"
+      },
+      "contextual_applied": 0,
+      "contextual_refinement": {
+        "state": "not_requested"
+      },
+      "contextual_result": "not_requested",
+      "editorial_delivery": "local_cleanup",
+      "human_validation": "pending_five_videos",
+      "message": "Nenhum corte seguro encontrado",
+      "mode": "standard",
+      "notes": [],
+      "output_seconds": 8.0,
+      "performance": {
+        "asr": null,
+        "preparation": {}
+      },
+      "policy": 3,
+      "provider": "disabled",
+      "removed_seconds": 0.0,
+      "result": "no_safe_cuts",
+      "revision": 0,
+      "schema": 1,
+      "sequence_audit": {
+        "restored": [],
+        "state": "not_requested"
+      },
+      "source_seconds": 8,
+      "suggestions": [
+        {
+          "auto": false,
+          "end": 3.9,
+          "evaluation": {
+            "acoustic_context": {},
+            "expressive_pause": true,
+            "local_pause_seconds": 1.8,
+            "policy": 3
+          },
+          "evidence": {},
+          "id": "pause",
+          "kind": "silence",
+          "reason": "Pausa possivelmente expressiva; preservada para manter seu ritmo.",
+          "start": 2.4
+        }
+      ],
+      "uncertain": 1
+    },
+    "resume_revision": null,
+    "stale": false,
+    "state": "complete"
+  }
+}

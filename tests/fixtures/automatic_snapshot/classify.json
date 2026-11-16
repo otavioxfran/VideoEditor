@@ -1,0 +1,17 @@
+[
+  {
+    "auto": false,
+    "end": 3.9,
+    "evaluation": {
+      "acoustic_context": {},
+      "expressive_pause": true,
+      "local_pause_seconds": 1.8,
+      "policy": 3
+    },
+    "evidence": {},
+    "id": "p",
+    "kind": "silence",
+    "reason": "Pausa possivelmente expressiva; preservada para manter seu ritmo.",
+    "start": 2.4
+  }
+]
