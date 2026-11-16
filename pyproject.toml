@@ -38,6 +38,9 @@ dev = [
 [project.scripts]
 video-editor = "cli:main"
 
+[tool.setuptools]
+py-modules = ["cli"]
+
 [tool.setuptools.packages.find]
 include = ["video_editor*"]
 
