@@ -179,11 +179,13 @@ def _card_fade(duration):
     )
 
 
-def render(base, plan, output, work_dir=None, encoder=None):
+def render(base, plan, output, work_dir=None, encoder=None, master_audio=None):
     base = Path(base)
     output = Path(output)
     if isinstance(plan, (str, Path)):
         plan = models.load_plan(plan)
+    if master_audio is None:
+        master_audio = getattr(plan, 'audio', None) is not None
     info = _probe_video(base)
     fps = float(info['fps'])
     duration = float(info['duration'])
@@ -285,6 +287,15 @@ def render(base, plan, output, work_dir=None, encoder=None):
             '-map', '0:v', '-map', '1:a?', '-c', 'copy',
             '-movflags', '+faststart', str(temporary),
         ])
-    temporary.replace(output)
+    mastered = None
+    if master_audio and _probe_audio(temporary):
+        from video_editor.finishing import audio
+        mastered = audio.master(
+            temporary, output, options=getattr(plan, 'audio', None) or {}
+        )
+        temporary.unlink(missing_ok=True)
+    else:
+        temporary.replace(output)
     return dict(path=str(output), duration=round(total_frames / fps, 3),
-                frames=total_frames, fps=fps, encoder=encoder, work=str(work))
+                frames=total_frames, fps=fps, encoder=encoder, work=str(work),
+                audio=mastered)

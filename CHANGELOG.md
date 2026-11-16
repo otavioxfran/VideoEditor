@@ -20,6 +20,12 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
     colocadas, e recusa gravar com o CapCut aberto.
   - `python cli.py finish fetch-images --query ...` busca imagens livres no Wikimedia Commons e grava
     os créditos.
+- Áudio de voz: `python cli.py finish audio analyze VIDEO` mede o loudness (LUFS), o true peak, a
+  dinâmica (LRA), o ruído nas pausas (sem contar o silêncio digital), os canais e as bandas, e
+  explica em português o que corrigir. `python cli.py finish audio master VIDEO --output OUT` aplica
+  só o necessário: canal mudo duplicado, passa-alta, redução de ruído conservadora, de-esser,
+  compressor e loudnorm em 2 passes até −14 LUFS e −1 dBTP. O vídeo não é recodificado. Uma chave
+  `"audio"` no plano ou `finish render --master-audio` aplica a masterização ao final do render.
 - `python cli.py ledger build` reúne as decisões humanas de todos os cortes (aceitar,
   recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
   `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,

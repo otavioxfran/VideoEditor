@@ -46,6 +46,7 @@ class Plan:
     cards: list[Card] = field(default_factory=list)
     banners: list[Banner] = field(default_factory=list)
     source: Path | None = None
+    audio: dict | None = None
 
     def layers(self):
         items = [
@@ -138,7 +139,10 @@ def load_plan(path):
     for previous, current in zip(banners, banners[1:]):
         if current.start < previous.end:
             raise ValueError('Banners sobrepostos.')
-    return Plan(overlays, cards, banners, source)
+    audio = data.get('audio')
+    if audio is not None and not isinstance(audio, dict):
+        raise ValueError('audio precisa ser um objeto JSON.')
+    return Plan(overlays, cards, banners, source, audio)
 
 
 def map_time(seconds, cards):

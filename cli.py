@@ -73,6 +73,9 @@ def main():
     finish_render.add_argument('--plan', required=True)
     finish_render.add_argument('--base')
     finish_render.add_argument('--output')
+    audio_group = finish_render.add_mutually_exclusive_group()
+    audio_group.add_argument('--master-audio', action='store_true')
+    audio_group.add_argument('--no-master-audio', action='store_true')
     finish_capcut = finish_sub.add_parser('capcut')
     finish_capcut.add_argument('job_id')
     finish_capcut.add_argument('--plan', required=True)
@@ -82,6 +85,16 @@ def main():
     finish_fetch = finish_sub.add_parser('fetch-images')
     finish_fetch.add_argument('--query', action='append', required=True)
     finish_fetch.add_argument('--out')
+    finish_audio = finish_sub.add_parser('audio', help='Analisar e masterizar áudio de voz')
+    audio_sub = finish_audio.add_subparsers(dest='audio_command', required=True)
+    audio_analyze = audio_sub.add_parser('analyze')
+    audio_analyze.add_argument('video')
+    audio_analyze.add_argument('--json', action='store_true')
+    audio_master = audio_sub.add_parser('master')
+    audio_master.add_argument('video')
+    audio_master.add_argument('--output', required=True)
+    audio_master.add_argument('--target', type=float, default=-14)
+    audio_master.add_argument('--denoise', choices=('auto', 'on', 'off'), default='auto')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -202,7 +215,25 @@ def main():
         import json
         from video_editor.finishing import assets, capcut, models
         from video_editor.finishing import render as finishing_render
-        if args.finish_command == 'fetch-images':
+        if args.finish_command == 'audio':
+            from video_editor.finishing import audio
+            if args.audio_command == 'analyze':
+                value = audio.analyze(args.video)
+                print(
+                    json.dumps(value, ensure_ascii=False, indent=2)
+                    if args.json
+                    else value['report']
+                )
+            else:
+                value = audio.master(
+                    args.video, args.output,
+                    options={'target_lufs': args.target, 'denoise': args.denoise},
+                )
+                print(value['after_report'])
+                print('Filtros aplicados:')
+                for item in value['filters']:
+                    print(f"- {item['filter']}: {item['reason']}")
+        elif args.finish_command == 'fetch-images':
             from video_editor.settings import DATA_DIR
             out = Path(args.out) if args.out else DATA_DIR / 'scratch' / 'finishing-images'
             records = assets.fetch_images(args.query, out)
@@ -213,6 +244,7 @@ def main():
             jobs.info(args.job_id)
             plan = models.load_plan(args.plan)
             if args.finish_command == 'render':
+                master = True if args.master_audio else False if args.no_master_audio else None
                 if args.base:
                     base = Path(args.base)
                 else:
@@ -238,7 +270,9 @@ def main():
                         parser.error('Nenhum export completo; informe --base.')
                     base = max(candidates, key=lambda item: item.stat().st_mtime)
                 output = Path(args.output) if args.output else base.with_name(base.stem + '-final.mp4')
-                result = finishing_render.render(base, plan, output)
+                result = finishing_render.render(
+                    base, plan, output, master_audio=master
+                )
                 print(json.dumps(result, ensure_ascii=False, indent=2))
             else:
                 result = capcut.export_draft(
