@@ -8,6 +8,11 @@ from video_editor.export import renderer
 SNAPSHOT = Path(__file__).parent / 'fixtures' / 'export_snapshot' / 'single.json'
 
 
+def _portable(argument):
+    # The snapshot was recorded on Windows; compare paths with forward slashes on every OS.
+    return argument.replace('\\', '/')
+
+
 def test_export_ffmpeg_arguments_characterization(tmp_path, monkeypatch):
     source = tmp_path / 'source.mp4'
     source.write_bytes(b'x')
@@ -22,7 +27,7 @@ def test_export_ffmpeg_arguments_characterization(tmp_path, monkeypatch):
     calls = []
 
     def execute(arguments):
-        calls.append([arg.replace(str(tmp_path), '<tmp>') for arg in arguments])
+        calls.append([_portable(arg.replace(str(tmp_path), '<tmp>')) for arg in arguments])
         Path(arguments[-1]).write_bytes(b'x')
         return SimpleNamespace(returncode=0, stderr='')
 
@@ -37,4 +42,5 @@ def test_export_ffmpeg_arguments_characterization(tmp_path, monkeypatch):
     if os.getenv('UPDATE_EXPORT_SNAPSHOT') == '1':
         path.write_text(encoded, encoding='utf-8')
     else:
-        assert calls == json.loads(path.read_text(encoding='utf-8'))
+        expected = json.loads(path.read_text(encoding='utf-8'))
+        assert calls == [[_portable(arg) for arg in call] for call in expected]
