@@ -12,15 +12,25 @@ from video_editor.finishing import cards, layers, models
 W, H = 1920, 1080
 
 
+_ENCODER_CACHE = {}
+
+
 def _encoder_available(name):
+    """Being listed by `ffmpeg -encoders` is not enough: NVENC is listed on
+    machines without an NVIDIA driver, so encode a few frames to be sure."""
+    if name in _ENCODER_CACHE:
+        return _ENCODER_CACHE[name]
     try:
         result = subprocess.run(
-            [media.binary('ffmpeg'), '-hide_banner', '-encoders'],
-            capture_output=True, text=True, encoding='utf-8', errors='replace',
+            [media.binary('ffmpeg'), '-hide_banner', '-v', 'error', '-f', 'lavfi',
+             '-i', 'color=c=black:s=256x256:r=30:d=0.2', '-c:v', name, '-f', 'null', '-'],
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30,
         )
-    except (OSError, RuntimeError):
-        return False
-    return result.returncode == 0 and name in result.stdout
+        available = result.returncode == 0
+    except (OSError, RuntimeError, subprocess.TimeoutExpired):
+        available = False
+    _ENCODER_CACHE[name] = available
+    return available
 
 
 def pick_encoder(preferred=None):
