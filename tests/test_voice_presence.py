@@ -3,7 +3,7 @@ import wave
 import numpy as np
 import pytest
 
-from video_editor import voice_presence
+from video_editor.analysis import voice_presence
 
 
 def test_robust_centroid_ignores_outliers():

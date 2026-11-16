@@ -15,7 +15,7 @@ class Exports:
     def current_config(self):
         # Punch-in is a creator preference: read live, and part of the export identity,
         # so toggling it marks earlier exports stale.
-        from video_editor import framing
+        from video_editor.analysis import framing
         return dict(self.config, punch_in=framing.settings()) if 'punch_in' not in self.config else dict(self.config)
 
     def identity(self, job_id):

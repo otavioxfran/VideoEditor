@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import pytest
 
-from video_editor.channel_profile import (
+from video_editor.learning.channel_profile import (
     load_profile,
     record_feedback,
     detect_speech_gaps,
@@ -82,7 +82,7 @@ def test_retakes_detection_identifies_real_channel_stumbles(benchmark_transcript
 def test_channel_profile_self_learning_from_studio_actions(tmp_path, monkeypatch):
     """The channel profile adapts when creator restores or manually cuts pauses."""
     prof_file = tmp_path / "channel_profile.json"
-    monkeypatch.setattr("video_editor.channel_profile.profile_path", lambda: prof_file)
+    monkeypatch.setattr("video_editor.learning.channel_profile.profile_path", lambda: prof_file)
 
     # Starts with default min_silence_gap of 0.8s
     prof = load_profile()
@@ -104,7 +104,7 @@ def test_channel_profile_self_learning_from_studio_actions(tmp_path, monkeypatch
 
 def test_empty_chair_and_long_absence_never_classified_as_expressive(benchmark_transcript):
     """A 24s pause where creator leaves the chair cannot be preserved as expressive, even with rising pitch."""
-    from video_editor.channel_profile import detect_speech_gaps
+    from video_editor.learning.channel_profile import detect_speech_gaps
     from video_editor.automatic import classify
 
     gaps = detect_speech_gaps(benchmark_transcript, 599.4)

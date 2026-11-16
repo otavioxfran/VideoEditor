@@ -7,17 +7,17 @@ from video_editor.editing import require_revision, load_edit
 
 
 def policy_hash():
-    root = Path(__file__).parent
+    root = Path(__file__).parent.parent
     sources = {
         name: (root / name).read_text(encoding="utf-8")
         for name in (
-            "automatic_evaluation.py",
-            "contextual.py",
-            "noise_profile.py",
+            "learning/automatic_evaluation.py",
+            "analysis/contextual.py",
+            "analysis/noise_profile.py",
             "models.py",
             "cuts.py",
             "cut_policy.py",
-            "activity.py",
+            "learning/activity.py",
             "transcription.py",
             "timeline.py",
             "pipeline.py",
@@ -26,10 +26,10 @@ def policy_hash():
             "export/service.py",
             "editing.py",
             "editorial/llm_client.py",
-            "acceptance.py",
-            "channel_profile.py",
-            "pacing.py",
-            "takes.py",
+            "learning/acceptance.py",
+            "learning/channel_profile.py",
+            "analysis/pacing.py",
+            "analysis/takes.py",
         )
     }
     from video_editor.settings import PERSONA_PATH
@@ -42,7 +42,7 @@ def policy_hash():
         persona.read_text(encoding="utf-8") if persona.exists() else ""
     )
     # Learned thresholds change cuts as much as code does; feedback logs do not.
-    from video_editor.channel_profile import decision_parameters
+    from video_editor.learning.channel_profile import decision_parameters
 
     sources["channel_profile"] = decision_parameters()
     return digest(sources)

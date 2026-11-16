@@ -80,7 +80,7 @@ def view(jobs, job_id):
     job, edit, transcript = load_edit(jobs, job_id)
     timeline = build_timeline(job['media']['duration'], edit['cuts'], job['media'].get('fps'))
     # The preview applies the same punch-in plan the export will render.
-    from video_editor import framing
+    from video_editor.analysis import framing
     for keep, scale in zip(timeline['keeps'], framing.plan(timeline, transcript, framing.settings())):
         keep['scale'] = scale
     return dict(job=job, edit=edit, transcript=transcript, timeline=timeline,
@@ -165,7 +165,7 @@ def mutate(jobs, job_id, request):
     # Learn only from committed edits; a rejected request must not move the profile.
     for details in feedback:
         try:
-            from video_editor.channel_profile import record_feedback
+            from video_editor.learning.channel_profile import record_feedback
             record_feedback(action, details)
         except Exception:
             pass

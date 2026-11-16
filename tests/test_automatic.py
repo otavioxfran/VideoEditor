@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from video_editor import acceptance
+from video_editor.learning import acceptance
 from video_editor.timeline import digest
 from video_editor.automatic import (
     Automatic,
@@ -216,7 +216,7 @@ def test_short_pause_at_slow_cadence_is_kept_without_invalid_bounds():
 def test_adaptive_noise_proposals_preserve_music_and_remain_gated(tmp_path):
     import wave
     import numpy as np
-    from video_editor.activity import adaptive_candidates
+    from video_editor.learning.activity import adaptive_candidates
 
     tr = normalize(
         [
@@ -633,7 +633,7 @@ def test_validated_class_requires_actual_replacement_before_cut(
     jobs.write(jid, "suggestions.json", candidates)
     candidate = next(c for c in candidates if c["id"].startswith("retake-"))
     monkeypatch.setattr(
-        "video_editor.acceptance.gate",
+        "video_editor.learning.acceptance.gate",
         lambda jobs: dict(enabled=True, state="validated_five_videos"),
     )
     monkeypatch.setattr(

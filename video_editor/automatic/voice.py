@@ -1,5 +1,5 @@
 """Background-voice candidate generation."""
-from video_editor import voice_presence
+from video_editor.analysis import voice_presence
 from video_editor.timeline import build_timeline
 
 def background_voice_candidates(jobs, job_id, job, transcript, edit=None):

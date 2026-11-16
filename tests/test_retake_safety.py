@@ -2,7 +2,7 @@ import pytest
 from video_editor.cuts import find_candidates
 from video_editor.cut_policy import apply_policy
 from video_editor.transcription import normalize
-from video_editor.activity import silence_candidates
+from video_editor.learning.activity import silence_candidates
 
 
 def transcript_of(texts):

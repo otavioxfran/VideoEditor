@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from video_editor import acceptance, report
-from video_editor.channel_profile import load_profile, profile_path, save_profile
+from video_editor.learning import acceptance, report
+from video_editor.learning.channel_profile import load_profile, profile_path, save_profile
 from video_editor.editing import mutate, RevisionConflict
 from video_editor.timeline import digest
 from video_editor.transcription import normalize

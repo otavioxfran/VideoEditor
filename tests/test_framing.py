@@ -1,4 +1,4 @@
-from video_editor import framing
+from video_editor.analysis import framing
 from video_editor.timeline import build_timeline
 
 ON = dict(enabled=True, scale=1.1)

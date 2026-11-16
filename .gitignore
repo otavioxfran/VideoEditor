@@ -29,7 +29,7 @@ videos/
 jobs/
 config/models/voice/
 editor_memory/
-learning/
+/learning/
 scratch/
 scratch_*
 

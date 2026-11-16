@@ -296,7 +296,7 @@ def decisions_result(result, groups, transcript, protected):
 
 
 def cached_call(jobs, job_id, config, task, payload, validator):
-    from video_editor.acceptance import policy_hash
+    from video_editor.learning.acceptance import policy_hash
 
     prompt = (
         task
@@ -590,7 +590,7 @@ def audit(
 
 def finish_refinement(jobs, job_id):
     """Recover a two-document ASR update only while both documents match its intent."""
-    from video_editor.acceptance import policy_hash
+    from video_editor.learning.acceptance import policy_hash
 
     path = jobs.path(job_id, "editorial/refinement_commit.json")
     if not path.exists():
@@ -630,7 +630,7 @@ def finish_refinement(jobs, job_id):
 
 def refine_job(jobs, job_id, transcript, edit, wav):
     from video_editor import transcription
-    from video_editor.acceptance import policy_hash
+    from video_editor.learning.acceptance import policy_hash
     from video_editor.cuts import find_candidates
 
     if edit["cuts"] or any(

@@ -127,7 +127,7 @@ def detect_speech_gaps(transcript: dict, duration: float, profile: dict | None =
     With `wav`, every removed span is checked for untranscribed sound and cut points
     snap to the quietest nearby frame; without it the evidence says 'not_measured'.
     """
-    from video_editor import pacing
+    from video_editor.analysis import pacing
 
     if profile is None:
         profile = load_profile()

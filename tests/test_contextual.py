@@ -4,7 +4,8 @@ import json
 import pytest
 from fastapi.testclient import TestClient
 
-from video_editor import contextual, acceptance
+from video_editor.analysis import contextual
+from video_editor.learning import acceptance
 from video_editor.automatic import Automatic
 from video_editor.editorial import llm_client
 from video_editor.export.service import Exports

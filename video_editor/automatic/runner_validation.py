@@ -2,8 +2,9 @@
 import math
 import subprocess
 
-from video_editor import acceptance, contextual, pacing, takes
-from video_editor.channel_profile import load_profile
+from video_editor.analysis import contextual, pacing, takes
+from video_editor.learning import acceptance
+from video_editor.learning.channel_profile import load_profile
 from video_editor.cuts import tokens
 from .bounds import overlap, safe_bounds
 from .constants import NEW_CLASSES

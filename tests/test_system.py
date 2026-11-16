@@ -41,7 +41,7 @@ def test_picked_video_outside_the_source_folder_can_be_cut(jobs, monkeypatch, tm
     outside = tmp_path / 'elsewhere' / 'gravação.mp4'
     outside.parent.mkdir()
     outside.write_bytes(b'isolated source fixture')
-    monkeypatch.setattr('video_editor.picker.pick_file', lambda start=None: str(outside))
+    monkeypatch.setattr('video_editor.learning.picker.pick_file', lambda start=None: str(outside))
     app = create_app(jobs.root, jobs.source_dir, recover=False)
     with TestClient(app) as client:
         # Typed by hand, a path outside the folder is still refused.
@@ -54,8 +54,8 @@ def test_picked_video_outside_the_source_folder_can_be_cut(jobs, monkeypatch, tm
 
 
 def test_cancelled_pick_changes_nothing(jobs, monkeypatch):
-    monkeypatch.setattr('video_editor.picker.pick_file', lambda start=None: None)
-    monkeypatch.setattr('video_editor.picker.pick_folder', lambda start=None: None)
+    monkeypatch.setattr('video_editor.learning.picker.pick_file', lambda start=None: None)
+    monkeypatch.setattr('video_editor.learning.picker.pick_folder', lambda start=None: None)
     app = create_app(jobs.root, jobs.source_dir, recover=False)
     with TestClient(app) as client:
         assert client.post('/api/pick/video').json() == dict(cancelled=True)
@@ -66,7 +66,7 @@ def test_picked_folder_becomes_the_library(jobs, monkeypatch, tmp_path):
     folder = tmp_path / 'minhas gravações'
     folder.mkdir()
     (folder / 'take.mov').write_bytes(b'x')
-    monkeypatch.setattr('video_editor.picker.pick_folder', lambda start=None: str(folder))
+    monkeypatch.setattr('video_editor.learning.picker.pick_folder', lambda start=None: str(folder))
     monkeypatch.setattr('video_editor.settings.USER_SETTINGS_PATH', tmp_path / 'studio.local.json')
     monkeypatch.setattr('video_editor.settings.LOCAL_CONFIG_DIR', tmp_path)
     app = create_app(jobs.root, jobs.source_dir, recover=False)
@@ -79,7 +79,7 @@ def test_picked_folder_becomes_the_library(jobs, monkeypatch, tmp_path):
 
 
 def test_folder_that_contains_the_workspace_is_refused(jobs, monkeypatch):
-    monkeypatch.setattr('video_editor.picker.pick_folder', lambda start=None: str(jobs.root.parent))
+    monkeypatch.setattr('video_editor.learning.picker.pick_folder', lambda start=None: str(jobs.root.parent))
     app = create_app(jobs.root, jobs.source_dir, recover=False)
     with TestClient(app) as client:
         assert client.post('/api/pick/folder').status_code == 422

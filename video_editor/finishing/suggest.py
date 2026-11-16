@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 from video_editor import media, storage
-from video_editor import glossary
+from video_editor.analysis import glossary
 from video_editor.editing import require_revision, view
 from video_editor.finishing import models
 from video_editor.settings import BASE_DIR

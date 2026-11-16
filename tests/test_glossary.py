@@ -1,5 +1,5 @@
 
-from video_editor import glossary
+from video_editor.analysis import glossary
 from video_editor.models import PrepareConfig
 from video_editor.timeline import digest
 

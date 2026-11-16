@@ -1,8 +1,8 @@
 """Contextual and editorial resolution for Automatic."""
-from video_editor import contextual
+from video_editor.analysis import contextual
 from video_editor.timeline import digest
 from video_editor.editorial import llm_client
-from video_editor.automatic_evaluation import local_decisions
+from video_editor.learning.automatic_evaluation import local_decisions
 from .classify import classify
 from .constants import POLICY_VERSION
 from .editorial import editorial_packet, validate_editorial

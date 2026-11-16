@@ -1,6 +1,6 @@
 import pytest
 
-from video_editor import takes
+from video_editor.analysis import takes
 
 
 def _segment(sid, text, start, step=.3, probability=.95):

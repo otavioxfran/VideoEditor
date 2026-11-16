@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from video_editor import visual_presence
+from video_editor.analysis import visual_presence
 
 
 BOX = (220.0, 10.0, 70.0, 70.0)

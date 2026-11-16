@@ -1,4 +1,4 @@
-from video_editor.performance import quality, selected_batch
+from video_editor.learning.performance import quality, selected_batch
 from video_editor import storage
 from video_editor.models import PrepareConfig
 from video_editor.transcription import transcribe, release_model
@@ -17,9 +17,9 @@ def test_calibration_corruption_and_other_gpu_fall_back(tmp_path, monkeypatch):
     path.write_text("broken")
     assert selected_batch(path) == 1
     storage.write(path, dict(gpu="RTX 2060", model="small", selected_batch_size=4))
-    monkeypatch.setattr("video_editor.performance.gpu", lambda: dict(name="different"))
+    monkeypatch.setattr("video_editor.learning.performance.gpu", lambda: dict(name="different"))
     assert selected_batch(path) == 1
-    monkeypatch.setattr("video_editor.performance.gpu", lambda: dict(name="RTX 2060"))
+    monkeypatch.setattr("video_editor.learning.performance.gpu", lambda: dict(name="RTX 2060"))
     assert selected_batch(path) == 4
 
 

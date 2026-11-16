@@ -3,7 +3,7 @@ import copy
 import pytest
 from fastapi.testclient import TestClient
 
-from video_editor import productivity
+from video_editor.learning import productivity
 from video_editor.editing import RevisionConflict, mutate
 from video_editor.export.service import Exports
 from video_editor.server.app import create_app

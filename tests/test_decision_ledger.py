@@ -1,6 +1,6 @@
 import pytest
 
-from video_editor import decision_ledger
+from video_editor.learning import decision_ledger
 
 SEGMENTS = [
     dict(

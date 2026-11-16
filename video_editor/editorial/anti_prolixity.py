@@ -147,7 +147,7 @@ def validate(result, segments, duration, origin='gemini'):
 
 def local_issues(transcript):
     """Without a provider, only measurable repetition is reported."""
-    from video_editor import takes
+    from video_editor.analysis import takes
     segments = [s for s in transcript['segments'] if s['words']]
     index = {s['id']: i for i, s in enumerate(segments)}
     result = []

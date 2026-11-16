@@ -4,14 +4,14 @@ import numpy as np
 import pytest
 from fastapi.testclient import TestClient
 
-from video_editor import acceptance
+from video_editor.learning import acceptance
 from video_editor.automatic import Automatic, validate_editorial
-from video_editor.automatic_evaluation import clone_prepared, local_decisions
+from video_editor.learning.automatic_evaluation import clone_prepared, local_decisions
 from video_editor.cuts import find_candidates
 from video_editor.editing import mutate
 from video_editor.export.service import Exports
 from video_editor.models import AutomaticOptions
-from video_editor.noise_profile import analyze
+from video_editor.analysis.noise_profile import analyze
 from video_editor.safety import source_identity
 from video_editor.server.app import create_app
 from video_editor.timeline import digest
@@ -195,7 +195,7 @@ def test_evaluation_api_applies_real_candidate_in_separate_job(
         evidence=dict(native_clear=True, vad_clear=True),
     )
     monkeypatch.setattr(
-        "video_editor.activity.adaptive_for_job", lambda *args: [candidate]
+        "video_editor.learning.activity.adaptive_for_job", lambda *args: [candidate]
     )
     monkeypatch.setattr(
         "video_editor.automatic.visual_context",

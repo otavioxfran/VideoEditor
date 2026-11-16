@@ -122,7 +122,7 @@ def main():
         print(download_model(args.model))
     elif args.command == 'report':
         import json
-        from video_editor import report as edit_report
+        from video_editor.learning import report as edit_report
         # Read-only: safe while the Studio is running, so no runtime lock.
         value = edit_report.build(jobs, args.job_id, app.state.exports)
         print(json.dumps(value, indent=2, ensure_ascii=False) if args.json else edit_report.text(value))
@@ -130,7 +130,7 @@ def main():
         print(jobs.migrate(args.job_id)['job_id'])
     elif args.command == 'ledger':
         import json
-        from video_editor import decision_ledger
+        from video_editor.learning import decision_ledger
         if args.ledger_command == 'build':
             result = decision_ledger.build(jobs)
             print(
@@ -149,7 +149,7 @@ def main():
                 else decision_ledger.text(value)
             )
     elif args.command == 'glossary':
-        from video_editor import glossary
+        from video_editor.analysis import glossary
         from video_editor.timeline import digest
         job = jobs.info(args.job_id)
         duration = float(job['media']['duration'])
@@ -204,7 +204,7 @@ def main():
                 )
     elif args.command == 'voice':
         import json
-        from video_editor import voice_presence
+        from video_editor.analysis import voice_presence
         job = jobs.info(args.job_id)
         transcript = jobs.read(args.job_id, 'transcript.json')
         presence_path = jobs.path(args.job_id, 'visual/presence.json')
@@ -340,7 +340,7 @@ def main():
     elif args.command == 'calibrate':
         import tempfile
         from video_editor import media
-        from video_editor.performance import calibrate as measure
+        from video_editor.learning.performance import calibrate as measure
         from video_editor.safety import source_identity
         from video_editor.settings import DATA_DIR, LOCAL_CONFIG_DIR
         if not 5 <= args.seconds <= 300:
@@ -367,7 +367,7 @@ def main():
         with jobs.runtime_lock():
             if args.automatic and config.model == 'small':
                 # ASR batching was calibrated for the small model only.
-                from video_editor.performance import selected_batch
+                from video_editor.learning.performance import selected_batch
                 from video_editor.settings import DATA_DIR, LOCAL_CONFIG_DIR
                 config.batch_size=selected_batch(LOCAL_CONFIG_DIR/'asr_calibration.local.json')
             if args.automatic:

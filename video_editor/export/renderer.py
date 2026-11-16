@@ -1,15 +1,13 @@
 """Execute supplied keeps verbatim, with bounded filter fan-out on long edits."""
 import subprocess
-from video_editor import framing, media, storage
+from video_editor import media, storage
+from video_editor.analysis import framing
+from video_editor.encoding import encoder_args, gpu_error, max_bitrate  # noqa: F401
 from video_editor.safety import destination
 
 DEFAULT_CONFIG = dict(video_codec='h264_nvenc', audio_codec='aac', audio_bitrate='192k',
                       fade_seconds=.015, crossfade_seconds=.06, hardware_decode=True, contract=5,
                       nvenc_cq=21, x264_crf=20, reference_max_bitrate=20_000_000)
-
-# The reference cap applies to 1080p60; other formats scale by pixel rate.
-REFERENCE_PIXEL_RATE = 1920 * 1080 * 60
-MIN_MAX_BITRATE, MAX_MAX_BITRATE = 6_000_000, 80_000_000
 
 MAX_BATCH_KEEPS = 24
 
@@ -76,32 +74,12 @@ def _execute(arguments):
                           capture_output=True, text=True, encoding='utf-8', errors='replace')
 
 
-def max_bitrate(config, media_info):
-    # Migrated legacy media may lack dimensions; fall back to the reference format.
-    try:
-        pixel_rate = float(media_info['width']) * float(media_info['height']) * float(media_info['fps'])
-    except (KeyError, TypeError, ValueError):
-        pixel_rate = REFERENCE_PIXEL_RATE
-    scaled = config.get('reference_max_bitrate', DEFAULT_CONFIG['reference_max_bitrate']) * pixel_rate / REFERENCE_PIXEL_RATE
-    return int(min(MAX_MAX_BITRATE, max(MIN_MAX_BITRATE, scaled)))
-
-
 def _encoder(codec, config, media_info):
-    # Constant quality bounded by a cap: unset NVENC defaults to ~2 Mbps, far below the raw.
-    cap = max_bitrate(config, media_info)
-    rate = ['-maxrate', str(cap), '-bufsize', str(2 * cap)]
-    if codec == 'h264_nvenc':
-        # No -pix_fmt here: hardware-decoded CUDA frames go straight to the encoder.
-        return ['-c:v', codec, '-preset', 'p5', '-tune', 'hq', '-rc', 'vbr',
-                '-cq', str(config.get('nvenc_cq', DEFAULT_CONFIG['nvenc_cq'])),
-                '-b:v', str(int(cap * .7)), *rate, '-spatial-aq', '1', '-profile:v', 'high']
-    return ['-c:v', codec, '-threads:v', '4', '-preset', 'fast',
-            '-crf', str(config.get('x264_crf', DEFAULT_CONFIG['x264_crf'])), *rate, '-pix_fmt', 'yuv420p']
+    return encoder_args(codec, config, media_info)
 
 
 def _gpu_error(result):
-    return any(word in result.stderr.lower() for word in ('nvenc', 'cuda', 'nvidia', 'no capable devices',
-        'hwaccel','hardware acceleration','decoder surfaces','impossible to convert'))
+    return gpu_error(result)
 
 
 def render(snapshot, output, root):

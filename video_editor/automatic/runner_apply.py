@@ -1,7 +1,8 @@
 """Applying automatic cuts and building the report."""
 import copy
 
-from video_editor import storage, takes
+from video_editor import storage
+from video_editor.analysis import takes
 from video_editor.editing import load_edit, require_revision
 from video_editor.timeline import build_timeline, digest, source_to_output
 from .bounds import overlap

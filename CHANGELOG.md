@@ -53,6 +53,10 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   O modelo (WeSpeaker ResNet34, Apache-2.0/CC-BY-4.0) é baixado na primeira vez e conferido
   por SHA-256.
 
+### Alterado
+- O vídeo final do Acabamento agora usa a mesma qualidade e o mesmo teto de bitrate do export
+  e cai automaticamente para o encoder de software quando a GPU falha.
+
 ### Corrigido
 - Ausência na frente da câmera (cadeira vazia) agora funciona em gravação de tela com a
   webcam num canto: a comparação usa só a região da pessoa, e a referência de cena vazia

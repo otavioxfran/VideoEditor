@@ -4,7 +4,7 @@ A static webcam shot makes every cut a visible head jump. Editors alternate the 
 (100% / ~110%) on the cuts that matter, so the cut reads as a choice. One plan, derived
 from the timeline and transcript, drives both the browser preview and the export.
 """
-from video_editor.channel_profile import load_profile
+from video_editor.learning.channel_profile import load_profile
 
 MIN_REMOVED = 1.5     # pause cuts shorter than this barely move the head: keep framing
 MIN_HOLD = 2.0        # never change framing twice within this much output time

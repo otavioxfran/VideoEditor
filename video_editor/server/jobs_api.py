@@ -3,7 +3,8 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from video_editor.media import LocalFileResponse as FileResponse
 from video_editor.models import CreateJob, AutomaticJob, AutomaticOptions, RevisionRequest, AcceptanceRequest, EvaluationRequest
-from video_editor import acceptance, media
+from video_editor import media
+from video_editor.learning import acceptance
 from video_editor.editing import decisions
 from video_editor.safety import source_identity
 
@@ -151,7 +152,7 @@ def router(jobs, worker, pipeline, exports, automatic=None):
 
     @api.post('/pick/video')
     def pick_video():
-        from video_editor import picker
+        from video_editor.learning import picker
         try:
             value = picker.pick_file(jobs.source_dir)
         except picker.PickerUnavailable as error:
@@ -165,7 +166,7 @@ def router(jobs, worker, pipeline, exports, automatic=None):
     @api.post('/pick/folder')
     def pick_folder():
         import os
-        from video_editor import picker
+        from video_editor.learning import picker
         from video_editor.settings import save_user_settings
         try:
             value = picker.pick_folder(jobs.source_dir)
@@ -190,7 +191,7 @@ def router(jobs, worker, pipeline, exports, automatic=None):
     def automatic_job(request: AutomaticJob):
         config=request.config.model_dump()
         if config['model']=='small' and config['batch_size']==1:
-            from video_editor.performance import selected_batch
+            from video_editor.learning.performance import selected_batch
             from video_editor.settings import LOCAL_CONFIG_DIR
             config['batch_size']=selected_batch(LOCAL_CONFIG_DIR/'asr_calibration.local.json')
         info=jobs.create(request.source_path,config,allow_external=chosen(request.source_path))

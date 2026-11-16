@@ -6,7 +6,7 @@ from fastapi import APIRouter
 from pydantic import Field, model_validator
 
 from video_editor import storage
-from video_editor.acceptance import policy_hash
+from video_editor.learning.acceptance import policy_hash
 from video_editor.editing import RevisionConflict, load_edit, require_revision
 from video_editor.models import Request
 from video_editor.timeline import build_timeline, digest

@@ -1,15 +1,14 @@
 """Automatic orchestration class; public API is re-exported by the package."""
 import time
 from pathlib import Path
-from video_editor import (
-    storage, activity, acceptance, contextual, takes,
-    visual_presence,
-)
+from video_editor import storage
+from video_editor.analysis import contextual, takes, visual_presence
+from video_editor.learning import activity, acceptance
 from video_editor.cuts import find_candidates
 from video_editor.cut_policy import apply_policy
 from video_editor.editing import load_edit, require_revision, RevisionConflict
 from video_editor.timeline import digest
-from video_editor.noise_profile import analyze as analyze_noise_profile
+from video_editor.analysis.noise_profile import analyze as analyze_noise_profile
 from .constants import ACTIVE_STATES, CONTEXT_SUFFIX
 from .classify import classify
 from .voice import background_voice_candidates
@@ -53,7 +52,7 @@ class Automatic:
         self.jobs.validate(job_id)
         revision = None
         if info["state"] == "ready":
-            from video_editor.contextual import finish_refinement
+            from video_editor.analysis.contextual import finish_refinement
 
             intent = finish_refinement(self.jobs, job_id)
             _, edit, tr = load_edit(self.jobs, job_id)
@@ -86,7 +85,7 @@ class Automatic:
         self.request(job_id, options, revision)
         return True
     def create_evaluation(self, job_id, revision, send_text=False):
-        from video_editor.automatic_evaluation import clone_prepared
+        from video_editor.learning.automatic_evaluation import clone_prepared
 
         previous = self.status(job_id)
         if previous["state"] in ACTIVE_STATES:
@@ -242,7 +241,7 @@ class Automatic:
             found += activity.adaptive_for_job(
                 jobs, job_id, transcript, job["media"]["duration"]
             )
-            from video_editor.channel_profile import detect_speech_gaps
+            from video_editor.learning.channel_profile import detect_speech_gaps
             found += detect_speech_gaps(transcript, job["media"]["duration"], wav=wav)
             found = takes.merge(found, takes.candidates(transcript))
             found += visual_presence.candidates(jobs, job_id, job, edit, transcript)

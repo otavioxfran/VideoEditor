@@ -7,42 +7,11 @@ from pathlib import Path
 from PIL import Image
 
 from video_editor import media
+from video_editor.encoding import encoder_args, gpu_error, pick_encoder
+from video_editor.export.renderer import DEFAULT_CONFIG
 from video_editor.finishing import cards, layers, models
 
 W, H = 1920, 1080
-
-
-_ENCODER_CACHE = {}
-
-
-def _encoder_available(name):
-    """Being listed by `ffmpeg -encoders` is not enough: NVENC is listed on
-    machines without an NVIDIA driver, so encode a few frames to be sure."""
-    if name in _ENCODER_CACHE:
-        return _ENCODER_CACHE[name]
-    try:
-        result = subprocess.run(
-            [media.binary('ffmpeg'), '-hide_banner', '-v', 'error', '-f', 'lavfi',
-             '-i', 'color=c=black:s=256x256:r=30:d=0.2', '-c:v', name, '-f', 'null', '-'],
-            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30,
-        )
-        available = result.returncode == 0
-    except (OSError, RuntimeError, subprocess.TimeoutExpired):
-        available = False
-    _ENCODER_CACHE[name] = available
-    return available
-
-
-def pick_encoder(preferred=None):
-    if preferred:
-        return preferred
-    return 'h264_nvenc' if _encoder_available('h264_nvenc') else 'libx264'
-
-
-def _encode_args(encoder):
-    if encoder == 'h264_nvenc':
-        return ['-c:v', 'h264_nvenc', '-preset', 'p4', '-rc', 'vbr', '-cq', '19', '-b:v', '0']
-    return ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18']
 
 
 def _run(command):
@@ -208,7 +177,8 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
     if progress:
         progress(0, total_parts)
     encoder = pick_encoder(encoder)
-    encode = _encode_args(encoder)
+    encode = encoder_args(encoder, DEFAULT_CONFIG, info)
+    encoder_fallback = False
     total_frames = round(duration * fps)
     rendered = []
     for index, (kind, left, right, value) in enumerate(pieces):
@@ -226,23 +196,39 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
             if layer_files:
                 merged = work / f'part_{index:03d}.png'
                 _composite(layer_files, size).save(merged)
-                command = [
-                    media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
-                    '-ss', f'{left:.6f}', '-i', str(base),
-                    '-loop', '1', '-framerate', str(fps), '-i', str(merged),
-                    '-filter_complex',
-                    '[0:v][1:v]overlay=0:0:shortest=1,format=yuv420p[v]',
-                    '-map', '[v]', '-frames:v', str(frames), '-an', *encode,
-                    '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
-                ]
+
+                def build(args):
+                    return [
+                        media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+                        '-ss', f'{left:.6f}', '-i', str(base),
+                        '-loop', '1', '-framerate', str(fps), '-i', str(merged),
+                        '-filter_complex',
+                        '[0:v][1:v]overlay=0:0:shortest=1,format=yuv420p[v]',
+                        '-map', '[v]', '-frames:v', str(frames), '-an', *args,
+                        '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
+                    ]
             else:
-                command = [
-                    media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
-                    '-ss', f'{left:.6f}', '-i', str(base),
-                    '-frames:v', str(frames), '-an', *encode,
-                    '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
-                ]
-            _run(command)
+                def build(args):
+                    return [
+                        media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+                        '-ss', f'{left:.6f}', '-i', str(base),
+                        '-frames:v', str(frames), '-an', *args,
+                        '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
+                    ]
+
+            def execute(builder):
+                nonlocal encoder, encode, encoder_fallback
+                try:
+                    _run(builder(encode))
+                except RuntimeError as error:
+                    if encoder != 'h264_nvenc' or not gpu_error(error):
+                        raise
+                    encoder = 'libx264'
+                    encode = encoder_args(encoder, DEFAULT_CONFIG, info)
+                    encoder_fallback = True
+                    _run(builder(encode))
+
+            execute(build)
             rendered.append((part, frames, 'base', left, right))
         else:
             card = value
@@ -255,13 +241,28 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
                 resized = work / f'card_{index:03d}_{size[0]}x{size[1]}.png'
                 Image.open(image).convert('RGBA').resize(size, Image.LANCZOS).save(resized)
                 image = resized
-            _run([
-                media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
-                '-loop', '1', '-framerate', str(fps), '-i', str(image),
-                '-vf', _card_fade(card.duration),
-                '-frames:v', str(frames), '-an', *encode,
-                '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
-            ])
+            def build(args):
+                return [
+                    media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+                    '-loop', '1', '-framerate', str(fps), '-i', str(image),
+                    '-vf', _card_fade(card.duration),
+                    '-frames:v', str(frames), '-an', *args,
+                    '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
+                ]
+
+            def execute(builder):
+                nonlocal encoder, encode, encoder_fallback
+                try:
+                    _run(builder(encode))
+                except RuntimeError as error:
+                    if encoder != 'h264_nvenc' or not gpu_error(error):
+                        raise
+                    encoder = 'libx264'
+                    encode = encoder_args(encoder, DEFAULT_CONFIG, info)
+                    encoder_fallback = True
+                    _run(builder(encode))
+
+            execute(build)
             rendered.append((part, frames, 'card', card.at, card.at))
         if progress:
             progress(index + 1, total_parts)
@@ -313,4 +314,4 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
         temporary.replace(output)
     return dict(path=str(output), duration=round(total_frames / fps, 3),
                 frames=total_frames, fps=fps, encoder=encoder, work=str(work),
-                audio=mastered)
+                audio=mastered, encoder_fallback=encoder_fallback)

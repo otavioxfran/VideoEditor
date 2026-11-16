@@ -117,7 +117,7 @@ def test_preparation_checkpoints_and_real_acoustic_detection(jobs,pulse_video,mo
 
 
 def test_silero_vad_is_local_and_required_for_silence(tmp_path):
-    from video_editor.activity import detect
+    from video_editor.learning.activity import detect
     source=tmp_path/'silent.wav'
     with wave.open(str(source),'wb') as handle:
         handle.setparams((1,2,16000,0,'NONE','not compressed'))
@@ -127,7 +127,7 @@ def test_silero_vad_is_local_and_required_for_silence(tmp_path):
 
 
 def test_quiet_tone_is_measured_as_sound_even_below_silencedetect_threshold(tmp_path):
-    from video_editor.activity import detect
+    from video_editor.learning.activity import detect
     source=tmp_path/'quiet-tone.wav'
     with wave.open(str(source),'wb') as handle:
         handle.setparams((1,2,16000,0,'NONE','not compressed'))
@@ -139,7 +139,7 @@ def test_quiet_tone_is_measured_as_sound_even_below_silencedetect_threshold(tmp_
 
 
 def test_mono_phase_cancellation_does_not_authorize_native_silence(tmp_path):
-    from video_editor.activity import detect
+    from video_editor.learning.activity import detect
     mono=tmp_path/'mono.wav'
     stereo=tmp_path/'stereo.wav'
     with wave.open(str(mono),'wb') as handle:

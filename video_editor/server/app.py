@@ -134,7 +134,7 @@ def create_app(jobs_dir=JOBS_DIR, source_dir=SOURCE_VIDEOS_DIR, pipeline=None, r
     application.include_router(editing_api.router(jobs, exports))
     from video_editor.server import system_api
     application.include_router(system_api.router())
-    from video_editor.productivity import router as productivity_router
+    from video_editor.learning.productivity import router as productivity_router
     application.include_router(productivity_router(jobs, exports))
     application.include_router(editorial_api.router(jobs, worker, provider_config))
     application.include_router(finishing_api.router(jobs, worker))

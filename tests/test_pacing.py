@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from video_editor import pacing
-from video_editor.channel_profile import DEFAULT_PROFILE
+from video_editor.analysis import pacing
+from video_editor.learning.channel_profile import DEFAULT_PROFILE
 from video_editor.export.renderer import _graph, crossfade_halves
 from video_editor.timeline import build_timeline
 

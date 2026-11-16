@@ -1,6 +1,7 @@
 import time
 from concurrent.futures import ThreadPoolExecutor
-from video_editor import activity, media, storage, transcription
+from video_editor import media, storage, transcription
+from video_editor.learning import activity
 from video_editor.cuts import find_candidates
 from video_editor.cut_policy import apply_policy
 from video_editor.timeline import digest, interval
@@ -76,10 +77,10 @@ class Pipeline:
             suggestions = apply_policy(transcript, find_candidates(transcript), info['duration'], info['fps'])
             suggestions += activity.silence_candidates(transcript, silences, info['duration'])
             suggestions += activity.adaptive_for_job(jobs,job_id,transcript,info['duration'])
-            from video_editor.channel_profile import detect_speech_gaps
+            from video_editor.learning.channel_profile import detect_speech_gaps
             suggestions += detect_speech_gaps(transcript, info['duration'], wav=wav)
-            from video_editor import takes
-            from video_editor.channel_profile import load_profile
+            from video_editor.analysis import takes
+            from video_editor.learning.channel_profile import load_profile
             proposals = takes.candidates(transcript)
             if not load_profile().get('auto_cut_takes', True):
                 for proposal in proposals:
@@ -94,7 +95,7 @@ class Pipeline:
                         s.update(bounds)
                     else:
                         s.update(auto=False,reason='Limites de frame exigem revisão; fala preservada.')
-            from video_editor import pacing
+            from video_editor.analysis import pacing
             pacing.seal(pacing.thin(pacing.reconcile(suggestions)), transcript)
             takes.guard(suggestions, transcript)
             suggestions.sort(key=lambda s: (s['start'], s['end']))
@@ -126,7 +127,7 @@ class Pipeline:
             if transcript['source_hash'] != signature or transcript.get('requested_config') != job['config']:
                 raise ValueError("Checkpoint ASR incompatível; crie outro job para outra configuração.")
         else:
-            from video_editor import glossary
+            from video_editor.analysis import glossary
             screen = (
                 glossary.screen_terms(
                     job['source']['path'],
