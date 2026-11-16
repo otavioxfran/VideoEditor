@@ -18,9 +18,12 @@ RETIRED_MODELS = ('gemini-2.5-flash', 'gemini-2.5-flash-lite')
 def cache_signature(config_path):
     """Only non-secret settings participate in the response identity."""
     path=Path(config_path)
-    if not path.exists():return dict(provider='unconfigured')
-    try:config=storage.read(path)
-    except (ValueError,OSError):return dict(provider='invalid_configuration')
+    if not path.exists():
+        return dict(provider='unconfigured')
+    try:
+        config=storage.read(path)
+    except (ValueError,OSError):
+        return dict(provider='invalid_configuration')
     return {k:config.get(k) for k in ('provider','model','enabled','free_tier_confirmed')}
 
 

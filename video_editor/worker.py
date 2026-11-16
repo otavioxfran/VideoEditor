@@ -1,7 +1,7 @@
 """One bounded worker per local app; tasks never run on the ASGI event loop."""
 import logging
 from concurrent.futures import Future
-from queue import Queue, Empty, Full
+from queue import Queue, Full
 from threading import Thread, Lock
 
 

@@ -1,8 +1,6 @@
-import copy
-import json
 import pytest
 from fastapi.testclient import TestClient
-from video_editor.editorial import brief, facts, llm_client
+from video_editor.editorial import brief, llm_client
 from video_editor.server.app import create_app
 
 
@@ -22,7 +20,8 @@ def test_import_cannot_cut_or_verify(jobs, ready):
         assert response.json()['claims'][0]['status'] == 'NEEDS_VERIFICATION'
         assert response.json()['origin'] == 'imported'
         assert jobs.read(job['job_id'],'edit.json') == before
-        bad = result();bad['claims'][0]['quote']='Trecho inexistente'
+        bad = result()
+        bad['claims'][0]['quote']='Trecho inexistente'
         assert client.post(prefix+'/editorial/import',json={'result':bad}).status_code == 422
         evidence = dict(expected_revision=0,claim_id='c1',status='SUPPORTED',url='https://example.com',excerpt='Evidência',human_confirmed=False)
         assert client.post(prefix+'/editorial/evidence',json=evidence).status_code == 422
@@ -63,7 +62,8 @@ def test_no_environment_key_detection(tmp_path,monkeypatch):
 
 
 def test_removed_claim_remains_in_brief_with_raw_reference(jobs,ready):
-    job=ready();app=create_app(jobs.root,jobs.source_dir,recover=False)
+    job=ready()
+    app=create_app(jobs.root,jobs.source_dir,recover=False)
     with TestClient(app) as client:
         prefix='/api/jobs/'+job['job_id']
         assert client.post(prefix+'/editorial/import',json={'result':result()}).status_code==200
@@ -76,7 +76,8 @@ def test_removed_claim_remains_in_brief_with_raw_reference(jobs,ready):
 
 def test_hallucinated_number_rejected(jobs,ready):
     job=ready(segments=[dict(start=1,end=2,text='O valor é 100 reais.',words=[])])
-    value=result();value['claims'][0].update(text='O valor é 200 reais.',quote='O valor é 100 reais.')
+    value=result()
+    value['claims'][0].update(text='O valor é 200 reais.',quote='O valor é 100 reais.')
     with pytest.raises(ValueError,match='Números'):
         brief.validate(value,jobs.read(job['job_id'],'transcript.json'),'imported')
 
@@ -108,18 +109,23 @@ def test_delayed_llm_cannot_overwrite_human_import(jobs,ready,monkeypatch):
     import threading
     started,release=threading.Event(),threading.Event()
     def provider(path,prompt):
-        started.set();assert release.wait(30)
-        value=result();value['thesis']='Resultado atrasado'
+        started.set()
+        assert release.wait(30)
+        value=result()
+        value['thesis']='Resultado atrasado'
         return value
     monkeypatch.setattr(llm_client,'generate',provider)
-    job=ready();app=create_app(jobs.root,jobs.source_dir,recover=False)
+    job=ready()
+    app=create_app(jobs.root,jobs.source_dir,recover=False)
     with TestClient(app) as client:
         prefix='/api/jobs/'+job['job_id']+'/editorial'
         assert client.post(prefix+'/assist',json={'send_text':True}).status_code==202
         assert started.wait(3)
         try:
-            value=result();value['thesis']='Importação humana mais recente'
+            value=result()
+            value['thesis']='Importação humana mais recente'
             assert client.post(prefix+'/import',json={'result':value}).status_code==200
-        finally:release.set()
+        finally:
+            release.set()
         app.state.worker.queue.join()
         assert client.get(prefix).json()['brief']['thesis']=='Importação humana mais recente'

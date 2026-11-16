@@ -2,7 +2,7 @@ import pytest
 from video_editor.cuts import find_candidates
 from video_editor.cut_policy import apply_policy
 from video_editor.transcription import normalize
-from video_editor.activity import silence_candidates, detect
+from video_editor.activity import silence_candidates
 
 
 def transcript_of(texts):
@@ -64,6 +64,7 @@ def test_acoustic_proof_and_word_overlap(jobs, ready):
 
 
 def test_quiet_music_energy_cannot_authorize_silence_cut(jobs,ready):
-    job=ready();transcript=jobs.read(job['job_id'],'transcript.json')
+    job=ready()
+    transcript=jobs.read(job['job_id'],'transcript.json')
     result=silence_candidates(transcript,[dict(start=2.1,end=14.9,vad_clear=True,peak_db=-46,rms_db=-49)],20)
     assert result and not result[0]['auto']

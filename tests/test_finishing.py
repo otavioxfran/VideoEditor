@@ -14,6 +14,8 @@ from video_editor.finishing import assets, capcut, layers, models
 from video_editor.finishing import render as finishing_render
 
 
+pytestmark = pytest.mark.slow
+
 def _image(path):
     image = Image.new('RGBA', (200, 120), (0, 0, 0, 0))
     ImageDraw.Draw(image).ellipse((20, 10, 120, 110), fill=(255, 60, 120, 255))

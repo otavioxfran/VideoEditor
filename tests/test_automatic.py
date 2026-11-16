@@ -19,6 +19,8 @@ from video_editor.transcription import normalize, transcribe, release_model
 from video_editor.worker import Worker
 
 
+pytestmark = pytest.mark.slow
+
 def transcript(texts):
     return normalize(
         [

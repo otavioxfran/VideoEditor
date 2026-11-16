@@ -32,9 +32,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt -r requirements-editorial.txt -r requirements-finishing.txt ruff
 
-      # Critical errors only (syntax, undefined names); the style backlog is tracked separately.
       - name: Lint
-        run: ruff check . --select E9,F63,F7,F82
+        run: ruff check .
 
       - name: Check UI modules parse
         run: |

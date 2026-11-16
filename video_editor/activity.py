@@ -95,28 +95,36 @@ def adaptive_candidates(transcript,path,native_audio,duration):
             raise ValueError('Análise de ritmo requer PCM mono 16 kHz.')
         audio=np.frombuffer(wav.readframes(wav.getnframes()),dtype='<i2').astype(np.float32)/32768
     block=320
-    if len(audio)<block:return []
+    if len(audio)<block:
+        return []
     frames=audio[:len(audio)//block*block].reshape(-1,block)
     levels=20*np.log10(np.maximum(np.sqrt(np.mean(frames*frames,axis=1)),1e-6))
     floor=float(np.percentile(levels,15))
     # silencedetect measures sample peaks, whereas the estimated floor is RMS.
     threshold=min(-30,max(-65,floor+15))
     native=_silences(native_audio,duration,threshold,minimum=.9)
-    if not native:return []
+    if not native:
+        return []
     speech=get_speech_timestamps(audio,VadOptions(threshold=.3,min_speech_duration_ms=0,
         min_silence_duration_ms=400,speech_pad_ms=220))
     words=[w for s in transcript['segments'] for w in s['words']]
     result=[]
     for span in native:
         start,end=span['start'],span['end']
-        if end-start<=.9 or any(w['start']<end-.16 and w['end']>start+.22 for w in words):continue
-        before=[w['end'] for w in words if w['end']<=start+.22];after=[w['start'] for w in words if w['start']>=end-.16]
-        if not before or not after:continue
+        if end-start<=.9 or any(w['start']<end-.16 and w['end']>start+.22 for w in words):
+            continue
+        before=[w['end'] for w in words if w['end']<=start+.22]
+        after=[w['start'] for w in words if w['start']>=end-.16]
+        if not before or not after:
+            continue
         left,right=max(start+.325,max(before)+.22),min(end-.325,min(after)-.16)
-        if right-left<.08:continue
-        if any(s['start']/16000<right and s['end']/16000>left for s in speech):continue
+        if right-left<.08:
+            continue
+        if any(s['start']/16000<right and s['end']/16000>left for s in speech):
+            continue
         samples=audio[int(start*16000):int(min(end,start+1)*16000)]
-        if len(samples)<512:continue
+        if len(samples)<512:
+            continue
         spectrum=np.abs(np.fft.rfft(samples[:512]*np.hanning(512)))**2+1e-16
         flatness=float(np.exp(np.mean(np.log(spectrum)))/np.mean(spectrum))
         local_levels=levels[int(start/.02):int(end/.02)]
@@ -136,14 +144,16 @@ def adaptive_for_job(jobs,job_id,transcript,duration):
     from video_editor.safety import validate_source
     info=jobs.info(job_id)
     wav=jobs.path(job_id,'audio/extracted_16k.wav')
-    if not wav.exists() or not info.get('render_audio'):return []
+    if not wav.exists() or not info.get('render_audio'):
+        return []
     validate_source(info['render_audio'])
     signature=digest(dict(transcript=digest(transcript),audio=info['render_audio'],duration=duration,
                           engine=digest(Path(__file__).read_text(encoding='utf-8'))))
     path=jobs.path(job_id,'audio/adaptive.json')
     if path.exists():
         existing=storage.read(path)
-        if existing['signature']==signature:return existing['suggestions']
+        if existing['signature']==signature:
+            return existing['suggestions']
     result=adaptive_candidates(transcript,wav,info['render_audio']['path'],duration)
     jobs.write(job_id,'audio/adaptive.json',dict(signature=signature,suggestions=result))
     return result

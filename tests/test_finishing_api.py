@@ -10,6 +10,8 @@ from video_editor.finishing import suggest
 from video_editor.server.app import create_app
 
 
+pytestmark = pytest.mark.slow
+
 def _prepare(jobs, ready):
     info = ready(duration=2)
     job_id = info['job_id']

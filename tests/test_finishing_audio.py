@@ -8,6 +8,8 @@ from video_editor.finishing import audio, models
 from video_editor.finishing import render as finishing_render
 
 
+pytestmark = pytest.mark.slow
+
 def _ffmpeg(*args):
     subprocess.run(
         [media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error', *args],

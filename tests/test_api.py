@@ -8,6 +8,8 @@ from video_editor.export.service import Exports
 from video_editor.worker import Worker
 
 
+pytestmark = pytest.mark.slow
+
 def test_media_stops_reading_abandoned_range(tmp_path):
     import asyncio
     from video_editor.media import LocalFileResponse

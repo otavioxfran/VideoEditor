@@ -9,6 +9,8 @@ from video_editor.finishing import models, suggest
 from video_editor.timeline import digest
 
 
+pytestmark = pytest.mark.slow
+
 def _write_edit(jobs, job_id, cuts=()):
     transcript = jobs.read(job_id, 'transcript.json')
     jobs.write(job_id, 'edit.json', dict(

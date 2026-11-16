@@ -19,6 +19,8 @@ from video_editor.transcription import normalize
 from video_editor.worker import Worker
 
 
+pytestmark = pytest.mark.slow
+
 def write_wav(path, audio):
     path.parent.mkdir(parents=True, exist_ok=True)
     with wave.open(str(path), "wb") as handle:

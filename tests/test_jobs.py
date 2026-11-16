@@ -1,6 +1,5 @@
 import pytest
 from video_editor import storage
-from video_editor.jobs import Jobs
 from video_editor.editing import view
 
 
@@ -50,7 +49,8 @@ def test_second_runtime_cannot_start_same_workspace(jobs):
 
 def test_missing_legacy_mtime_compares_actual_raw_and_copy(jobs, ready):
     created=ready()
-    directory=jobs.root/'early';(directory/'analysis').mkdir(parents=True)
+    directory=jobs.root/'early'
+    (directory/'analysis').mkdir(parents=True)
     copied=directory/'input_original.mp4'
     copied.write_bytes(__import__('pathlib').Path(created['source']['path']).read_bytes())
     storage.write(directory/'source_info.json',dict(source_path=created['source']['path'],
@@ -58,7 +58,8 @@ def test_missing_legacy_mtime_compares_actual_raw_and_copy(jobs, ready):
     storage.write(directory/'analysis/decisions.json',dict(metadata=dict(duration=20,fps=30),
         segments=[dict(id=1,start_time=1,end_time=2,transcript='Mantido.',status='KEEP')]))
     # Same size alone is not evidence; fail before committing the new format.
-    original=copied.read_bytes();copied.write_bytes(b'x'*len(original))
+    original=copied.read_bytes()
+    copied.write_bytes(b'x'*len(original))
     with pytest.raises(ValueError,match='diverge'):
         jobs.migrate('early')
     assert not (directory/'job.json').exists()

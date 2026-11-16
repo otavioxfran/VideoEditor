@@ -36,7 +36,8 @@ video.currentTime=5;player.update();assert.equal(video.currentTime,5);
 video.currentTime=9;player.update();assert.equal(video.paused,true);assert.equal(player.virtual,true);
 console.log('PLAYER_CONTRACT_OK');
 '''.replace('TIMELINE',json.dumps(timeline))
-    path=tmp_path/'test.mjs';path.write_text(script,encoding='utf-8')
+    path=tmp_path/'test.mjs'
+    path.write_text(script,encoding='utf-8')
     result=subprocess.run([shutil.which('node'),str(path)],capture_output=True,text=True,timeout=20)
     assert result.returncode==0,result.stderr
     assert 'PLAYER_CONTRACT_OK' in result.stdout
@@ -100,6 +101,7 @@ assert.equal(real.duration,15,'The real project must not acquire the audition cu
 await player.audition(trial,10,12);player.setTimeline(real);
 assert.equal(player.returnTimeline,null);assert.equal(player.contextEnd,null);
 '''.replace('REAL',json.dumps(actual)).replace('TRIAL',json.dumps(trial))
-    path=tmp_path/'audition.mjs';path.write_text(script,encoding='utf-8')
+    path=tmp_path/'audition.mjs'
+    path.write_text(script,encoding='utf-8')
     result=subprocess.run([shutil.which('node'),str(path)],capture_output=True,text=True,timeout=20)
     assert result.returncode==0,result.stderr

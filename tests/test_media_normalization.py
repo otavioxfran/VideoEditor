@@ -11,7 +11,7 @@ from video_editor.models import PrepareConfig
 from video_editor.timeline import build_timeline
 from video_editor.transcription import normalize
 
-pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="FFmpeg requerido")
+pytestmark = [pytest.mark.skipif(not shutil.which("ffmpeg"), reason="FFmpeg requerido"), pytest.mark.slow]
 
 
 @pytest.fixture

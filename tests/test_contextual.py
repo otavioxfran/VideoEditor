@@ -14,6 +14,8 @@ from video_editor.transcription import normalize
 from video_editor.worker import Worker
 
 
+pytestmark = pytest.mark.slow
+
 def transcript(
     a="meu carro parou de funcionar.", b="meu automovel deixou de funcionar."
 ):

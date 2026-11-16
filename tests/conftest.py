@@ -1,5 +1,4 @@
 import pytest
-from video_editor import storage
 from video_editor.jobs import Jobs
 from video_editor.models import PrepareConfig
 from video_editor.timeline import digest

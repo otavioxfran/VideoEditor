@@ -1,7 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 import pytest
 from video_editor.editing import mutate, view, RevisionConflict
-from video_editor.timeline import digest
 
 
 def test_real_concurrent_edit_one_wins(jobs, ready):

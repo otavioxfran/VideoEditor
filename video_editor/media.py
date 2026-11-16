@@ -1,7 +1,6 @@
 import json
 import subprocess
 import shutil
-from pathlib import Path
 from fractions import Fraction
 from video_editor.safety import destination
 import anyio

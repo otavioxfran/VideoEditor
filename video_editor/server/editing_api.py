@@ -16,7 +16,8 @@ def router(jobs, exports):
         jobs.validate(job_id)
         current=editing.view(jobs,job_id)
         suggestion=next((s for s in current['suggestions'] if s['id']==suggestion_id),None)
-        if suggestion is None:raise ValueError('Sugestão inexistente.')
+        if suggestion is None:
+            raise ValueError('Sugestão inexistente.')
         cuts=[*current['edit']['cuts'],suggestion]
         return dict(timeline=build_timeline(current['job']['media']['duration'],cuts,current['job']['media']['fps']),
                     start=suggestion['start'],end=suggestion['end'],revision=current['edit']['revision'])

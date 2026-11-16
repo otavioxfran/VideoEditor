@@ -161,15 +161,18 @@ def refine(path, transcript, actual, segment_ids=None, hotwords=None):
         previous=updated['segments'][position-1]['end'] if position else 0
         following=updated['segments'][position+1]['start'] if position+1<len(updated['segments']) else len(audio)/16000
         left,right=max(0,previous,segment['start']-.15),min(len(audio)/16000,following,segment['end']+.15)
-        if right<=left:continue
+        if right<=left:
+            continue
         try:
             pieces, _ = model.transcribe(audio[int(left*16000):int(right*16000)],
                                         language=actual['language'], word_timestamps=True, vad_filter=False,
                                         **({'hotwords': hotwords} if hotwords else {}))
             recognized = _serialize(pieces)
             from video_editor.cuts import tokens
-            old=tokens(segment['text']);new=tokens(' '.join(s['text'] for s in recognized))
-            anchors=lambda values:[t for t in values if any(c.isdigit() for c in t) or t in ('nao','nunca','jamais','sem')]
+            old=tokens(segment['text'])
+            new=tokens(' '.join(s['text'] for s in recognized))
+            def anchors(values):
+                return [t for t in values if any(c.isdigit() for c in t) or t in ('nao','nunca','jamais','sem')]
             if anchors(old)!=anchors(new):
                 continue
             words = [dict(w, start=w['start']+left, end=w['end']+left) for s in recognized for w in s['words']]

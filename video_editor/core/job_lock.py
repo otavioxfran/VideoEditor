@@ -12,13 +12,12 @@ Guarantees:
 4. Clean Release: Release guaranteed in finally block.
 """
 
-import os
 import sys
 import time
 import logging
 import threading
 from pathlib import Path
-from typing import Dict, Union, Any, Generator
+from typing import Dict, Any, Generator
 from contextlib import contextmanager
 
 from video_editor.core.security import assert_safe_job_id, assert_safe_write_path
@@ -67,7 +66,7 @@ def job_lock(
 ) -> Generator[Path, None, None]:
     """
     Acquires an exclusive lock on jobs/<job_id>/.job.lock.
-    
+
     Usage:
         with job_lock(job_ctx, timeout=10.0):
             # Critical section for job_ctx.job_id

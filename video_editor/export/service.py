@@ -1,4 +1,3 @@
-from pathlib import Path
 from uuid import uuid4
 from video_editor import storage
 from video_editor.editing import load_edit, require_revision
@@ -66,7 +65,8 @@ class Exports:
             if metadata.get('snapshot_digest')!=digest(snapshot):
                 raise ValueError('Snapshot foi alterado ou não tem assinatura completa; solicite outra exportação.')
             validate_source(snapshot['source'])
-            if snapshot.get('audio_source'):validate_source(snapshot['audio_source'])
+            if snapshot.get('audio_source'):
+                validate_source(snapshot['audio_source'])
             identity = export_identity({'source': snapshot['source'],'render_audio':snapshot.get('audio_source')}, snapshot['transcript'],
                                        snapshot['timeline'], snapshot['config'])
             if identity != snapshot['identity'] or identity != metadata['identity']:
@@ -76,7 +76,8 @@ class Exports:
             result = self.render_function(snapshot, output, jobs.directory(job_id))
             # Publish both files only when the source is unchanged and MP4 is validated.
             validate_source(snapshot['source'])
-            if snapshot.get('audio_source'):validate_source(snapshot['audio_source'])
+            if snapshot.get('audio_source'):
+                validate_source(snapshot['audio_source'])
             storage.write_text(jobs.path(job_id, prefix + '/subtitles.srt'),
                                srt(snapshot['transcript'], snapshot['timeline']))
             metadata.update(state='complete', completed_at=storage.now(), **result)

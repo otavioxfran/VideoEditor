@@ -1,6 +1,5 @@
 import os
 import pytest
-from video_editor import storage
 from video_editor.editing import mutate
 from video_editor.safety import destination
 

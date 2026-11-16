@@ -7,7 +7,7 @@ import wave
 from concurrent.futures import ThreadPoolExecutor
 import pytest
 from video_editor import media
-from video_editor.export.renderer import render, DEFAULT_CONFIG
+from video_editor.export.renderer import DEFAULT_CONFIG
 from video_editor.export.service import Exports
 from video_editor.export.subtitles import cues
 from video_editor.models import PrepareConfig
@@ -15,7 +15,7 @@ from video_editor.pipeline import Pipeline
 from video_editor.transcription import normalize
 from video_editor.worker import Worker
 
-pytestmark = pytest.mark.skipif(not shutil.which('ffmpeg') or not shutil.which('ffprobe'), reason='FFmpeg requerido')
+pytestmark = [pytest.mark.skipif(not shutil.which('ffmpeg') or not shutil.which('ffprobe'), reason='FFmpeg requerido'), pytest.mark.slow]
 
 
 @pytest.fixture
@@ -93,7 +93,8 @@ def test_filtergraph_does_not_go_in_windows_command_line(jobs, ready, pulse_vide
     worker = Worker()
     exports = Exports(jobs,worker,config=dict(DEFAULT_CONFIG,video_codec='libx264'))
     result = exports.request(job['job_id'],8)
-    worker.queue.join();worker.close()
+    worker.queue.join()
+    worker.close()
     assert exports.get(job['job_id'],result['render_id'])['state'] == 'complete'
     assert jobs.path(job['job_id'],f'exports/{result["render_id"]}/filtergraph.txt').exists()
 
@@ -139,9 +140,11 @@ def test_quiet_tone_is_measured_as_sound_even_below_silencedetect_threshold(tmp_
 
 def test_mono_phase_cancellation_does_not_authorize_native_silence(tmp_path):
     from video_editor.activity import detect
-    mono=tmp_path/'mono.wav';stereo=tmp_path/'stereo.wav'
+    mono=tmp_path/'mono.wav'
+    stereo=tmp_path/'stereo.wav'
     with wave.open(str(mono),'wb') as handle:
-        handle.setparams((1,2,16000,0,'NONE','not compressed'));handle.writeframes(b'\x00\x00'*64000)
+        handle.setparams((1,2,16000,0,'NONE','not compressed'))
+        handle.writeframes(b'\x00\x00'*64000)
     with wave.open(str(stereo),'wb') as handle:
         handle.setparams((2,2,16000,0,'NONE','not compressed'))
         handle.writeframes(b''.join(struct.pack('<hh',value,-value) for value in

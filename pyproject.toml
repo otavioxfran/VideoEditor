@@ -47,10 +47,14 @@ include = ["video_editor*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+markers = [
+    "slow: testes que chamam FFmpeg ou renderizam m?dia de verdade",
+]
 
 [tool.ruff]
 target-version = "py311"
 line-length = 100
+exclude = ["scratch", "build", "jobs", "videos", "private"]
 
 [tool.ruff.lint]
 select = [

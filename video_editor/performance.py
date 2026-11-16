@@ -103,11 +103,12 @@ def quality(reference, candidate):
     new = tokens(" ".join(s["text"] for s in candidate["segments"]))
     similarity = SequenceMatcher(None, old, new, autojunk=False).ratio()
     # Numerical/negative changes cannot be hidden by a good overall similarity score.
-    anchors = lambda values: [
-        t
-        for t in values
-        if any(c.isdigit() for c in t) or t in ("nao", "nunca", "jamais", "sem")
-    ]
+    def anchors(values):
+        return [
+            t
+            for t in values
+            if any(c.isdigit() for c in t) or t in ("nao", "nunca", "jamais", "sem")
+        ]
     return dict(
         token_similarity=similarity,
         anchors_equal=anchors(old) == anchors(new),

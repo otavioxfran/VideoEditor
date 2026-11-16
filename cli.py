@@ -343,11 +343,14 @@ def main():
         from video_editor.performance import calibrate as measure
         from video_editor.safety import source_identity
         from video_editor.settings import DATA_DIR, LOCAL_CONFIG_DIR
-        if not 5<=args.seconds<=300:parser.error('--seconds deve estar entre 5 e 300')
+        if not 5 <= args.seconds <= 300:
+            parser.error('--seconds deve estar entre 5 e 300')
         source=Path(args.video).resolve()
         (DATA_DIR/'scratch').mkdir(exist_ok=True)
         with jobs.runtime_lock(),tempfile.TemporaryDirectory(prefix='asr-calibration-',dir=DATA_DIR/'scratch') as folder:
-            identity=source_identity(source);info=media.probe(source);wav=Path(folder)/'sample.wav'
+            identity = source_identity(source)
+            info = media.probe(source)
+            wav = Path(folder) / 'sample.wav'
             seek=['-ss',str(info['origin'])] if info['origin']>0 else []
             media.run(['ffmpeg','-nostdin','-y','-v','error',*seek,'-i',str(source),'-vn',
                        '-af','aresample=async=1:first_pts=0','-t',str(args.seconds),
@@ -358,7 +361,8 @@ def main():
         from video_editor.transcription import release_model
         release_model()
     elif args.command == 'process':
-        if args.send_text and not args.automatic:parser.error('--send-text exige --automatic')
+        if args.send_text and not args.automatic:
+            parser.error('--send-text exige --automatic')
         config = PrepareConfig(model=args.model, device=args.device, compute_type=args.compute_type)
         with jobs.runtime_lock():
             if args.automatic and config.model == 'small':
@@ -372,7 +376,8 @@ def main():
             if args.automatic:
                 mode = 'evaluation' if args.evaluation else 'standard'
                 app.state.automatic.request(job['job_id'],dict(send_text=args.send_text,export=True,mode=mode))
-                worker.queue.join();worker.close()
+                worker.queue.join()
+                worker.close()
                 print(app.state.automatic.status(job['job_id']))
                 return
             worker.submit(app.state.pipeline.prepare, job['job_id']).result()
