@@ -6,6 +6,7 @@ import { setupProductivity } from "./productivity.js";
 import { reviewCard } from "./review-card.js";
 import { setupBriefing } from "./editor-briefing.js";
 import { setupFinish } from "./editor-finish.js";
+import { setupFinishing } from "./editor-finishing.js";
 import { setupProlixity } from "./editor-prolixity.js";
 import "./review-ui.js";
 import "./timeline.js";
@@ -63,6 +64,7 @@ if ($("timeline")) $("timeline").dataset.waveform = `${base}/waveform`;
 const player = new Player($("video"), $("seek"), $("clock"));
 
 let current = null;
+let finishing = null;
 let busy = false;
 let polling = false;
 let automaticSignature = "";
@@ -150,6 +152,7 @@ const ctx = {
 };
 const briefing = setupBriefing(ctx);
 const finish = setupFinish(ctx);
+finishing = setupFinishing(ctx);
 const prolixity = setupProlixity(ctx);
 const productivity = setupProductivity($("productivity"), base, () => current, message);
 $("productivity-panel").addEventListener("toggle", () => {
@@ -218,6 +221,7 @@ async function loadExports() {
       "A edição mudou. O vídeo abaixo é a versão anterior; use Exportar MP4 + SRT para assistir aos seus ajustes.";
   }
   renderDeliveryCuts();
+  finishing?.refresh();
 }
 
 /* Automatic edit: status strip, report and the human evaluation form. */

@@ -179,7 +179,7 @@ def _card_fade(duration):
     )
 
 
-def render(base, plan, output, work_dir=None, encoder=None, master_audio=None):
+def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, progress=None):
     base = Path(base)
     output = Path(output)
     if isinstance(plan, (str, Path)):
@@ -194,6 +194,9 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None):
     work.mkdir(parents=True, exist_ok=True)
     files, card_files = _layer_files(plan, work)
     pieces = _base_ranges(plan, duration)
+    total_parts = len(pieces)
+    if progress:
+        progress(0, total_parts)
     encoder = pick_encoder(encoder)
     encode = _encode_args(encoder)
     total_frames = round(duration * fps)
@@ -250,6 +253,8 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None):
                 '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
             ])
             rendered.append((part, frames, 'card', card.at, card.at))
+        if progress:
+            progress(index + 1, total_parts)
     total_frames = sum(frames for _, frames, *_ in rendered)
     list_path = work / 'concat.txt'
     list_path.write_text(

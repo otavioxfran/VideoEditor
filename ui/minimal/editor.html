@@ -90,6 +90,51 @@
       </div>
     </section>
 
+    <section class="finishing panel" id="finishing" aria-labelledby="finishing-title" hidden>
+      <div class="panel-head finishing-head">
+        <h2 id="finishing-title">Acabamento</h2>
+        <span class="meta">Imagens, coberturas e correções no tempo do vídeo exportado.</span>
+      </div>
+      <div class="finishing-toolbar">
+        <button class="btn small" id="finishing-generate" type="button">Gerar sugestões</button>
+        <span class="finishing-counts" id="finishing-counts"></span>
+        <span class="spacer"></span>
+        <button class="btn primary" id="finishing-render" type="button" disabled>Gerar vídeo final</button>
+      </div>
+      <p class="hint" id="finishing-warning" role="status" aria-live="polite"></p>
+      <div class="finishing-filters">
+        <label class="field"><span class="field-label">Tipo</span>
+          <select class="select" id="finishing-filter-type">
+            <option value="all">Todos</option>
+            <option value="image">Imagem</option>
+            <option value="cover">Cobertura</option>
+            <option value="correction">Correção</option>
+          </select>
+        </label>
+        <label class="field"><span class="field-label">Status</span>
+          <select class="select" id="finishing-filter-status">
+            <option value="all">Todos</option>
+            <option value="pending">Pendentes</option>
+            <option value="accepted">Aceitos</option>
+            <option value="rejected">Recusados</option>
+          </select>
+        </label>
+      </div>
+      <p class="hint" id="finishing-empty"></p>
+      <div id="finishing-list" aria-live="polite"></div>
+      <p class="hint" id="finishing-progress" role="status" aria-live="polite" hidden></p>
+      <div id="finishing-result" hidden>
+        <h3>Vídeo final</h3>
+        <video id="finishing-result-video" controls preload="metadata"></video>
+        <div class="toolbar">
+          <a class="btn small" id="finishing-result-video-link" download="video.mp4">Baixar MP4</a>
+          <a class="btn small" id="finishing-result-srt-link" download="subtitles.srt">Baixar SRT</a>
+          <a class="btn small" id="finishing-result-description-link" download="descricao.txt">Baixar descrição</a>
+          <button class="btn small" id="finishing-result-copy" type="button">Copiar descrição</button>
+        </div>
+      </div>
+    </section>
+
     <div class="editor-grid">
       <div class="editor-main-column">
       <section class="viewer-panel panel">
@@ -290,6 +335,6 @@
     </div>
   </dialog>
 
-  <script type="module" src="/assets/editor.js?v=editor-v4"></script>
+  <script type="module" src="/assets/editor.js?v=editor-v5"></script>
 </body>
 </html>
