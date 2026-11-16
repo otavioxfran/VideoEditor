@@ -20,6 +20,13 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
     colocadas, e recusa gravar com o CapCut aberto.
   - `python cli.py finish fetch-images --query ...` busca imagens livres no Wikimedia Commons e grava
     os créditos.
+- Sugestões de acabamento: `python cli.py finish suggest JOB_ID` propõe, a partir da transcrição,
+  do briefing e da tela, onde entram imagens, logos e memes (biblioteca local em
+  `config/finishing_library.local.json`, veja o `.example.json`), tarjas ou telas pretas para
+  afirmações contraditas e confirmadas, e coberturas para telas indevidas parecidas com os prints de
+  `config/screen_hazards.local/`. Tudo nasce pendente: `finish review`/`finish decide` (ou a API
+  `/api/jobs/{id}/finishing/...`) aceitam, recusam ou editam, e `finish plan` monta o plano só
+  com o aceito. `finish describe` gera a descrição do YouTube com capítulos e créditos.
 - Áudio de voz: `python cli.py finish audio analyze VIDEO` mede o loudness (LUFS), o true peak, a
   dinâmica (LRA), o ruído nas pausas (sem contar o silêncio digital), os canais e as bandas, e
   explica em português o que corrigir. `python cli.py finish audio master VIDEO --output OUT` aplica

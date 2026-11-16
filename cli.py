@@ -95,6 +95,21 @@ def main():
     audio_master.add_argument('--output', required=True)
     audio_master.add_argument('--target', type=float, default=-14)
     audio_master.add_argument('--denoise', choices=('auto', 'on', 'off'), default='auto')
+    finish_suggest = finish_sub.add_parser('suggest')
+    finish_suggest.add_argument('job_id')
+    finish_suggest.add_argument('--export')
+    finish_review = finish_sub.add_parser('review')
+    finish_review.add_argument('job_id')
+    finish_decide = finish_sub.add_parser('decide')
+    finish_decide.add_argument('job_id')
+    finish_decide.add_argument('item_id')
+    finish_decide.add_argument('action', choices=('accept', 'reject'))
+    finish_plan = finish_sub.add_parser('plan')
+    finish_plan.add_argument('job_id')
+    finish_plan.add_argument('--out')
+    finish_plan.add_argument('--accept-all', action='store_true')
+    finish_describe = finish_sub.add_parser('describe')
+    finish_describe.add_argument('job_id')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -215,6 +230,7 @@ def main():
         import json
         from video_editor.finishing import assets, capcut, models
         from video_editor.finishing import render as finishing_render
+        from video_editor.finishing import suggest
         if args.finish_command == 'audio':
             from video_editor.finishing import audio
             if args.audio_command == 'analyze':
@@ -240,6 +256,42 @@ def main():
             print(f'{len(records)} imagem(ns) em {out}')
             for record in records:
                 print(record['path'], record['license'])
+        elif args.finish_command == 'suggest':
+            value = suggest.suggest(jobs, args.job_id, args.export)
+            counts = {}
+            for item in value['items']:
+                counts[item['kind']] = counts.get(item['kind'], 0) + 1
+            print(f"revisão {value['revision']}: {len(value['items'])} sugestão(ões)")
+            for kind, count in sorted(counts.items()):
+                print(f'- {kind}: {count}')
+        elif args.finish_command == 'review':
+            value = suggest.load_suggestions(jobs, args.job_id)
+            print(f"revisão {value['revision']}: {len(value['items'])} sugestão(ões)")
+            for index, item in enumerate(value['items'], 1):
+                print(
+                    f"{index}. [{item['start']:.2f}-{item['end']:.2f}] "
+                    f"{item['kind']} | {item['reason']} | {item['status']}"
+                    + (' | needs_text' if item.get('needs_text') else '')
+                )
+        elif args.finish_command == 'decide':
+            value = suggest.load_suggestions(jobs, args.job_id)
+            value = suggest.decide(jobs, args.job_id, dict(
+                expected_revision=value['revision'], item_id=args.item_id,
+                action=args.action,
+            ))
+            print(f"revisão {value['revision']}")
+        elif args.finish_command == 'plan':
+            value = suggest.build_plan(
+                jobs, args.job_id, out=args.out, accept_all=args.accept_all
+            )
+            print(value['path'])
+        elif args.finish_command == 'describe':
+            value = suggest.describe(jobs, args.job_id)
+            if value['text'].strip():
+                print(value['text'])
+            else:
+                print('Descrição vazia: gere o briefing editorial (títulos, resumo e capítulos) '
+                      'no Studio e aceite sugestões com créditos antes de descrever.')
         else:
             jobs.info(args.job_id)
             plan = models.load_plan(args.plan)

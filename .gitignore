@@ -44,3 +44,8 @@ private/
 start-studio.local.cmd
 # Windows installer build output
 build/
+
+# Finishing library and screen references are local, user-owned data.
+config/finishing_library.local.json
+config/screen_hazards.local/
+

@@ -15,7 +15,7 @@ from video_editor.export.service import Exports
 from video_editor.automatic import Automatic
 from video_editor.editing import RevisionConflict
 from video_editor.core.job_lock import JobLockTimeoutError
-from video_editor.server import jobs_api, editing_api, editorial_api
+from video_editor.server import jobs_api, editing_api, editorial_api, finishing_api
 
 
 def create_app(jobs_dir=JOBS_DIR, source_dir=SOURCE_VIDEOS_DIR, pipeline=None, renderer=None, recover=True, editorial_config=None):
@@ -137,6 +137,7 @@ def create_app(jobs_dir=JOBS_DIR, source_dir=SOURCE_VIDEOS_DIR, pipeline=None, r
     from video_editor.productivity import router as productivity_router
     application.include_router(productivity_router(jobs, exports))
     application.include_router(editorial_api.router(jobs, worker, provider_config))
+    application.include_router(finishing_api.router(jobs))
     from video_editor.editorial.settings import router as settings_router
     application.include_router(settings_router(provider_config))
 

@@ -1,0 +1,28 @@
+{
+  "assets": [
+    {
+      "id": "logo-produtox",
+      "terms": ["produtox", "produto x"],
+      "image": "assets/finishing/produtox.png",
+      "mode": "badge",
+      "license": "Imagem de exemplo — substitua pela sua."
+    },
+    {
+      "id": "pessoa-fulano",
+      "terms": ["fulano", "fulano de tal"],
+      "image": "assets/finishing/fulano.png",
+      "mode": "cutout",
+      "license": "Imagem de exemplo — substitua pela sua."
+    },
+    {
+      "id": "meme-bordao",
+      "terms": ["bordao", "bordão"],
+      "image": "assets/finishing/meme.png",
+      "mode": "contain",
+      "kind": "meme",
+      "max_per_video": 2,
+      "license": "Imagem de exemplo — substitua pela sua."
+    }
+  ],
+  "webcam_rect": [1240, 0, 680, 366]
+}

@@ -46,7 +46,12 @@ def validate(result, transcript, origin):
     for field in ('chapters', 'suggestions', 'risks'):
         key = 'title' if field == 'chapters' else 'reason'
         clean[field] = [{key: i[key], 'segment_ids': i['segment_ids']} for i in result.get(field, [])]
-    clean['claims'] = [dict(id='c' + str(i + 1), text=c['text'], quote=c['quote'], segment_ids=c['segment_ids'],
-                            status='NEEDS_VERIFICATION', evidence=[], human_confirmed=False)
-                       for i, c in enumerate(result.get('claims', []))]
+    clean['claims'] = []
+    for i, c in enumerate(result.get('claims', [])):
+        item = dict(id='c' + str(i + 1), text=c['text'], quote=c['quote'],
+                    segment_ids=c['segment_ids'], status='NEEDS_VERIFICATION',
+                    evidence=[], human_confirmed=False)
+        if c.get('severity') is not None:
+            item['severity'] = str(c['severity'])
+        clean['claims'].append(item)
     return dict(schema=1, revision=0, origin=origin, transcript_hash=digest(transcript), **clean)
