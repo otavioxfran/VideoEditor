@@ -420,6 +420,9 @@ def master(input_path, output, profile='voz', options=None):
     if suffix in ('.mp4', '.mov', '.mkv'):
         args.extend(['-map', '0:v?', '-c:v', 'copy'])
     args.extend(['-map', '0:a:0', '-af', chain, *codec])
+    if before['duration'] > 0:
+        # loudnorm and the limiter can leave a short tail; keep the input length.
+        args.extend(['-t', f"{before['duration']:.6f}"])
     if suffix not in ('.wav',):
         args.extend(['-movflags', '+faststart'])
     _ffmpeg([*args, str(output)])
