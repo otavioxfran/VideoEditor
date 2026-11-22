@@ -149,6 +149,14 @@ def _mask(image, exclude_roi):
     return image
 
 
+def _frame_hash(image):
+    from PIL import Image
+
+    gray = Image.fromarray(image).convert('L').resize((17, 16), Image.LANCZOS)
+    values = np.asarray(gray, dtype=np.int16)
+    return values[:, 1:] > values[:, :-1]
+
+
 def _ocr_lines(source, duration, exclude_roi=None):
     from rapidocr_onnxruntime import RapidOCR
 
@@ -171,6 +179,7 @@ def _ocr_lines(source, duration, exclude_roi=None):
     engine = RapidOCR()
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     lines = []
+    previous_hash = None
     try:
         while len(lines) < MAX_FRAMES:
             raw = process.stdout.read(frame_bytes)
@@ -180,6 +189,10 @@ def _ocr_lines(source, duration, exclude_roi=None):
                 (FRAME_HEIGHT, FRAME_WIDTH, 3)
             )
             image = _mask(image, exclude_roi)
+            frame_hash = _frame_hash(image)
+            if previous_hash is not None and np.count_nonzero(frame_hash != previous_hash) <= 6:
+                continue
+            previous_hash = frame_hash
             result, _ = engine(image)
             if result:
                 lines.append([str(item[1]) for item in result])

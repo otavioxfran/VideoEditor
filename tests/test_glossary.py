@@ -265,7 +265,10 @@ def test_pipeline_hotwords_are_off_by_default(jobs, ready, monkeypatch):
     )
     assert calls == [None]
     assert transcript['glossary']['hotwords_used'] is False
-    assert transcript['glossary']['hotwords'] == 'Lori, Jensen'
+    # With hints off the screen OCR runs in the background, so only the user's terms are
+    # known when the transcript is written; the screen terms land in screen_terms.json.
+    assert transcript['glossary']['hotwords'] == 'Lori'
+    assert transcript['glossary']['screen_terms'] == []
 
 
 def test_common_word_never_becomes_term_even_with_low_probability():
@@ -276,3 +279,39 @@ def test_common_word_never_becomes_term_even_with_low_probability():
     updated, changes = glossary.correct(transcript, ['NVIDIA'])
     assert changes == []
     assert updated['segments'][0]['text'] == 'a vida'
+
+
+def test_pipeline_does_not_wait_for_screen_ocr_when_hotwords_are_off(jobs, ready, monkeypatch):
+    import threading
+
+    from video_editor import pipeline
+
+    job = ready(duration=20)
+    job_id = job['job_id']
+    jobs.path(job_id, 'transcript.json').unlink()
+    release, finished = threading.Event(), threading.Event()
+
+    def slow_screen(*args, **kwargs):
+        release.wait(10)
+        finished.set()
+        return dict(state='ok', terms=['NVIDIA'])
+
+    monkeypatch.setattr(
+        pipeline.transcription, 'transcribe',
+        lambda path, config, source, hotwords=None: (
+            dict(schema=1, source_hash=digest(source), segments=[]), {}
+        ),
+    )
+    monkeypatch.setattr(glossary, 'ocr_available', lambda: True)
+    monkeypatch.setattr(glossary, 'screen_terms', slow_screen)
+    monkeypatch.setattr(glossary, 'user_terms', lambda: [])
+    monkeypatch.setattr(pipeline, 'user_settings', lambda: {})
+    transcript, _ = pipeline.Pipeline(jobs)._transcript(
+        job_id, jobs.info(job_id), 'unused.wav', digest(job['source']),
+        dict(duration=20),
+    )
+    # The transcript is ready while the OCR is still running in the background.
+    assert not finished.is_set()
+    assert 'glossary' not in transcript
+    release.set()
+    assert finished.wait(10)

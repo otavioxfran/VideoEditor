@@ -1,3 +1,5 @@
+import logging
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from video_editor import media, storage, transcription
@@ -7,6 +9,30 @@ from video_editor.cut_policy import apply_policy
 from video_editor.timeline import digest, interval
 from video_editor.safety import source_identity, validate_source
 from video_editor.settings import user_settings
+
+_SCREEN_OCR = set()
+_SCREEN_OCR_LOCK = threading.Lock()
+
+
+def _start_screen_ocr(read_screen, job_id):
+    """Run the screen OCR on a daemon thread, at most once per job at a time."""
+    with _SCREEN_OCR_LOCK:
+        if job_id in _SCREEN_OCR:
+            return None
+        _SCREEN_OCR.add(job_id)
+
+    def run():
+        try:
+            read_screen()
+        except Exception:
+            logging.getLogger(__name__).exception('Leitura da tela falhou')
+        finally:
+            with _SCREEN_OCR_LOCK:
+                _SCREEN_OCR.discard(job_id)
+
+    thread = threading.Thread(target=run, name=f'screen-ocr-{job_id[:8]}', daemon=True)
+    thread.start()
+    return thread
 
 
 class Pipeline:
@@ -128,20 +154,27 @@ class Pipeline:
                 raise ValueError("Checkpoint ASR incompatível; crie outro job para outra configuração.")
         else:
             from video_editor.analysis import glossary
-            screen = (
-                glossary.screen_terms(
-                    job['source']['path'],
-                    info['duration'],
-                    cache_path=jobs.path(job_id, 'visual/screen_terms.json'),
-                )
-                if glossary.ocr_available()
-                else dict(state='unavailable', terms=[])
-            )
-            user = glossary.user_terms()
-            terms = user + list(screen.get('terms') or [])
-            hints = glossary.hotwords(terms)
             enabled = bool(user_settings().get('glossary_hotwords', False))
-            if hints and enabled:
+            screen = None
+            if glossary.ocr_available():
+                screen_cache = jobs.path(job_id, 'visual/screen_terms.json')
+
+                def read_screen():
+                    return glossary.screen_terms(
+                        job['source']['path'], info['duration'], cache_path=screen_cache,
+                    )
+
+                if enabled:
+                    # Whisper hints need the screen terms before transcribing.
+                    screen = read_screen()
+                else:
+                    # Nothing before the transcript needs them: OCR takes minutes on a long
+                    # recording, so it writes visual/screen_terms.json in the background and
+                    # its readers (suggestions, library, CLI) pick it up once it exists.
+                    _start_screen_ocr(read_screen, job_id)
+            if enabled and screen is not None:
+                user = glossary.user_terms()
+                hints = glossary.hotwords(user + list(screen.get('terms') or []))
                 transcript, actual = transcription.transcribe(
                     wav, job['config'], job['source'], hotwords=hints
                 )
@@ -149,6 +182,10 @@ class Pipeline:
                 transcript, actual = transcription.transcribe(
                     wav, job['config'], job['source']
                 )
+            screen = screen or dict(state='pending' if glossary.ocr_available() else 'unavailable', terms=[])
+            user = glossary.user_terms()
+            terms = user + list(screen.get('terms') or [])
+            hints = glossary.hotwords(terms)
             for segment in transcript['segments']:
                 interval(segment['start'], segment['end'], info['duration'])
             transcript.update(requested_config=job['config'], actual_config=actual)
