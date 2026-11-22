@@ -5,7 +5,7 @@ from uuid import uuid4
 from video_editor import storage
 from video_editor.core.job_lock import job_lock
 from video_editor.core.security import assert_safe_write_path
-from video_editor.safety import destination, job_directory, source_identity, validate_source
+from video_editor.safety import clear_source_cache, destination, job_directory, source_identity, validate_source
 from video_editor.settings import ALLOWED_VIDEO_EXTENSIONS
 from video_editor.timeline import digest
 
@@ -25,14 +25,22 @@ class Jobs:
         if self.root == self.source_dir or self.root.is_relative_to(self.source_dir):
             raise PermissionError("Workspace precisa ficar fora da filmoteca.")
         self._sources_cache = None
+        self._directories = {}
 
     def protected_sources(self):
         if self._sources_cache is None:
-            self._sources_cache = [j['source']['path'] for j in self.list() if 'source' in j]
+            self._sources_cache = list(dict.fromkeys(
+                j['source']['path'] for j in self.list() if 'source' in j
+            ))
+            clear_source_cache()
         return self._sources_cache
 
     def directory(self, job_id):
-        return job_directory(self.root, job_id)
+        cached = self._directories.get(job_id)
+        if cached is None:
+            cached = job_directory(self.root, job_id)
+            self._directories[job_id] = cached
+        return cached
 
     def runtime_lock(self):
         assert_safe_write_path(self.root, 'workspace local')
@@ -75,7 +83,11 @@ class Jobs:
                     except (FileNotFoundError, ValueError, KeyError, OSError):
                         continue
         ordered = sorted(result, key=lambda x: x.get('created_at', ''), reverse=True)
-        self._sources_cache = [j['source']['path'] for j in ordered if 'source' in j]
+        self._directories = {item['job_id']: self.root / item['job_id'] for item in ordered}
+        self._sources_cache = list(dict.fromkeys(
+            j['source']['path'] for j in ordered if 'source' in j
+        ))
+        clear_source_cache()
         return ordered
 
     def sources(self):
@@ -99,10 +111,12 @@ class Jobs:
         job_id = uuid4().hex
         directory = destination(self.root / job_id, self.root, [path])
         directory.mkdir(exist_ok=False)
+        self._directories[job_id] = directory
         info = dict(schema=1, job_id=job_id, name=path.stem, source=identity,
                     created_at=storage.now(), config=config, state='created', stage='created',
                     error=None, media=None, timings={})
         self.write(job_id, 'job.json', info)
+        clear_source_cache()
         if self._sources_cache is not None and identity['path'] not in self._sources_cache:
             self._sources_cache.append(identity['path'])
         return info
@@ -211,6 +225,7 @@ class Jobs:
             validate_source(identity)
             # Commit marker last: interrupted migration is safe to repeat.
             self.write(job_id, 'job.json', info)
+            clear_source_cache()
             if self._sources_cache is not None and identity['path'] not in self._sources_cache:
                 self._sources_cache.append(identity['path'])
             return info

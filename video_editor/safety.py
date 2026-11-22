@@ -1,7 +1,29 @@
 """Read-only sources and allowlisted destinations, including symlink/hardlink aliases."""
-import os
 from pathlib import Path
+
 from video_editor.core.security import assert_safe_write_path, assert_safe_job_id
+
+
+_PROTECTED_CACHE = {}
+
+
+def clear_source_cache():
+    _PROTECTED_CACHE.clear()
+
+
+def _protected_identity(source):
+    key = str(source)
+    cached = _PROTECTED_CACHE.get(key)
+    if cached is not None:
+        return cached
+    resolved = Path(source).resolve()
+    if resolved.is_file():
+        stat = resolved.stat()
+        value = (str(resolved), stat.st_dev, stat.st_ino)
+    else:
+        value = (str(resolved), None, None)
+    _PROTECTED_CACHE[key] = value
+    return value
 
 
 def source_identity(path):
@@ -25,9 +47,15 @@ def destination(path, root, sources=()):
     if path == root or not path.is_relative_to(root):
         raise PermissionError("Destino fora do workspace do job.")
     assert_safe_write_path(path)
-    for source in sources:
-        source = Path(source).resolve()
-        if path == source or (path.exists() and source.exists() and os.path.samefile(path, source)):
+    path_stat = path.stat() if path.exists() else None
+    for source in {str(item) for item in sources}:
+        resolved, device, inode = _protected_identity(source)
+        if str(path) == resolved or (
+            path_stat is not None
+            and device is not None
+            and path_stat.st_dev == device
+            and path_stat.st_ino == inode
+        ):
             raise PermissionError("Destino equivale a um raw protegido.")
     return path
 

@@ -87,14 +87,15 @@ class Exports:
             jobs.write(job_id, prefix + '/export.json', dict(metadata, state='failed', error=str(error)))
             raise
 
-    def get(self, job_id, render_id):
+    def get(self, job_id, render_id, identity=None):
         # The identifier is always a single component; no traversal through render_id.
         from video_editor.core.security import assert_safe_job_id
         assert_safe_job_id(render_id)
         metadata = self.jobs.read(job_id, f'exports/{render_id}/export.json')
         if metadata['state'] == 'complete':
             try:
-                identity = self.identity(job_id)
+                if identity is None:
+                    identity = self.identity(job_id)
                 metadata['status'] = 'current' if identity == metadata['identity'] else 'stale'
                 if metadata.get('snapshot_digest'):
                     snapshot=self.jobs.read(job_id,f'exports/{render_id}/snapshot.json')
@@ -113,10 +114,12 @@ class Exports:
         directory = self.jobs.directory(job_id)
         result = []
         exports_dir = directory / 'exports'
+        identity = None
         if exports_dir.exists():
+            identity = self.identity(job_id)
             for export in exports_dir.iterdir():
                 if export.is_dir() and (export / 'export.json').is_file():
-                    result.append(self.get(job_id, export.name))
+                    result.append(self.get(job_id, export.name, identity=identity))
         # Legacy media is discoverable, never silently promoted to a current export.
         legacy_dir = directory / 'output'
         if legacy_dir.exists():
