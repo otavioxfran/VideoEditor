@@ -63,6 +63,17 @@ def _json_block(text):
     return json.loads(match.group(0)) if match else {}
 
 
+def _ebur128_summary(text):
+    summary = text.rsplit('Summary:', 1)[-1]
+    return {
+        'input_i': (_metric(summary, 'I') or '').split()[0],
+        'input_tp': (_metric(summary, 'Peak') or '').split()[0],
+        'input_lra': (_metric(summary, 'LRA') or '').split()[0],
+        'input_thresh': (_metric(summary, 'Threshold') or '').split()[0],
+        'target_offset': '0',
+    }
+
+
 def _loudness(path):
     _, error = _ffmpeg([
         '-i', str(path), '-map', '0:a:0',
@@ -79,13 +90,7 @@ def _loudness(path):
     }
 
 
-def _astats(path, extra=None):
-    chain = 'astats=metadata=0:reset=0'
-    if extra:
-        chain = f'{extra},{chain}'
-    _, error = _ffmpeg([
-        '-i', str(path), '-map', '0:a:0', '-af', chain, '-f', 'null', '-',
-    ])
+def _astats_from_text(error):
     channels = []
     for match in re.finditer(r'Channel:\s*(\d+)(.*?)(?=Channel:\s*\d+|Overall)', error, re.S):
         block = match.group(2)
@@ -101,6 +106,57 @@ def _astats(path, extra=None):
         'rms_dbfs': _number(_metric(overall, 'RMS level dB')),
         'samples': int(_metric(overall, 'Number of samples') or 0),
     }
+
+
+def _analyze_metrics(path, full=True, duration=0):
+    bands = [
+        ('low_dbfs', 'lowpass=f=120'),
+        ('mid_dbfs', 'highpass=f=120,lowpass=f=4000'),
+        ('high_dbfs', 'highpass=f=4000,lowpass=f=10000'),
+        ('sibilance_dbfs', 'highpass=f=5000,lowpass=f=9000'),
+    ] if full else []
+    loudness_filter = (
+        'loudnorm=I=-14:TP=-1:LRA=7:print_format=json'
+        if duration and duration <= 10
+        else 'ebur128=peak=true'
+    )
+    branches = [
+        loudness_filter,
+        'astats=metadata=0:reset=0',
+    ]
+    if full:
+        branches.extend([
+            f'silencedetect=noise={SILENCE_THRESHOLD}dB:d={SILENCE_DURATION}',
+            *[extra + ',astats=metadata=0:reset=0' for _, extra in bands],
+        ])
+    count = len(branches)
+    graph = [f'[0:a:0]asplit={count}' + ''.join(f'[a{i}]' for i in range(count))]
+    for index, branch in enumerate(branches):
+        graph.append(f'[a{index}]{branch}[o{index}]')
+    args = ['-i', str(path), '-filter_complex', ';'.join(graph)]
+    for index in range(count):
+        args.extend(['-map', f'[o{index}]'])
+    args.extend(['-f', 'null', '-'])
+    _, error = _ffmpeg(args)
+    loudness = _json_block(error)
+    if not loudness:
+        loudness = _ebur128_summary(error)
+    stats_groups = {}
+    for line in error.splitlines():
+        match = re.match(r'\[Parsed_astats_(\d+) @ [^\]]+\](.*)', line)
+        if not match:
+            continue
+        key = int(match.group(1))
+        stats_groups[key] = stats_groups.get(key, '') + match.group(2) + '\n'
+    stats_blocks = [stats_groups[key] for key in sorted(stats_groups)]
+    overall = _astats_from_text(stats_blocks[0]) if stats_blocks else _astats_from_text(error)
+    measured = {name: None for name, _ in bands}
+    if full and len(stats_blocks) >= 1 + len(bands):
+        for (name, _), block in zip(bands, stats_blocks[1:]):
+            measured[name] = _astats_from_text(block)['rms_dbfs']
+    starts = [float(value) for value in re.findall(r'silence_start:\s*([0-9.]+)', error)]
+    ends = [float(value) for value in re.findall(r'silence_end:\s*([0-9.]+)', error)]
+    return loudness, overall, starts, ends, measured
 
 
 def _metric(block, name):
@@ -180,11 +236,6 @@ def _pcm_scan(path, pauses, sample_rate, channels):
     }
 
 
-def _band(path, expression):
-    stats = _astats(path, expression)
-    return stats['rms_dbfs']
-
-
 def _diagnostics(result):
     items = []
 
@@ -241,7 +292,7 @@ def format_report(result):
         f"- LRA: {_format_number(result['lra_lu'], 'LU')}",
         f"- Pico/RMS: {_format_number(result['peak_dbfs'], 'dBFS')} / "
         f"{_format_number(result['rms_dbfs'], 'dBFS')}",
-        f"- Amostras clipadas: {result['clipped_samples']}",
+        f"- Amostras clipadas: {'—' if result['clipped_samples'] is None else result['clipped_samples']}",
         f"- Ruído nas pausas: {_format_number(result['background_noise_dbfs'], 'dBFS')}",
         f"- Canais: {result['channels']['count']} "
         f"({'mono' if result['channels']['mono'] else 'estéreo'})",
@@ -267,21 +318,36 @@ def _format_number(value, unit):
     return '—' if value is None else f'{value:.1f} {unit}'
 
 
-def analyze(path):
+def analyze(path, full=True):
     path = Path(path)
     if not path.is_file():
         raise FileNotFoundError(path)
     info = _probe(path)
-    loudness = _loudness(path)
-    stats = _astats(path)
-    pauses = _silence_intervals(path, info['duration'])
-    scan = _pcm_scan(path, pauses, info['sample_rate'], info['channels'])
-    bands = {
-        'low_dbfs': _band(path, 'lowpass=f=120'),
-        'mid_dbfs': _band(path, 'highpass=f=120,lowpass=f=4000'),
-        'high_dbfs': _band(path, 'highpass=f=4000,lowpass=f=10000'),
-        'sibilance_dbfs': _band(path, 'highpass=f=5000,lowpass=f=9000'),
+    loudness_data, stats, starts, ends, bands = _analyze_metrics(
+        path, full=full, duration=info['duration']
+    )
+    loudness = {
+        'integrated_lufs': _number(loudness_data.get('input_i')),
+        'true_peak_dbtp': _number(loudness_data.get('input_tp')),
+        'lra_lu': _number(loudness_data.get('input_lra')),
+        'loudness_threshold': _number(loudness_data.get('input_thresh')),
+        'loudnorm_offset': _number(loudness_data.get('target_offset')),
     }
+    if full:
+        pauses = []
+        for index, start in enumerate(starts):
+            end = ends[index] if index < len(ends) else info['duration']
+            if end > start:
+                pauses.append((start, end))
+        scan = _pcm_scan(path, pauses, info['sample_rate'], info['channels'])
+        bands = {
+            name: bands.get(name) for name in (
+                'low_dbfs', 'mid_dbfs', 'high_dbfs', 'sibilance_dbfs'
+            )
+        }
+    else:
+        scan = dict(clipped_samples=0, background_noise_dbfs=None, pause_count=0)
+        bands = dict(low_dbfs=None, mid_dbfs=None, high_dbfs=None, sibilance_dbfs=None)
     channel_values = [item['rms_dbfs'] for item in stats['channels']]
     finite = [item for item in channel_values if item is not None]
     imbalance = (max(finite) - min(finite)) if finite and len(finite) == len(channel_values) else (
@@ -357,7 +423,8 @@ def master(input_path, output, profile='voz', options=None):
     output = Path(output)
     options = dict(options or {})
     target = _target(options)
-    before = analyze(input_path)
+    info = _probe(input_path)
+    before = analyze(input_path, full=info['duration'] <= 120)
     filters = []
 
     def add(name, reason):
@@ -391,42 +458,93 @@ def master(input_path, output, profile='voz', options=None):
     target_filter = (
         f"I={target['target_lufs']}:TP={target['true_peak']}:LRA={target['lra']}"
     )
-    measure_chain = [item['filter'] for item in filters] + [
-        f'loudnorm={target_filter}:print_format=json'
-    ]
-    _, error = _ffmpeg([
+    measure_chain = [item['filter'] for item in filters]
+    _, measure_error = _ffmpeg([
         '-i', str(input_path), '-map', '0:a:0',
-        '-af', ','.join(measure_chain), '-f', 'null', '-',
+        '-af', ','.join([*measure_chain, 'ebur128=peak=true']),
+        '-f', 'null', '-',
     ])
-    measured = _json_block(error)
+    measured = _ebur128_summary(measure_error)
     second = f'loudnorm={target_filter}'
-    if measured:
-        second += (
-            f":measured_I={measured.get('input_i', '')}"
-            f":measured_TP={measured.get('input_tp', '')}"
-            f":measured_LRA={measured.get('input_lra', '')}"
-            f":measured_thresh={measured.get('input_thresh', '')}"
-            f":offset={measured.get('target_offset', '')}:linear=true"
-        )
-    add(second, 'normalizar loudness para o alvo do YouTube')
-    add('alimiter=limit=0.891251:level=false',
-        'teto de segurança em -1 dBTP')
-    chain = ','.join(item['filter'] for item in filters)
+    if info['duration'] > 120 and measured.get('input_i'):
+        gain = target['target_lufs'] - float(measured['input_i'])
+        if abs(gain) >= .05:
+            add(f'volume={gain:.1f}dB', 'ajustar loudness sem segunda passagem')
+    else:
+        if measured.get('input_i'):
+            second += (
+                f":measured_I={measured.get('input_i', '')}"
+                f":measured_TP={measured.get('input_tp', '')}"
+                f":measured_LRA={measured.get('input_lra', '')}"
+                f":measured_thresh={measured.get('input_thresh', '')}"
+                f":offset={measured.get('target_offset', '')}:linear=true"
+            )
+        add(second, 'normalizar loudness para o alvo do YouTube')
+    # -2 dBFS leaves room for inter-sample peaks and the AAC encoder's overshoot, so the file stays under -1 dBTP.
+    add('alimiter=limit=0.794328:level=false',
+        'teto de segurança abaixo de -1 dBTP, com folga para o AAC')
+    # Measure the processed audio in the same pass that writes it: astats for levels and
+    # ebur128 for loudness, true peak and LRA. The report must show measured values.
+    chain = (','.join(item['filter'] for item in filters)
+             + ',astats=metadata=0:reset=0,ebur128=peak=true')
     suffix = output.suffix.lower()
     codec = ['-c:a', 'aac', '-b:a', '192k', '-ar', '48000']
     if suffix == '.wav':
         codec = ['-c:a', 'pcm_s16le', '-ar', '48000']
-    args = ['-i', str(input_path)]
+    args = ['-i', str(input_path), '-filter_complex', f'[0:a:0]{chain}[a]']
     if suffix in ('.mp4', '.mov', '.mkv'):
         args.extend(['-map', '0:v?', '-c:v', 'copy'])
-    args.extend(['-map', '0:a:0', '-af', chain, *codec])
+    args.extend(['-map', '[a]', *codec])
     if before['duration'] > 0:
         # loudnorm and the limiter can leave a short tail; keep the input length.
         args.extend(['-t', f"{before['duration']:.6f}"])
     if suffix not in ('.wav',):
         args.extend(['-movflags', '+faststart'])
-    _ffmpeg([*args, str(output)])
-    after = analyze(output)
+    _, error = _ffmpeg([*args, str(output)])
+    stats_blocks = {}
+    for line in error.splitlines():
+        match = re.match(r'\[Parsed_astats_(\d+) @ [^\]]+\](.*)', line)
+        if not match:
+            continue
+        key = int(match.group(1))
+        stats_blocks[key] = stats_blocks.get(key, '') + match.group(2) + '\n'
+    after_stats = _astats_from_text(
+        next(iter(stats_blocks.values()), error)
+    )
+    loudness_after = _ebur128_summary(error)
+    after = {
+        **{key: before[key] for key in ('duration', 'sample_rate')},
+        # Not re-measured after mastering (that would cost extra full passes); shown as "—"
+        # instead of repeating the input's numbers as if they were the output's.
+        'bands': dict(low_dbfs=None, mid_dbfs=None, high_dbfs=None, sibilance_dbfs=None,
+                      low=None, mid=None, high=None, sibilance=None),
+        'clipped_samples': None, 'background_noise_dbfs': None,
+        'noise_floor_dbfs': None, 'noise_floor': None, 'pause_count': None,
+        'path': str(output),
+        'channels': {
+            'count': before['channels']['count'],
+            'mono': before['channels']['mono'],
+            'is_mono': before['channels']['mono'],
+            'quiet': before['channels']['quiet'],
+            'muted': before['channels']['quiet'],
+            'active': before['channels']['active'],
+            'imbalance_db': before['channels']['imbalance_db'],
+            'values': after_stats['channels'],
+        },
+        'integrated_lufs': _number(loudness_after.get('input_i')),
+        'lufs': _number(loudness_after.get('input_i')),
+        'true_peak_dbtp': _number(loudness_after.get('input_tp')),
+        'true_peak': _number(loudness_after.get('input_tp')),
+        'lra_lu': _number(loudness_after.get('input_lra')),
+        'lra': _number(loudness_after.get('input_lra')),
+        'loudness_threshold': before['loudness_threshold'],
+        'loudnorm_offset': before['loudnorm_offset'],
+        'peak_dbfs': after_stats['peak_dbfs'],
+        'rms_dbfs': after_stats['rms_dbfs'],
+        'samples': after_stats['samples'],
+    }
+    after['diagnostics'] = _diagnostics(after)
+    after['report'] = format_report(after)
     return dict(
         before=before,
         after=after,

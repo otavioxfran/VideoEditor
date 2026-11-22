@@ -1,0 +1,15 @@
+{
+  "integrated_lufs": -25.95,
+  "true_peak_dbtp": -25.06,
+  "lra_lu": 0.1,
+  "peak_dbfs": -25.06446,
+  "rms_dbfs": -28.074274,
+  "clipped_samples": 0,
+  "background_noise_dbfs": null,
+  "bands": {
+    "low_dbfs": -38.979577,
+    "mid_dbfs": -28.451703,
+    "high_dbfs": -81.029654,
+    "sibilance_dbfs": -86.605788
+  }
+}

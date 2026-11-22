@@ -159,3 +159,20 @@ def test_render_masters_when_plan_has_audio(tmp_path):
     )
     assert result['audio'] is not None
     assert result['audio']['after']['integrated_lufs'] == pytest.approx(-14, abs=1)
+
+
+def test_master_reports_measured_loudness_not_the_target(tmp_path):
+    # Long enough (> 120 s) to take the single-measure path used for real videos.
+    source = tmp_path / 'long.wav'
+    _speech(source, duration=130, target=-24)
+    output = tmp_path / 'long.m4a'
+    result = audio.master(source, output)
+    reported = result['after']
+    independent = audio._loudness(output)
+    assert reported['integrated_lufs'] == pytest.approx(independent['integrated_lufs'], abs=0.3)
+    assert reported['true_peak_dbtp'] == pytest.approx(independent['true_peak_dbtp'], abs=0.5)
+    assert independent['integrated_lufs'] == pytest.approx(-14, abs=1)
+    assert independent['true_peak_dbtp'] <= -1
+    # Values that were not re-measured are blank, not copied from the input.
+    assert reported['bands']['low_dbfs'] is None
+    assert reported['background_noise_dbfs'] is None
