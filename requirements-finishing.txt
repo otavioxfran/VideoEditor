@@ -1,2 +1,0 @@
-# Optional finishing/overlay dependencies (Pillow is already used by the export stack).
-Pillow>=10
