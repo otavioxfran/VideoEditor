@@ -1,5 +1,6 @@
 import hashlib
 import json
+from concurrent.futures import ThreadPoolExecutor
 import mimetypes
 import threading
 from datetime import datetime, timezone
@@ -36,7 +37,16 @@ class PlanRequest(BaseModel):
     accept_all: bool = False
 
 
+class LibraryRequest(BaseModel):
+    dry_run: bool = False
+
+
 _STATUS_LOCK = threading.Lock()
+# Renders queued or running in this process. A status file that says otherwise was left
+# by a Studio that closed mid-render and must not keep the panel waiting forever.
+_ACTIVE_RENDERS = set()
+_WARMING = set()
+INTERRUPTED = 'Render interrompido: o Studio foi fechado durante o render. Gere o vídeo final de novo.'
 
 
 def _status_path(jobs, job_id):
@@ -48,7 +58,11 @@ def _read_status(jobs, job_id):
         path = _status_path(jobs, job_id)
         if not path.is_file():
             return dict(state='idle', done=0, total=0)
-        return storage.read(path)
+        status = storage.read(path)
+        if status.get('state') in ('queued', 'running') and job_id not in _ACTIVE_RENDERS:
+            status.update(state='failed', error=INTERRUPTED)
+            jobs.write(job_id, 'finishing/render.json', status)
+        return status
 
 
 def _write_status(jobs, job_id, value):
@@ -85,6 +99,17 @@ def _allowed_file(jobs, job_id, raw):
     if any(Path(asset['image']).resolve() == resolved for asset in library.get('assets') or []):
         return resolved
     raise FileNotFoundError('Imagem fora das origens permitidas.')
+
+
+def _warm_previews(jobs, job_id, items):
+    def one(item):
+        try:
+            _preview(jobs, job_id, item, None)
+        except (OSError, RuntimeError, ValueError, FileNotFoundError):
+            pass
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        list(pool.map(one, items[:60]))
 
 
 def _image_response(path):
@@ -182,6 +207,26 @@ def _render_execute(jobs, job_id, status):
         status.update(state='failed', error=str(error)[:2000])
         _write_status(jobs, job_id, status)
         raise
+    finally:
+        _ACTIVE_RENDERS.discard(job_id)
+
+
+def _start_warmup(jobs, job_id, items):
+    """Previews are a convenience: warm them on a background thread of their own instead
+    of the single worker, so exports, renders and preparation never wait behind them."""
+    with _STATUS_LOCK:
+        if job_id in _WARMING:
+            return
+        _WARMING.add(job_id)
+
+    def run():
+        try:
+            _warm_previews(jobs, job_id, items)
+        finally:
+            with _STATUS_LOCK:
+                _WARMING.discard(job_id)
+
+    threading.Thread(target=run, name=f'finishing-previews-{job_id[:8]}', daemon=True).start()
 
 
 def router(jobs, worker=None):
@@ -193,7 +238,10 @@ def router(jobs, worker=None):
 
     @api.post('/suggestions/generate')
     def generate(job_id: str, request: GenerateRequest | None = None):
-        return suggest.suggest(jobs, job_id, (request or GenerateRequest()).export_id)
+        value = suggest.suggest(jobs, job_id, (request or GenerateRequest()).export_id)
+        if worker is not None and value.get('items'):
+            _start_warmup(jobs, job_id, value['items'])
+        return value
 
     @api.post('/suggestions/decide')
     def decide(job_id: str, request: DecideRequest):
@@ -203,6 +251,13 @@ def router(jobs, worker=None):
     def plan(job_id: str, request: PlanRequest | None = None):
         return suggest.build_plan(
             jobs, job_id, accept_all=(request or PlanRequest()).accept_all
+        )
+
+    @api.post('/library/expand')
+    def library_expand(job_id: str, request: LibraryRequest | None = None):
+        from video_editor.finishing import library
+        return library.expand(
+            jobs, job_id, dry_run=(request or LibraryRequest()).dry_run
         )
 
     @api.get('/suggestions/{item_id}/image')
@@ -252,14 +307,23 @@ def router(jobs, worker=None):
             video=f'{base}/video.mp4', srt=f'{base}/subtitles.srt',
             description=f'{base}/descricao.txt', work=f'{base}/work',
         )
-        jobs.path(job_id, f'{base}/work').mkdir(parents=True, exist_ok=True)
-        _write_status(jobs, job_id, status)
+        with _STATUS_LOCK:
+            if job_id in _ACTIVE_RENDERS:
+                raise ValueError('Já existe um vídeo final sendo gerado para este job.')
+            _ACTIVE_RENDERS.add(job_id)
+        try:
+            jobs.path(job_id, f'{base}/work').mkdir(parents=True, exist_ok=True)
+            _write_status(jobs, job_id, status)
+        except Exception:
+            _ACTIVE_RENDERS.discard(job_id)
+            raise
         if worker is None:
             _render_execute(jobs, job_id, status)
         else:
             try:
                 worker.submit(_render_execute, jobs, job_id, status)
             except Exception as error:
+                _ACTIVE_RENDERS.discard(job_id)
                 status.update(state='failed', error=str(error))
                 _write_status(jobs, job_id, status)
                 raise

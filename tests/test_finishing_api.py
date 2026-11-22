@@ -121,3 +121,26 @@ def test_render_completes_and_serves_result(client):
     assert video.headers['content-type'] == 'video/mp4'
     assert value.get(f'{prefix}/render/srt').status_code == 200
     assert value.get(f'{prefix}/render/description').status_code == 200
+
+
+def test_render_left_running_by_a_closed_studio_is_reported_as_interrupted(client):
+    value, job_id, _ = client
+    jobs = value.app.state.jobs
+    jobs.write(job_id, 'finishing/render.json', dict(state='running', done=3, total=10))
+    status = value.get(f'/api/jobs/{job_id}/finishing/render').json()
+    assert status['state'] == 'failed'
+    assert 'interrompido' in status['error']
+    assert jobs.read(job_id, 'finishing/render.json')['state'] == 'failed'
+
+
+def test_second_render_request_is_refused_while_one_is_active(client):
+    from video_editor.server import finishing_api
+
+    value, job_id, _ = client
+    finishing_api._ACTIVE_RENDERS.add(job_id)
+    try:
+        response = value.post(f'/api/jobs/{job_id}/finishing/render')
+        assert response.status_code == 422
+        assert 'sendo gerado' in response.json()['detail']
+    finally:
+        finishing_api._ACTIVE_RENDERS.discard(job_id)

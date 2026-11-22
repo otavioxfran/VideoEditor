@@ -49,6 +49,8 @@ def load_library(path=None):
     for index, item in enumerate(value.get('assets') or []):
         if not isinstance(item, dict):
             raise ValueError(f'Asset {index} inválido.')
+        if item.get('rejected') or item.get('needs_confirmation'):
+            continue
         terms = [term for term in item.get('terms') or [] if _normalize(term)]
         if not item.get('id') or not item.get('image'):
             raise ValueError(f'Asset {index} sem id ou imagem.')
@@ -200,6 +202,8 @@ def _mention_items(view_value, library):
             priority=40 if kind_asset == 'meme' else 60,
             status='pending', needs_text=False, asset_id=asset['id'],
             kind_asset=kind_asset, license=asset.get('license', ''),
+            credit=asset.get('credit') or asset.get('license', ''),
+            auto=bool(asset.get('auto')), source_url=asset.get('source_url'),
             max_per_video=asset.get('max_per_video'),
             min_seconds=minimum, cooldown=cooldown,
         ))
@@ -469,8 +473,11 @@ def _resolve(items):
     return sorted(kept, key=lambda item: (item['start'], item['kind']))
 
 
-def suggest(jobs, job_id, export_id=None, library_path=None, hazards_dir=None):
+def suggest(jobs, job_id, export_id=None, library_path=None, hazards_dir=None, expand_library=False):
     current = view(jobs, job_id)
+    if expand_library:
+        from video_editor.finishing import library as library_module
+        library_module.expand(jobs, job_id, library_path=library_path)
     library = load_library(library_path)
     edit_revision = int(current['edit']['revision'])
     video, selected_export = _export_video(jobs, job_id, export_id, edit_revision)
@@ -530,6 +537,12 @@ def decide(jobs, job_id, request):
             item['status'] = 'accepted'
         elif action == 'reject':
             item['status'] = 'rejected'
+            if item.get('auto') and item.get('asset_id'):
+                try:
+                    from video_editor.finishing import library
+                    library.reject(LIBRARY_PATH, item['asset_id'])
+                except (OSError, ValueError):
+                    pass
         elif action == 'edit':
             payload = dict(request.get('payload') or {})
             item['payload'] = dict(item.get('payload') or {}, **payload)
@@ -657,9 +670,9 @@ def describe(jobs, job_id):
     for item in suggestions.get('items') or []:
         if item.get('status') not in ('accepted', 'edited'):
             continue
-        license_name = str(item.get('license') or '')
-        if license_name and license_name not in credits:
-            credits.append(license_name)
+        credit = str(item.get('credit') or item.get('license') or '')
+        if credit and credit not in credits:
+            credits.append(credit)
     if credits:
         lines.extend(['Créditos:', *[f'- {credit}' for credit in credits], ''])
     if any(item.get('kind') in ('card', 'banner') and item.get('status') in ('accepted', 'edited')

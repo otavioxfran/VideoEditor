@@ -224,6 +224,14 @@ export function setupFinishing(ctx) {
       element("span", STATUS_LABELS[item.status] || item.status, `badge ${accepted(item) ? "success" : item.status === "rejected" ? "danger" : "review"}`),
     );
     if (item.long) badges.append(element("span", "Longo", "badge review"));
+    if (item.auto) {
+      badges.append(element("span", "imagem nova (auto)", "badge review"));
+      if (item.credit || item.license) {
+        const credit = element("span", item.credit || item.license, "meta");
+        credit.title = item.credit || item.license;
+        badges.append(credit);
+      }
+    }
     if (item.needs_text) badges.append(element("span", "Revise o texto", "badge review"));
     head.append(badges, element("span", `${timecode(item.start)} → ${timecode(item.end)}`, "timecode"));
     node.append(head, element("p", item.reason || "", "finishing-reason"));
@@ -358,6 +366,13 @@ export function setupFinishing(ctx) {
     if (!response.ok) throw new Error("Descrição ainda não está pronta.");
     await navigator.clipboard.writeText(await response.text());
     ctx.message("Descrição copiada.");
+  });
+
+  $("finishing-expand").onclick = () => ctx.action(async () => {
+    if (!currentExport) { ctx.message("Exporte a revisão atual para ampliar a biblioteca."); return; }
+    const value = await api(`${base}/finishing/library/expand`, "POST", {});
+    ctx.message(`${value.downloaded.length} imagem(ns) automática(s) baixada(s).`);
+    await refresh();
   });
 
   $("finishing-filter-type").onchange = render;

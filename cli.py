@@ -110,6 +110,11 @@ def main():
     finish_plan.add_argument('--accept-all', action='store_true')
     finish_describe = finish_sub.add_parser('describe')
     finish_describe.add_argument('job_id')
+    finish_library = finish_sub.add_parser('library')
+    library_sub = finish_library.add_subparsers(dest='library_command', required=True)
+    library_expand = library_sub.add_parser('expand')
+    library_expand.add_argument('job_id')
+    library_expand.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     jobs, worker = app.state.jobs, app.state.worker
     if args.command == 'studio':
@@ -256,6 +261,10 @@ def main():
             print(f'{len(records)} imagem(ns) em {out}')
             for record in records:
                 print(record['path'], record['license'])
+        elif args.finish_command == 'library':
+            from video_editor.finishing import library as library_module
+            value = library_module.expand(jobs, args.job_id, dry_run=args.dry_run)
+            print(json.dumps(value, ensure_ascii=False, indent=2))
         elif args.finish_command == 'suggest':
             value = suggest.suggest(jobs, args.job_id, args.export)
             counts = {}
