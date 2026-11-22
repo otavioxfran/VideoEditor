@@ -36,8 +36,14 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   dinâmica (LRA), o ruído nas pausas (sem contar o silêncio digital), os canais e as bandas, e
   explica em português o que corrigir. `python cli.py finish audio master VIDEO --output OUT` aplica
   só o necessário: canal mudo duplicado, passa-alta, redução de ruído conservadora, de-esser,
-  compressor e loudnorm em 2 passes até −14 LUFS e −1 dBTP. O vídeo não é recodificado. Uma chave
+  compressor e normalização até −14 LUFS, com pico abaixo de −1 dBTP. O vídeo não é recodificado. Uma chave
   `"audio"` no plano ou `finish render --master-audio` aplica a masterização ao final do render.
+- Biblioteca que cresce sozinha: **Ampliar biblioteca** no painel Acabamento (ou
+  `python cli.py finish library expand JOB_ID [--dry-run]`) busca imagens de licença livre no
+  Wikimedia Commons para os nomes do vídeo que ainda não têm imagem, com título, autor, licença e
+  link no crédito. Sobrenomes soltos e variações de quem já está na biblioteca são ignorados, e
+  nomes de pessoas nunca são baixados sozinhos: ficam para você confirmar, para não pôr o rosto
+  de um homônimo no vídeo. Recusar uma imagem automática tira ela da biblioteca.
 - `python cli.py ledger build` reúne as decisões humanas de todos os cortes (aceitar,
   recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
   `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,
@@ -56,8 +62,21 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
 ### Alterado
 - O vídeo final do Acabamento agora usa a mesma qualidade e o mesmo teto de bitrate do export
   e cai automaticamente para o encoder de software quando a GPU falha.
+- Mais rápido: a lista de exports e as demais telas do Studio deixaram de conferir o disco
+  milhares de vezes por chamada (de 7-12 s para menos de 1 s num job longo); a leitura de texto
+  da tela roda em segundo plano e não segura mais a transcrição (eram 12-15 min num vídeo de
+  36 min); as prévias do Acabamento são geradas em segundo plano sem ocupar a fila de exports e
+  renders; a masterização mede tudo num passe só (de cerca de 5 min para menos de 1,5 min num
+  vídeo de 24 min).
 
 ### Corrigido
+- O Studio instalado pelo instalador do Windows e pelo Docker não abria: o Acabamento precisa do
+  Pillow, que só era instalado à parte. O Pillow agora faz parte de `requirements.txt`.
+- Um vídeo final interrompido (Studio fechado no meio do render) não fica mais "renderizando"
+  para sempre; o painel mostra que foi interrompido. Um segundo pedido de render enquanto o
+  primeiro roda é recusado.
+- O relatório da masterização mostra o loudness, o pico e a dinâmica medidos no áudio final, e o
+  limitador deixa folga para o pico ficar abaixo de −1 dBTP depois do AAC.
 - Ausência na frente da câmera (cadeira vazia) agora funciona em gravação de tela com a
   webcam num canto: a comparação usa só a região da pessoa, e a referência de cena vazia
   precisa estar parada. Pessoa de cabeça baixa ou inclinada não vira mais ausência, e

@@ -143,6 +143,28 @@ As opções avançadas (modelo, edição experimental, briefing) ficam escondida
 Quer que a assistência editorial conheça o seu estilo? Copie `PERSONA.example.md` para
 `PERSONA.md` e escreva sobre o seu canal. Esse arquivo fica só no seu computador.
 
+### Acabamento: imagens, correções e áudio
+
+Depois de exportar, o painel **Acabamento** (abaixo do vídeo exportado) sugere o que entra por
+cima do corte, e nada é aplicado sem você aceitar:
+
+- **Imagens, logos e memes** quando você fala um termo da sua biblioteca. Copie
+  `config/finishing_library.example.json` para `config/finishing_library.local.json` e
+  liste cada imagem com as palavras que a disparam. **Ampliar biblioteca** busca imagens de
+  licença livre (Wikimedia Commons) para os nomes do vídeo que ainda não têm imagem, com o
+  crédito de cada uma. Fotos de pessoas nunca são baixadas sozinhas: o nome fica para você
+  confirmar.
+- **Coberturas** para telas que não podem aparecer (OBS, janela privada): guarde prints delas
+  em `config/screen_hazards.local/`. O trecho é coberto por um quadro limpo, e a webcam
+  continua ao vivo.
+- **Tarjas e telas pretas de correção** para afirmações marcadas como erradas no briefing. O
+  texto é seu: o vídeo só sai depois de revisado.
+
+Revise com **A** (aceitar), **R** (recusar) e **J/K** (próximo/anterior) e clique em
+**Gerar vídeo final**. Sai um MP4 com o áudio masterizado para o YouTube (−14 LUFS, pico
+abaixo de −1 dBTP), o SRT com os tempos certos e a descrição com capítulos e créditos.
+Também dá para fazer tudo pela linha de comando: `python cli.py finish --help`.
+
 ---
 
 ## 🛠️ How it works

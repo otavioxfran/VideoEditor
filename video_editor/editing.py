@@ -1,4 +1,5 @@
 import copy
+import logging
 import math
 from uuid import uuid4
 from video_editor import storage
@@ -168,5 +169,6 @@ def mutate(jobs, job_id, request):
             from video_editor.learning.channel_profile import record_feedback
             record_feedback(action, details)
         except Exception:
-            pass
+            # The edit is already committed; a broken profile must not fail it, but say so.
+            logging.getLogger(__name__).warning('Perfil do canal não registrou o feedback', exc_info=True)
     return view(jobs, job_id)
