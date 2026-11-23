@@ -67,10 +67,13 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   por SHA-256.
 
 ### Alterado
-- O vídeo final pode copiar direto do vídeo-base os trechos sem imagem entre dois quadros-chave
-  e recodificar só o resto. Só acontece quando a escala de tempo do vídeo-base fecha com o fps
-  (um quadro = número inteiro de unidades); os exports atuais não fecham (1/16000 a 60 fps) e
-  continuam sendo recodificados por inteiro, sem os carimbos fora de ordem que a cópia geraria.
+- O vídeo final copia direto do export os trechos sem imagem entre dois quadros-chave e só
+  recodifica o resto (num vídeo de 24 min: 67% copiado, de cerca de 13-16 min para 8,5 min, sem
+  perda de qualidade nesses trechos). Para isso o export passou a gravar com escala de tempo
+  exata (60 fps → 1/15360: cada quadro = 256 unidades) e partes intermediárias em `.mov` em vez
+  de `.mkv`, que arredondava o tempo em milissegundos. Exports antigos, gravados a 1/16000, são
+  recodificados por inteiro como antes. As partes do vídeo final são emendadas com a duração
+  exata de cada uma, sem carimbos de tempo fora de ordem.
 - A assistência editorial com Gemini pula modelos aposentados, espera respostas longas (até
   2 min), passa para o próximo modelo quando um está sobrecarregado ou sem cota e evita por 5
   minutos o modelo que falhou.
