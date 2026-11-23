@@ -1,4 +1,7 @@
 """Automatic.run orchestration."""
+import logging
+import os
+import threading
 import time
 
 from video_editor import storage
@@ -63,6 +66,26 @@ def _apply_stage(self, job_id, job, transcript, revision, suggestions,
     return revision
 
 
+def _prepare_finishing(jobs, job_id):
+    """Have the finishing panel ready when the user opens the video: suggestions with new
+    free images, plus previews, generated on a background thread after the export."""
+    if os.getenv('VIDEO_EDITOR_AUTO_FINISHING', '1') == '0':
+        return
+
+    def run():
+        try:
+            from video_editor.finishing import suggest
+            from video_editor.server.finishing_api import _start_warmup
+            document = suggest.suggest(jobs, job_id, expand_library=True)
+            if document.get('items'):
+                _start_warmup(jobs, job_id, document['items'])
+        except Exception:
+            logging.getLogger(__name__).warning(
+                'Sugestões de acabamento não foram geradas após o export', exc_info=True)
+
+    threading.Thread(target=run, name=f'finishing-prepare-{job_id[:8]}', daemon=True).start()
+
+
 def run_automatic(self, job_id):
     jobs = self.jobs
     state = jobs.read(job_id, "automatic.json")
@@ -99,6 +122,8 @@ def run_automatic(self, job_id):
         self._export_if_requested(job_id, revision, state, stage, timings)
         timings["total"] = time.monotonic() - started
         stage("complete", completed_at=storage.now())
+        if state["options"]["export"] and not evaluation_mode:
+            _prepare_finishing(jobs, job_id)
     except Exception as error:
         stage("failed", error=str(error))
         raise

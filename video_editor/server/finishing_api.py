@@ -21,6 +21,8 @@ from video_editor.finishing import render as finishing_render
 
 class GenerateRequest(BaseModel):
     export_id: str | None = None
+    # Fetch free images for names in the video that have none yet, before matching.
+    expand_library: bool = True
 
 
 class DecideRequest(BaseModel):
@@ -185,7 +187,7 @@ def _render_execute(jobs, job_id, status):
             _write_status(jobs, job_id, status)
         result = finishing_render.render(
             jobs.path(job_id, status['export']), plan, output,
-            work_dir=work, master_audio=True, progress=update,
+            work_dir=work, master_audio=True, progress=update, sound_seed=job_id,
         )
         srt_source = jobs.path(job_id, status['source_srt'])
         srt_target = jobs.path(job_id, status['srt'])
@@ -238,7 +240,10 @@ def router(jobs, worker=None):
 
     @api.post('/suggestions/generate')
     def generate(job_id: str, request: GenerateRequest | None = None):
-        value = suggest.suggest(jobs, job_id, (request or GenerateRequest()).export_id)
+        request = request or GenerateRequest()
+        value = suggest.suggest(
+            jobs, job_id, request.export_id, expand_library=request.expand_library
+        )
         if worker is not None and value.get('items'):
             _start_warmup(jobs, job_id, value['items'])
         return value

@@ -40,6 +40,17 @@ def isolated_channel_profile(tmp_path, monkeypatch):
 
 
 @pytest.fixture(autouse=True)
+def isolated_finishing(tmp_path, monkeypatch):
+    # Never read or grow the user's real image library, and never fetch images after an
+    # automatic export: tests stay offline.
+    from video_editor.analysis import glossary
+    from video_editor.finishing import suggest
+    monkeypatch.setattr(suggest, 'LIBRARY_PATH', tmp_path / 'finishing_library.local.json')
+    monkeypatch.setattr(glossary, 'USER_GLOSSARY', tmp_path / 'glossary.local.json')
+    monkeypatch.setenv('VIDEO_EDITOR_AUTO_FINISHING', '0')
+
+
+@pytest.fixture(autouse=True)
 def cleanup_whisper():
     yield
     try:

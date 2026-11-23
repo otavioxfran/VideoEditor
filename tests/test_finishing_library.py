@@ -92,3 +92,62 @@ def test_rejecting_auto_card_marks_library_asset(jobs, ready, tmp_path, monkeypa
     saved = json.loads(path.read_text(encoding='utf-8'))['assets'][0]
     assert saved['rejected'] is True
     assert suggest.load_library(path)['assets'] == []
+
+
+def _screen(jobs, job, terms):
+    screen = jobs.path(job['job_id'], 'visual/screen_terms.json')
+    screen.parent.mkdir(parents=True, exist_ok=True)
+    screen.write_text(json.dumps({'terms': terms}), encoding='utf-8')
+
+
+def test_library_falls_back_to_openverse_when_commons_has_nothing(jobs, ready, tmp_path):
+    job = ready(duration=20, segments=_transcript_segments())
+    _screen(jobs, job, ['Megaspeed'])
+
+    def request(url):
+        if 'api.php' in url:
+            return json.dumps({'query': {'pages': {}}}).encode()
+        if 'openverse' in url:
+            assert 'license_type=commercial' in url
+            return json.dumps({'results': [{
+                'title': 'Megaspeed datacenter', 'url': 'https://example.test/m.jpg',
+                'width': 1600, 'license': 'by', 'license_version': '4.0',
+                'creator': 'Autora', 'foreign_landing_url': 'https://example.test/m',
+            }]}).encode()
+        return b'image-bytes'
+
+    path = tmp_path / 'library.json'
+    value = library.expand(jobs, job['job_id'], library_path=path, out_dir=tmp_path / 'auto', request=request)
+    asset = value['downloaded'][0]
+    assert asset['source'] == 'Openverse'
+    assert asset['license'] == 'CC BY 4.0'
+    assert 'Autora' in asset['credit']
+
+
+def test_library_remembers_misses_and_survives_network_errors(jobs, ready, tmp_path):
+    job = ready(duration=20, segments=_transcript_segments())
+    _screen(jobs, job, ['Megaspeed'])
+    calls = []
+
+    def empty(url):
+        calls.append(url)
+        if 'api.php' in url:
+            return json.dumps({'query': {'pages': {}}}).encode()
+        return json.dumps({'results': []}).encode()
+
+    path = tmp_path / 'library.json'
+    first = library.expand(jobs, job['job_id'], library_path=path, out_dir=tmp_path / 'auto', request=empty)
+    assert first['missing'] == ['Megaspeed']
+    searched = len(calls)
+    second = library.expand(jobs, job['job_id'], library_path=path, out_dir=tmp_path / 'auto', request=empty)
+    assert second['candidates'] == [] and len(calls) == searched
+    # The miss is not an asset: loading the library must not choke on it.
+    assert suggest.load_library(path)['assets'] == []
+
+    def offline(url):
+        raise OSError('sem rede')
+
+    job2 = ready(duration=20, segments=_transcript_segments())
+    _screen(jobs, job2, ['Pequim'])
+    third = library.expand(jobs, job2['job_id'], library_path=path, out_dir=tmp_path / 'auto', request=offline)
+    assert third['downloaded'] == [] and third['missing'] == ['Pequim'] or third['failed'] == ['Pequim']

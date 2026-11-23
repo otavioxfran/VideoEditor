@@ -110,48 +110,55 @@ def expand(jobs, job_id, library_path=None, out_dir=None, dry_run=False, request
                     downloaded=[], dry_run=True)
     target = Path(out_dir) if out_dir else _auto_dir(path)
     target.mkdir(parents=True, exist_ok=True)
-    downloaded = []
+    downloaded, missing, failed = [], [], []
     for candidate in automatic:
-        pages = assets.search(candidate['term'], limit=5, request=request)
-        for page in pages:
-            title = str(page.get('title') or '').removeprefix('File:')
-            if not _title_matches(title, candidate['term']):
-                continue
-            info = (page.get('imageinfo') or [{}])[0]
-            meta = info.get('extmetadata') or {}
-            license_name = meta.get('LicenseShortName', {}).get('value', '')
-            width = info.get('width') or 0
-            if not assets.license_ok(license_name, width):
-                continue
-            url = info.get('thumburl') or info.get('url')
-            if not url:
-                continue
-            suffix = Path(url.split('?', 1)[0]).suffix.lower() or '.jpg'
-            image = target / f"{suggest_asset_slug(candidate['term'])}{suffix}"
-            counter = 2
-            while image.exists():
-                image = target / f"{suggest_asset_slug(candidate['term'])}-{counter}{suffix}"
-                counter += 1
-            image.write_bytes(assets._get(url, request=request))
-            artist = re.sub('<[^>]+>', '', meta.get('Artist', {}).get('value', '')).strip()
-            source_url = info.get('descriptionurl') or url
-            item = dict(
-                id=f"auto-{suggest_asset_slug(candidate['term'])}-{len(downloaded) + 1}",
-                terms=[candidate['term']], image=str(image), mode='cover',
-                kind='broll', license=license_name,
-                credit=_credit(title, artist, license_name, source_url),
-                source_url=source_url, added_at=datetime.now(timezone.utc).isoformat(),
-                auto=True, rejected=False,
-            )
-            if any(word in title.casefold() for word in ('logo', 'brand', 'icon')):
-                item['mode'] = 'badge'
-                item['kind'] = 'logo'
-            elif any(word in title.casefold() for word in ('person', 'portrait', 'man', 'woman')):
-                item['mode'] = 'cutout'
-                item['kind'] = 'pessoa'
-            value.setdefault('assets', []).append(item)
-            downloaded.append(item)
-            break
+        try:
+            hits = assets.find_free_images(candidate['term'], limit=5, request=request)
+        except Exception:
+            # A network problem must never break suggestions; try again next time.
+            failed.append(candidate['term'])
+            continue
+        hit = next((item for item in hits if _title_matches(item['title'], candidate['term'])), None)
+        if hit is None:
+            # Remember the miss so the same name is not searched on every video.
+            missing.append(candidate['term'])
+            value.setdefault('assets', []).append(dict(
+                id=f"missing-{suggest_asset_slug(candidate['term'])}",
+                terms=[candidate['term']], image='', auto=True, not_found=True,
+                added_at=datetime.now(timezone.utc).isoformat(),
+            ))
+            continue
+        suffix = Path(hit['url'].split('?', 1)[0]).suffix.lower()
+        if suffix not in ('.jpg', '.jpeg', '.png', '.webp', '.gif'):
+            suffix = '.jpg'
+        image = target / f"{suggest_asset_slug(candidate['term'])}{suffix}"
+        counter = 2
+        while image.exists():
+            image = target / f"{suggest_asset_slug(candidate['term'])}-{counter}{suffix}"
+            counter += 1
+        try:
+            image.write_bytes(assets._get(hit['url'], request=request))
+        except Exception:
+            failed.append(candidate['term'])
+            continue
+        title = hit['title']
+        item = dict(
+            id=f"auto-{suggest_asset_slug(candidate['term'])}-{len(downloaded) + 1}",
+            terms=[candidate['term']], image=str(image), mode='cover',
+            kind='broll', license=hit['license'],
+            credit=_credit(title, hit['artist'], hit['license'], hit['source_url']),
+            source=hit['source'], source_url=hit['source_url'],
+            added_at=datetime.now(timezone.utc).isoformat(),
+            auto=True, rejected=False,
+        )
+        if any(word in title.casefold() for word in ('logo', 'brand', 'icon')):
+            item['mode'] = 'badge'
+            item['kind'] = 'logo'
+        elif any(word in title.casefold() for word in ('person', 'portrait', 'man', 'woman')):
+            item['mode'] = 'cutout'
+            item['kind'] = 'pessoa'
+        value.setdefault('assets', []).append(item)
+        downloaded.append(item)
     for candidate in pending:
         value.setdefault('assets', []).append(dict(
             id=f"person-{suggest_asset_slug(candidate['term'])}",
@@ -162,7 +169,7 @@ def expand(jobs, job_id, library_path=None, out_dir=None, dry_run=False, request
     path.parent.mkdir(parents=True, exist_ok=True)
     storage.write(path, value)
     return dict(candidates=candidates, automatic=automatic, pending=pending,
-                downloaded=downloaded, dry_run=False)
+                downloaded=downloaded, missing=missing, failed=failed, dry_run=False)
 
 
 def suggest_asset_slug(text):

@@ -148,6 +148,67 @@ def _probe_video(path):
     )
 
 
+MIN_COPY_SECONDS = 2.0
+
+
+def _keyframes(path):
+    """Keyframe times of an H.264 yuv420p video; [] when copying is not safe."""
+    try:
+        stream = json.loads(media.run([
+            'ffprobe', '-v', 'error', '-select_streams', 'v:0',
+            '-show_entries', 'stream=codec_name,pix_fmt,time_base,avg_frame_rate',
+            '-of', 'json', str(path),
+        ]))['streams'][0]
+        if stream.get('codec_name') != 'h264' or stream.get('pix_fmt') != 'yuv420p':
+            return []
+        # Copied packets keep the base's timestamps. Unless one frame is a whole number of
+        # time-base ticks (e.g. 1/15360 at 60 fps), they jitter by a tick and the joins come
+        # out with non-monotonic timestamps; then every stretch is re-encoded instead.
+        time_base = Fraction(stream.get('time_base') or '0/1')
+        rate = Fraction(stream.get('avg_frame_rate') or '0/1')
+        if not time_base or not rate or (1 / (rate * time_base)).denominator != 1:
+            return []
+        output = media.run([
+            'ffprobe', '-v', 'error', '-select_streams', 'v:0', '-skip_frame', 'nokey',
+            '-show_entries', 'frame=pts_time', '-of', 'csv=p=0', str(path),
+        ])
+    except (OSError, ValueError, KeyError, IndexError, RuntimeError):
+        return []
+    times = []
+    for line in output.split():
+        value = line.split(',')[0].strip()
+        try:
+            times.append(float(value))
+        except ValueError:
+            continue
+    return sorted(times)
+
+
+def _copy_spans(left, right, keyframes, fps):
+    """Split a stretch without layers into (start, end, copy) parts: re-encode from left
+    to the first keyframe, copy between keyframes, re-encode the tail. [] = encode all."""
+    inside = [time for time in keyframes if left - 0.5 / fps <= time <= right + 0.5 / fps]
+    if len(inside) < 2 or inside[-1] - inside[0] < MIN_COPY_SECONDS:
+        return []
+    first, last = inside[0], inside[-1]
+    spans = []
+    if first - left > 0.5 / fps:
+        spans.append((left, first, False))
+    spans.append((max(left, first), last, True))
+    if right - last > 0.5 / fps:
+        spans.append((last, right, False))
+    return spans
+
+
+def _encode_range(base, start, frames, fps, out, encode):
+    _run([
+        media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+        '-ss', f'{start:.6f}', '-i', str(base),
+        '-frames:v', str(frames), '-an', *encode,
+        '-pix_fmt', 'yuv420p', '-r', str(fps), str(out),
+    ])
+
+
 def _card_fade(duration):
     fade = min(.2, max(0.0, duration / 4))
     if fade <= 0:
@@ -158,7 +219,8 @@ def _card_fade(duration):
     )
 
 
-def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, progress=None):
+def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, progress=None,
+           sound_seed=None, copy_unchanged=True):
     base = Path(base)
     output = Path(output)
     if isinstance(plan, (str, Path)):
@@ -181,6 +243,8 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
     encoder_fallback = False
     total_frames = round(duration * fps)
     rendered = []
+    copied_frames = 0
+    keyframes = _keyframes(base) if copy_unchanged else []
     for index, (kind, left, right, value) in enumerate(pieces):
         if kind == 'base':
             frames = round(right * fps) - round(left * fps)
@@ -208,6 +272,39 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
                         '-pix_fmt', 'yuv420p', '-r', str(fps), str(part),
                     ]
             else:
+                spans = _copy_spans(left, right, keyframes, fps)
+                if spans:
+                    for number, (start, end, copy) in enumerate(spans):
+                        sub = work / f'part_{index:03d}_{number}.mp4'
+                        count = round(end * fps) - round(start * fps)
+                        if count <= 0:
+                            continue
+                        if copy:
+                            # Between two keyframes of the export the frames are copied
+                            # as they are: no second encode, no quality loss, no time.
+                            # Seeking half a frame past the keyframe lands exactly on it.
+                            _run([
+                                media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+                                '-ss', f'{start + 0.5 / fps:.6f}', '-i', str(base),
+                                '-frames:v', str(count), '-an', '-c:v', 'copy',
+                                '-avoid_negative_ts', 'make_zero', str(sub),
+                            ])
+                        else:
+                            try:
+                                _encode_range(base, start, count, fps, sub, encode)
+                            except RuntimeError as error:
+                                if encoder != 'h264_nvenc' or not gpu_error(error):
+                                    raise
+                                encoder = 'libx264'
+                                encode = encoder_args(encoder, DEFAULT_CONFIG, info)
+                                encoder_fallback = True
+                                _encode_range(base, start, count, fps, sub, encode)
+                        rendered.append((sub, count, 'base', start, end))
+                        copied_frames += count if copy else 0
+                    if progress:
+                        progress(index + 1, total_parts)
+                    continue
+
                 def build(args):
                     return [
                         media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
@@ -279,6 +376,7 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
         '-c', 'copy', '-movflags', '+faststart', str(joined),
     ])
     temporary = output.with_suffix('.tmp.mp4')
+    sound_result = None
     base_info = _probe_audio(base) if plan.cards else {}
     if plan.cards and base_info:
         filter_text = _audio_filter(base_info, _audio_pieces(plan, duration))
@@ -303,6 +401,19 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
             '-map', '0:v', '-map', '1:a?', '-c', 'copy',
             '-movflags', '+faststart', str(temporary),
         ])
+    if getattr(plan, 'sound', None) and _probe_audio(temporary):
+        from video_editor.finishing import sound
+        voiced = output.with_suffix('.sound.mp4')
+        try:
+            added = sound.mix(temporary, voiced, plan, total_frames / fps, work,
+                              seed=sound_seed or output.parent.name)
+        except RuntimeError:
+            # Sound design is a bonus: a failed mix must not cost the user the video.
+            added = None
+            voiced.unlink(missing_ok=True)
+        if added:
+            voiced.replace(temporary)
+            sound_result = added
     mastered = None
     if master_audio and _probe_audio(temporary):
         from video_editor.finishing import audio
@@ -314,4 +425,5 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
         temporary.replace(output)
     return dict(path=str(output), duration=round(total_frames / fps, 3),
                 frames=total_frames, fps=fps, encoder=encoder, work=str(work),
-                audio=mastered, encoder_fallback=encoder_fallback)
+                audio=mastered, encoder_fallback=encoder_fallback, sound=sound_result,
+                copied_frames=copied_frames)

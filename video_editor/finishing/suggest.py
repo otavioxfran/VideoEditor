@@ -49,7 +49,7 @@ def load_library(path=None):
     for index, item in enumerate(value.get('assets') or []):
         if not isinstance(item, dict):
             raise ValueError(f'Asset {index} inválido.')
-        if item.get('rejected') or item.get('needs_confirmation'):
+        if item.get('rejected') or item.get('needs_confirmation') or item.get('not_found'):
             continue
         terms = [term for term in item.get('terms') or [] if _normalize(term)]
         if not item.get('id') or not item.get('image'):
@@ -475,9 +475,17 @@ def _resolve(items):
 
 def suggest(jobs, job_id, export_id=None, library_path=None, hazards_dir=None, expand_library=False):
     current = view(jobs, job_id)
-    if expand_library:
+    library_note = None
+    # Only a user who keeps a local library gets it expanded (no network otherwise).
+    if expand_library and Path(library_path or LIBRARY_PATH).is_file():
         from video_editor.finishing import library as library_module
-        library_module.expand(jobs, job_id, library_path=library_path)
+        try:
+            expanded = library_module.expand(jobs, job_id, library_path=library_path)
+            if expanded.get('downloaded'):
+                library_note = f"{len(expanded['downloaded'])} imagem(ns) nova(s) na biblioteca."
+        except Exception:
+            # Without network the suggestions still come from the current library.
+            library_note = 'Não deu para ampliar a biblioteca agora (sem internet?).'
     library = load_library(library_path)
     edit_revision = int(current['edit']['revision'])
     video, selected_export = _export_video(jobs, job_id, export_id, edit_revision)
@@ -507,8 +515,8 @@ def suggest(jobs, job_id, export_id=None, library_path=None, hazards_dir=None, e
         edit_revision=edit_revision,
         export=dict(id=selected_export, revision=edit_revision),
     )
-    if warning:
-        document['warning'] = warning
+    if warning or library_note:
+        document['warning'] = ' '.join(part for part in (warning, library_note) if part)
     jobs.write(job_id, 'finishing/suggestions.json', document)
     return document
 
@@ -574,6 +582,18 @@ def _selected(document, accept_all=False):
     ]
 
 
+def _layer_sound(item, payload):
+    """A cover hides something and must go unnoticed; a meme lands with a boom, a logo
+    with a pop, anything else with a whoosh."""
+    if item['kind'] == 'cover':
+        return 'none'
+    if item.get('kind_asset') == 'meme':
+        return 'boom'
+    if payload.get('mode') in ('badge', 'badge_big'):
+        return 'pop'
+    return 'whoosh'
+
+
 def build_plan(jobs, job_id, out=None, accept_all=False):
     document = load_suggestions(jobs, job_id)
     selected = _selected(document, accept_all)
@@ -584,7 +604,7 @@ def build_plan(jobs, job_id, out=None, accept_all=False):
             overlays.append(dict(
                 start=item['start'], end=item['end'],
                 image=payload.get('image'), mode=payload.get('mode', 'contain'),
-                webcam_rect=payload.get('webcam_rect'),
+                webcam_rect=payload.get('webcam_rect'), sound=_layer_sound(item, payload),
             ))
         elif item['kind'] == 'banner':
             banners.append(dict(
@@ -598,7 +618,8 @@ def build_plan(jobs, job_id, out=None, accept_all=False):
                 lines=payload.get('lines') or ['Correção'],
                 note=payload.get('note', ''),
             ))
-    plan = dict(overlays=overlays, banners=banners, cards=cards)
+    plan = dict(overlays=overlays, banners=banners, cards=cards,
+                sound=dict(effects=True, music='auto'))
     path = Path(out) if out else jobs.path(job_id, 'finishing/plan.json')
     path.parent.mkdir(parents=True, exist_ok=True)
     storage.write(path, plan)

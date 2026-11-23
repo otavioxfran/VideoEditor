@@ -428,3 +428,47 @@ def test_asset_license_filter():
     assert assets.license_ok('Public domain', 900)
     assert not assets.license_ok('All rights reserved', 900)
     assert not assets.license_ok('CC BY 4.0', 500)
+
+
+@pytest.mark.slow
+def test_render_copies_keyframe_stretches_without_layers(tmp_path):
+    base = tmp_path / 'base.mp4'
+    # 12 s at 30 fps with a keyframe every 2 s and a tone, like a real export.
+    subprocess.run([
+        media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
+        '-f', 'lavfi', '-i', 'testsrc=size=640x360:rate=30:duration=12',
+        '-f', 'lavfi', '-i', 'sine=frequency=330:duration=12',
+        '-c:v', 'libx264', '-g', '60', '-keyint_min', '60', '-sc_threshold', '0',
+        '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-shortest', str(base),
+    ], check=True)
+    image = _image(tmp_path / 'logo.png')
+    plan = tmp_path / 'plano.json'
+    plan.write_text(json.dumps(dict(overlays=[
+        dict(start=5.3, end=6.1, image=str(image), mode='contain'),
+    ])), encoding='utf-8')
+    out = tmp_path / 'final.mp4'
+    result = finishing_render.render(base, plan, out, encoder='libx264')
+    assert result['frames'] == 360
+    # Most of the 12 s has no layer and sits between keyframes: it is copied, not encoded.
+    assert result['copied_frames'] >= 180
+    decoded = subprocess.run(
+        [media.binary('ffmpeg'), '-v', 'error', '-i', str(out), '-f', 'null', '-'],
+        capture_output=True, text=True,
+    )
+    assert decoded.returncode == 0 and not decoded.stderr.strip()
+    frames = json.loads(media.run([
+        'ffprobe', '-v', 'error', '-count_frames', '-select_streams', 'v:0',
+        '-show_entries', 'stream=nb_read_frames', '-of', 'json', str(out),
+    ]))['streams'][0]['nb_read_frames']
+    assert int(frames) == 360
+
+    def frame(path, second):
+        raw = subprocess.run([
+            media.binary('ffmpeg'), '-v', 'error', '-ss', str(second), '-i', str(path),
+            '-frames:v', '1', '-f', 'rawvideo', '-pix_fmt', 'gray', '-',
+        ], capture_output=True, check=True).stdout
+        return np.frombuffer(raw, dtype=np.uint8).astype(int)
+
+    # A copied frame is the export's frame, bit for bit; the layer is where it belongs.
+    assert np.abs(frame(out, 9.0) - frame(base, 9.0)).max() == 0
+    assert np.abs(frame(out, 5.7) - frame(base, 5.7)).max() > 0

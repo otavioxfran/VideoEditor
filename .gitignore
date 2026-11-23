@@ -48,4 +48,7 @@ build/
 # Finishing library and screen references are local, user-owned data.
 config/finishing_library.local.json
 config/screen_hazards.local/
+config/sounds.local/
+config/music.local/
+config/finishing_library.local/
 

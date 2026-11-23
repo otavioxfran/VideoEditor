@@ -12,6 +12,7 @@ MODES = {
 LABELS = {'CORREÇÃO', 'ATENÇÃO'}
 IMAGE_MODES = MODES - {'dark', 'panel_white', 'panel_dark'}
 CARD_DURATION = 4.0
+SOUNDS = {'whoosh', 'boom', 'pop', 'none'}
 
 
 @dataclass(frozen=True)
@@ -21,6 +22,8 @@ class Overlay:
     image: Path | None
     mode: str
     webcam_rect: tuple[float, float, float, float] | None = None
+    # Effect when the layer appears: whoosh, boom, pop, none, or None for the mode default.
+    sound: str | None = None
 
 
 @dataclass(frozen=True)
@@ -47,6 +50,7 @@ class Plan:
     banners: list[Banner] = field(default_factory=list)
     source: Path | None = None
     audio: dict | None = None
+    sound: dict | None = None
 
     def layers(self):
         items = [
@@ -109,7 +113,10 @@ def load_plan(path):
         end = _number(item.get('end'), 'overlay.end')
         if start < 0 or end <= start:
             raise ValueError(f'Overlay {index}: intervalo inválido.')
-        overlays.append(Overlay(start, end, image, mode, _rect(item.get('webcam_rect'))))
+        sound = item.get('sound')
+        if sound is not None and sound not in SOUNDS:
+            raise ValueError(f'Overlay {index}: som inválido {sound!r}.')
+        overlays.append(Overlay(start, end, image, mode, _rect(item.get('webcam_rect')), sound))
     cards = []
     for index, item in enumerate(data.get('cards') or []):
         label = str(item.get('label', '')).upper()
@@ -142,7 +149,10 @@ def load_plan(path):
     audio = data.get('audio')
     if audio is not None and not isinstance(audio, dict):
         raise ValueError('audio precisa ser um objeto JSON.')
-    return Plan(overlays, cards, banners, source, audio)
+    sound = data.get('sound')
+    if sound is not None and not isinstance(sound, dict):
+        raise ValueError('sound precisa ser um objeto JSON.')
+    return Plan(overlays, cards, banners, source, audio, sound)
 
 
 def map_time(seconds, cards):
