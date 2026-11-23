@@ -44,6 +44,13 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   link no crédito. Sobrenomes soltos e variações de quem já está na biblioteca são ignorados, e
   nomes de pessoas nunca são baixados sozinhos: ficam para você confirmar, para não pôr o rosto
   de um homônimo no vídeo. Recusar uma imagem automática tira ela da biblioteca.
+- Som no vídeo final: whoosh quando entra uma imagem, tela preta ou tarja, "pop" nos logos e
+  "boom" nos memes, sintetizados pelo FFmpeg (ou os seus, em `config/sounds.local/`), e música de
+  fundo opcional, vinda de `config/music.local/`, que abaixa sozinha quando você fala. As
+  coberturas de tela ficam em silêncio.
+- Depois do corte automático, as sugestões de acabamento são geradas em segundo plano, já
+  buscando as imagens livres que faltam (Wikimedia Commons e, como reserva, Openverse). Nomes
+  sem imagem livre ficam anotados para não serem buscados de novo a cada vídeo.
 - `python cli.py ledger build` reúne as decisões humanas de todos os cortes (aceitar,
   recusar, cortes e restaurações manuais) em `learning/decisions.jsonl`, fora do Git.
   `python cli.py ledger replay` compara a política atual com essas decisões: erros, perguntas,
@@ -60,6 +67,13 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   por SHA-256.
 
 ### Alterado
+- O vídeo final pode copiar direto do vídeo-base os trechos sem imagem entre dois quadros-chave
+  e recodificar só o resto. Só acontece quando a escala de tempo do vídeo-base fecha com o fps
+  (um quadro = número inteiro de unidades); os exports atuais não fecham (1/16000 a 60 fps) e
+  continuam sendo recodificados por inteiro, sem os carimbos fora de ordem que a cópia geraria.
+- A assistência editorial com Gemini pula modelos aposentados, espera respostas longas (até
+  2 min), passa para o próximo modelo quando um está sobrecarregado ou sem cota e evita por 5
+  minutos o modelo que falhou.
 - O vídeo final do Acabamento agora usa a mesma qualidade e o mesmo teto de bitrate do export
   e cai automaticamente para o encoder de software quando a GPU falha.
 - Mais rápido: a lista de exports e as demais telas do Studio deixaram de conferir o disco

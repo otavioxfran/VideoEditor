@@ -160,6 +160,16 @@ cima do corte, e nada é aplicado sem você aceitar:
 - **Tarjas e telas pretas de correção** para afirmações marcadas como erradas no briefing. O
   texto é seu: o vídeo só sai depois de revisado.
 
+Depois do corte automático, as sugestões já ficam prontas: o editor busca sozinho as imagens
+livres que faltam e gera as prévias em segundo plano.
+
+**Som:** cada imagem entra com um efeito curto (whoosh; "pop" nos logos; um "boom" grave nos
+memes; nada nas coberturas, que devem passar despercebidas). Os efeitos são sintetizados pelo
+próprio FFmpeg; para usar os seus, ponha `whoosh.wav`, `pop.wav` ou `boom.wav` em
+`config/sounds.local/`. Para ter **música de fundo**, ponha faixas livres (por exemplo, da
+Biblioteca de Áudio do YouTube) em `config/music.local/`: uma é escolhida por vídeo, entra
+baixinha e abaixa sozinha quando você fala.
+
 Revise com **A** (aceitar), **R** (recusar) e **J/K** (próximo/anterior) e clique em
 **Gerar vídeo final**. Sai um MP4 com o áudio masterizado para o YouTube (−14 LUFS, pico
 abaixo de −1 dBTP), o SRT com os tempos certos e a descrição com capítulos e créditos.
