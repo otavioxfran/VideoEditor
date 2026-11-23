@@ -48,6 +48,11 @@ def isolated_finishing(tmp_path, monkeypatch):
     monkeypatch.setattr(suggest, 'LIBRARY_PATH', tmp_path / 'finishing_library.local.json')
     monkeypatch.setattr(glossary, 'USER_GLOSSARY', tmp_path / 'glossary.local.json')
     monkeypatch.setenv('VIDEO_EDITOR_AUTO_FINISHING', '0')
+    # Background work outliving a test can hold its temporary files (Windows refuses to
+    # delete open files): previews are not warmed, and the real screen OCR stays off unless
+    # a test turns it on with its own monkeypatch.
+    monkeypatch.setenv('VIDEO_EDITOR_PREVIEW_WARMUP', '0')
+    monkeypatch.setattr(glossary, 'ocr_available', lambda: False)
 
 
 @pytest.fixture(autouse=True)

@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 import mimetypes
 import threading
@@ -216,6 +217,8 @@ def _render_execute(jobs, job_id, status):
 def _start_warmup(jobs, job_id, items):
     """Previews are a convenience: warm them on a background thread of their own instead
     of the single worker, so exports, renders and preparation never wait behind them."""
+    if os.getenv('VIDEO_EDITOR_PREVIEW_WARMUP', '1') == '0':
+        return
     with _STATUS_LOCK:
         if job_id in _WARMING:
             return
