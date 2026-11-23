@@ -67,6 +67,9 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   por SHA-256.
 
 ### Alterado
+- Masterização de voz com equalizador (escolhido em teste A/B): um pouco de corpo em 120 Hz,
+  menos som embolado em 320 Hz, mais presença em 3,2 kHz e brilho em 9 kHz. Desliga com
+  `"audio": {"eq": false}` no plano.
 - O vídeo final copia direto do export os trechos sem imagem entre dois quadros-chave e só
   recodifica o resto (num vídeo de 24 min: 67% copiado, de cerca de 13-16 min para 8,5 min, sem
   perda de qualidade nesses trechos). Para isso o export passou a gravar com escala de tempo
@@ -87,6 +90,10 @@ usa [versionamento semântico](https://semver.org/lang/pt-BR/).
   vídeo de 24 min).
 
 ### Corrigido
+- A masterização voltou a medir o ruído das pausas e o "s" chiado em vídeos longos: desde a
+  otimização de desempenho, com mais de 2 minutos ela pulava essa análise, e a redução de ruído e
+  o de-esser nunca eram aplicados em vídeos de verdade. Também passou a sobrescrever a saída se
+  ela já existir.
 - O Studio instalado pelo instalador do Windows e pelo Docker não abria: o Acabamento precisa do
   Pillow, que só era instalado à parte. O Pillow agora faz parte de `requirements.txt`.
 - Um vídeo final interrompido (Studio fechado no meio do render) não fica mais "renderizando"
