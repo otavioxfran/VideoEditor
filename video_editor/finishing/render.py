@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 from video_editor import media
-from video_editor.encoding import encoder_args, gpu_error, pick_encoder
+from video_editor.encoding import encoder_args, exact_timescale, gpu_error, pick_encoder
 from video_editor.export.renderer import DEFAULT_CONFIG
 from video_editor.finishing import cards, layers, models
 
@@ -365,15 +365,22 @@ def render(base, plan, output, work_dir=None, encoder=None, master_audio=None, p
             progress(index + 1, total_parts)
     total_frames = sum(frames for _, frames, *_ in rendered)
     list_path = work / 'concat.txt'
+    # Exact durations (frames / fps) instead of what each container reports: with B-frames
+    # a re-encoded part can report one frame short, and its last frame then collides with
+    # the next part's first one (non-monotonic timestamps at the join).
     list_path.write_text(
-        ''.join(f"file '{part.resolve().as_posix()}'\n" for part, *_ in rendered),
+        'ffconcat version 1.0\n' + ''.join(
+            f"file '{part.resolve().as_posix()}'\nduration {frames / fps:.9f}\n"
+            for part, frames, *_ in rendered
+        ),
         encoding='utf-8',
     )
     joined = work / 'joined.mp4'
     _run([
         media.binary('ffmpeg'), '-nostdin', '-y', '-v', 'error',
         '-f', 'concat', '-safe', '0', '-i', str(list_path),
-        '-c', 'copy', '-movflags', '+faststart', str(joined),
+        '-c', 'copy', '-movflags', '+faststart',
+        '-video_track_timescale', str(exact_timescale(fps)), str(joined),
     ])
     temporary = output.with_suffix('.tmp.mp4')
     sound_result = None
