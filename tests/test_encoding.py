@@ -70,3 +70,17 @@ def test_finishing_falls_back_to_x264_on_gpu_failure_without_redoing_first_piece
     assert result['encoder_fallback'] is True
     assert nvenc == 2
     assert len([command for command in calls if 'h264_nvenc' in command]) == 2
+
+
+def test_exact_timescale_makes_every_frame_a_whole_number_of_ticks():
+    from fractions import Fraction
+
+    from video_editor.encoding import exact_timescale
+
+    assert exact_timescale(60) == 15360
+    assert exact_timescale(30) == 7680
+    assert exact_timescale(60000 / 1001) == 60000
+    assert exact_timescale(30000 / 1001) == 30000
+    for fps in (24, 25, 30, 50, 60, 24000 / 1001, 30000 / 1001, 60000 / 1001):
+        rate = Fraction(fps).limit_denominator(1001)
+        assert (exact_timescale(fps) / rate).denominator == 1

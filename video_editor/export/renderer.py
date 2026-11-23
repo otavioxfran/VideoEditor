@@ -2,7 +2,7 @@
 import subprocess
 from video_editor import media, storage
 from video_editor.analysis import framing
-from video_editor.encoding import encoder_args, gpu_error, max_bitrate  # noqa: F401
+from video_editor.encoding import encoder_args, exact_timescale, gpu_error, max_bitrate  # noqa: F401
 from video_editor.safety import destination
 
 DEFAULT_CONFIG = dict(video_codec='h264_nvenc', audio_codec='aac', audio_bitrate='192k',
@@ -101,6 +101,8 @@ def render(snapshot, output, root):
     origin = snapshot['media'].get('origin') if snapshot['media'].get('timing_contract') == 2 else None
     clock_args = ['-ss',f'{origin:.9f}'] if origin is not None and origin>0 else []
     fps = snapshot['media']['fps']
+    # Frame-exact timestamps let the finishing render copy untouched stretches later.
+    timescale = exact_timescale(fps)
     audio=snapshot.get('audio_source')
     audio_index=1 if audio else 0
 
@@ -121,7 +123,8 @@ def render(snapshot, output, root):
             storage.write_text(graph, _graph(keeps, snapshot['config']['fade_seconds'], origin=origin, fps=fps,audio_input=audio_index,tail_padding=snapshot['media'].get('tail_padding',0),crossfade_seconds=snapshot['config'].get('crossfade_seconds',0),framing_filters=frames))
             return _execute([*inputs(clock_args), '-/filter_complex', str(graph), '-map', '[outv]', '-map', '[outa]',
                              *_encoder(codec, snapshot['config'], snapshot['media']), '-c:a', 'aac', '-b:a', snapshot['config']['audio_bitrate'],
-                             '-t',f"{snapshot['timeline']['duration']:.9f}",'-movflags', '+faststart', str(partial)])
+                             '-t',f"{snapshot['timeline']['duration']:.9f}",'-movflags', '+faststart',
+                             '-video_track_timescale', str(timescale), str(partial)])
         # Seeking limits decoding to each batch's source range. Video is encoded once;
         # PCM audio is concatenated before a single AAC encode, avoiding per-batch priming.
         manifest = destination(output.parent / 'concat.txt', root, sources)
@@ -134,7 +137,7 @@ def render(snapshot, output, root):
             offset = max(0, batch[0]['source_start'] - 1)
             span = batch[-1]['source_end'] - offset
             batch_graph = destination(output.parent / f'filtergraph-{index:04d}.txt', root, sources)
-            chunk = destination(output.parent / f'part-{index:04d}.mkv', root, sources)
+            chunk = destination(output.parent / f'part-{index:04d}.mov', root, sources)
             if chunk not in intermediates:
                 intermediates.append(chunk)
             storage.write_text(batch_graph, _graph(batch, snapshot['config']['fade_seconds'], offset, origin, fps,audio_index,snapshot['media'].get('tail_padding',0),snapshot['config'].get('crossfade_seconds',0),frames[left:left + MAX_BATCH_KEEPS]))
@@ -144,7 +147,8 @@ def render(snapshot, output, root):
             batch_inputs=inputs(seek,span)
             result = _execute([*batch_inputs,
                                '-/filter_complex', str(batch_graph), '-map', '[outv]', '-map', '[outa]',
-                               *_encoder(codec, snapshot['config'], snapshot['media']), '-c:a', 'pcm_s16le', str(chunk)])
+                               *_encoder(codec, snapshot['config'], snapshot['media']), '-c:a', 'pcm_s16le',
+                               '-video_track_timescale', str(timescale), str(chunk)])
             if result.returncode:
                 return result
             duration = sum(k['source_end'] - k['source_start'] for k in batch)
@@ -153,7 +157,7 @@ def render(snapshot, output, root):
         storage.write_text(manifest, '\n'.join(lines) + '\n')
         return _execute(['-f', 'concat', '-safe', '1', '-i', str(manifest), '-map', '0:v:0', '-map', '0:a:0',
                          '-c:v', 'copy', '-c:a', 'aac', '-b:a', snapshot['config']['audio_bitrate'],
-                         '-movflags', '+faststart', str(partial)])
+                         '-movflags', '+faststart', '-video_track_timescale', str(timescale), str(partial)])
 
     codec = snapshot['config']['video_codec']
     # Punch-in crops in system memory; CUDA frames cannot be cropped, and CPU decode

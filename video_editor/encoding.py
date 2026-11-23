@@ -1,5 +1,6 @@
 """Shared FFmpeg encoder probing and quality/bounded-bitrate arguments."""
 import subprocess
+from fractions import Fraction
 from video_editor import media
 
 REFERENCE_PIXEL_RATE = 1920 * 1080 * 60
@@ -61,3 +62,17 @@ def gpu_error(error):
         "nvenc", "cuda", "nvidia", "no capable devices", "hwaccel",
         "hardware acceleration", "decoder surfaces", "impossible to convert",
     ))
+
+
+def exact_timescale(fps):
+    """MP4/MOV track timescale in which one frame is a whole number of ticks.
+
+    60 fps -> 15360 (256 ticks per frame), 59.94 (60000/1001) -> 60000 (1001 ticks).
+    The muxer's default for these streams (1/16000, or milliseconds in MKV) leaves
+    frames at 266/267 ticks; copying packets out of such a file later produces
+    non-monotonic timestamps at the joins.
+    """
+    rate = Fraction(float(fps)).limit_denominator(1001)
+    if rate <= 0:
+        return 15360
+    return rate.numerator * (256 if rate.numerator < 1000 else 1)
