@@ -547,8 +547,9 @@ def test_sdk_retry_is_bounded_and_does_not_expose_credentials(tmp_path, monkeypa
     monkeypatch.setattr(llm_client.time, "sleep", lambda *args: None)
     with pytest.raises(llm_client.ManualFallback) as caught:
         llm_client.generate(path, "isolated transcript")
-    # One try per free model, then manual fallback: bounded and never paid.
-    assert len(calls) == len(llm_client.FREE_MODELS) + 1 and all(c["retry_options"]["attempts"] == 1 for c in calls)
+    # One try per free model (the retired model in the config is skipped), then manual
+    # fallback: bounded and never paid.
+    assert len(calls) == len(llm_client.FREE_MODELS) and all(c["retry_options"]["attempts"] == 1 for c in calls)
     assert secret not in str(caught.value)
 
 
