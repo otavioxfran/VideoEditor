@@ -14,12 +14,18 @@ SILENCE_THRESHOLD = -35
 SILENCE_DURATION = .35
 PAUSE_MARGIN = .05
 NOISE_LIMIT = -55.0
+# Voice EQ: +2 dB body at 120 Hz, -2.5 dB mud at 320 Hz, +3 dB presence at 3.2 kHz and
+# +1.5 dB air at 9 kHz. Off with options {"eq": false}.
+VOICE_EQ = (
+    'equalizer=f=120:t=q:w=1:g=2,equalizer=f=320:t=q:w=1.2:g=-2.5,'
+    'equalizer=f=3200:t=q:w=1:g=3,equalizer=f=9000:t=q:w=1:g=1.5'
+)
 DIGITAL_SILENCE = -90.0
 
 
 def _ffmpeg(args):
     result = subprocess.run(
-        [media.binary('ffmpeg'), '-nostdin', '-hide_banner', *args],
+        [media.binary('ffmpeg'), '-nostdin', '-hide_banner', '-y', *args],
         capture_output=True, text=True, encoding='utf-8', errors='replace',
     )
     if result.returncode:
@@ -424,7 +430,9 @@ def master(input_path, output, profile='voz', options=None):
     options = dict(options or {})
     target = _target(options)
     info = _probe(input_path)
-    before = analyze(input_path, full=info['duration'] <= 120)
+    # The full analysis measures pause noise and sibilance; without them denoise and the
+    # de-esser never run on a real (long) video. It costs about a minute on 24 minutes.
+    before = analyze(input_path, full=True)
     filters = []
 
     def add(name, reason):
@@ -455,6 +463,9 @@ def master(input_path, output, profile='voz', options=None):
 
     add('acompressor=threshold=0.0631:ratio=3:attack=10:release=150:makeup=2',
         'suavizar a dinâmica da voz')
+    if profile == 'voz' and options.get('eq', True) is not False:
+        # Chosen by ear by the author (A/B test, 2026-11-23): body, less mud, presence, air.
+        add(VOICE_EQ, 'equalizar a voz: corpo, menos embolado, presença e brilho')
     target_filter = (
         f"I={target['target_lufs']}:TP={target['true_peak']}:LRA={target['lra']}"
     )

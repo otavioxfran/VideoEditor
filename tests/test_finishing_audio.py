@@ -176,3 +176,11 @@ def test_master_reports_measured_loudness_not_the_target(tmp_path):
     # Values that were not re-measured are blank, not copied from the input.
     assert reported['bands']['low_dbfs'] is None
     assert reported['background_noise_dbfs'] is None
+
+
+def test_master_equalizes_voice_by_default_and_can_skip_it(tmp_path):
+    source = _speech(tmp_path / 'voz.wav', duration=5, target=-24)
+    with_eq = audio.master(source, tmp_path / 'eq.wav')
+    assert audio.VOICE_EQ in with_eq['applied']
+    without = audio.master(source, tmp_path / 'plain.wav', options={'eq': False})
+    assert audio.VOICE_EQ not in without['applied']
